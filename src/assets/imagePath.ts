@@ -19,4 +19,25 @@ export default {
     payment_card: require('./images/payment_card.png'),
     right_arrow: require('./images/right_arrow.png'),
     promo_card: require('./images/promo_card.png'),
+
+    // beverages
+    diet_coke: require('./images/diet_coke.png'),
+    coke: require('./images/coke.png'),
+    sprite: require('./images/sprite.png'),
+    pepsi: require('./images/pepsi.png'),
+    apple_juice: require('./images/apple_juice.png'),
+    orange_juice: require('./images/orage_juice.png'),
+
+    // non-veg
+    beef: require('./images/beef.png'),
+    chicken: require('./images/chicken.png'),
+
+    // fruites
+    banana: require('./images/banana.png'),
+    apple: require('./images/apple.png'),
+
+    // veggies
+    res_capsicum: require('./images/red_capsicum.png'),
+    ginger: require('./images/ginger.png'),
+
 }
