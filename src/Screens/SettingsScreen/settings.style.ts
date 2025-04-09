@@ -50,14 +50,11 @@ export default StyleSheet.create({
         borderRadius: 18,
         backgroundColor: colors.grey2
     },
-    logOutImage: {
-        position: 'absolute',
-        left: 20,
-        alignSelf: 'center'
-    },
     logOutText: {
         fontSize: 18,
         color: colors.green,
-        fontWeight:'600',
+        fontWeight: '600',
+        textAlign: 'center',
+        textAlignVertical: 'center',
     }
 })

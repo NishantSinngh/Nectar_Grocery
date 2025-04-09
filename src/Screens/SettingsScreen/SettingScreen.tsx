@@ -27,6 +27,7 @@ const SettingScreen = () => {
                 <View style={{ flex: 1, }} >
                     <FlatList
                         data={SettingsList}
+                        scrollEnabled={false}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }: { item: { id: string, title: string, path: any } }) => <SettingsItem item={item} />}
                     />
@@ -35,7 +36,7 @@ const SettingScreen = () => {
                     style={settingsStyle.logOutButton}
                     onPress={() => console.log('Log Out')}
                 >
-                    <Image source={imagePath.exit} style={settingsStyle.logOutImage} />
+                    <Image source={imagePath.exit} />
                     <View style={[{ flex: 1, }, settingsStyle.center]}>
                         <Text style={settingsStyle.logOutText}>Log Out</Text>
                     </View>
