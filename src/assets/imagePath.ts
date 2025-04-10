@@ -19,6 +19,10 @@ export default {
     payment_card: require('./images/payment_card.png'),
     right_arrow: require('./images/right_arrow.png'),
     promo_card: require('./images/promo_card.png'),
+    minus: require('./images/minus.png'),
+    plus: require('./images/plus.png'),
+    cross: require('./images/cross.png'),
+    
 
     // beverages
     diet_coke: require('./images/diet_coke.png'),

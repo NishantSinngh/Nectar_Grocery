@@ -1,20 +1,20 @@
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import FavStyles from './FavStyles'
 import AppHeader from '../../components/AppHeader'
 import commonStyles from '../../helperFunctions/commonStyles'
-import FavouriteItem from '../../components/FavouriteItem'
 import imagePath from '../../assets/imagePath'
 import Spacer from '../../components/Spacer'
 import ButtonComp from '../../components/ButtonComp'
+import colors from '../../constants/colors'
+import CartItem from '../../components/CartItem'
 
-const FavouriteScreen = () => {
+const CartScreen = () => {
     const DummyData = [
         {
             id: '1',
             name: 'Sprite Can',
             quantity: "300mL",
-            price: "20",
+            price: 40,
             path: imagePath.sprite,
 
         },
@@ -22,7 +22,7 @@ const FavouriteScreen = () => {
             id: '2',
             name: 'Pepsi Can',
             quantity: "300mL",
-            price: "20",
+            price: 40,
             path: imagePath.pepsi,
 
         },
@@ -30,7 +30,7 @@ const FavouriteScreen = () => {
             id: '3',
             name: 'Apple & Grape Juice',
             quantity: "2L",
-            price: "200",
+            price: 200,
             path: imagePath.apple_juice,
 
         },
@@ -38,7 +38,7 @@ const FavouriteScreen = () => {
             id: '4',
             name: 'Coca Cola Can',
             quantity: "300mL",
-            price: "20",
+            price: 20,
             path: imagePath.coke,
 
         },
@@ -46,7 +46,7 @@ const FavouriteScreen = () => {
             id: '5',
             name: 'Pepsi Can',
             quantity: "300mL",
-            price: "20",
+            price: 20,
             path: imagePath.pepsi,
 
         },
@@ -54,7 +54,7 @@ const FavouriteScreen = () => {
             id: '6',
             name: 'Pepsi Can',
             quantity: "300mL",
-            price: "20",
+            price: 20,
             path: imagePath.pepsi,
 
         },
@@ -62,15 +62,17 @@ const FavouriteScreen = () => {
             id: '7',
             name: 'Pepsi Can',
             quantity: "300mL",
-            price: "20",
+            price: 20,
             path: imagePath.pepsi,
 
         },
     ]
+
+    const totalPrice = DummyData.reduce((sum, item) => sum += item.price, 0)
     return (
         <>
-            <View style={FavStyles.appContainer}>
-                <AppHeader mainViewStyle={commonStyles.appHeader} titile='Favourite' />
+            <View style={styles.appContainer}>
+                <AppHeader mainViewStyle={commonStyles.appHeader} titile='My Cart' />
                 <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                     <FlatList
                         scrollEnabled={false}
@@ -80,15 +82,21 @@ const FavouriteScreen = () => {
                             <Text style={{ fontSize: 24 }}>You have no favourites</Text>
                         </View>}
                         keyExtractor={(item) => item.id}
-                        renderItem={({ item }) => <FavouriteItem item={item} />}
+                        renderItem={({ item }) => <CartItem item={item} />}
                     />
                 </ScrollView>
             </View>
-            <ButtonComp title='Add All To Cart' />
+            <ButtonComp title='Go To Checkout' price={totalPrice} />
         </>
     )
 }
 
-export default FavouriteScreen
+export default CartScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    appContainer: {
+        flex: 1,
+        backgroundColor: colors.white,
+        justifyContent: 'flex-start',
+    },
+})

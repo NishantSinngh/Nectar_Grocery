@@ -1,4 +1,4 @@
-import { Image, ImageSourcePropType, ImageStyle, Pressable, StyleProp, StyleSheet } from 'react-native'
+import { Image, ImageSourcePropType, ImageStyle, Pressable, StyleProp, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 const ImageButton = ({
@@ -11,9 +11,9 @@ const ImageButton = ({
     onPress?: () => void
 }) => {
     return (
-        <Pressable onPress={onPress}>
+        <TouchableOpacity onPress={onPress}>
             <Image source={src} style={imgStyle}/>
-        </Pressable>
+        </TouchableOpacity>
     )
 }
 

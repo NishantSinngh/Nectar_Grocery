@@ -2,7 +2,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import NavigationStrings from '../constants/NavigationStrings'
 import ComingSoon from '../components/ComingSoon'
-import { FavoutiteScreen, SettingScreen } from '../Screens'
+import { CartScreen, FavoutiteScreen, SettingScreen } from '../Screens'
 import imagePath from '../assets/imagePath'
 import { Image } from 'react-native'
 import colors from '../constants/colors'
@@ -44,7 +44,7 @@ const BottomTabs = React.memo(() => {
                 }}
             />
             <Tab.Screen
-                name={NavigationStrings.CART} component={ComingSoon}
+                name={NavigationStrings.CART} component={CartScreen}
                 options={{
                     tabBarLabel: 'Cart',
                     tabBarIcon: (focused) => (
