@@ -1,9 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import colors from '../constants/colors';
 
-
-const BottomTabCustom = (props: any) => {
+const HIT_SLOP_PROP = {
+    top: 10,
+    right: 20,
+    left: 20,
+    bottom: 20,
+};
+const BottomTabCustom = React.memo((props: any) => {
     const { state, descriptors, navigation } = props;
 
     return (
@@ -40,12 +45,13 @@ const BottomTabCustom = (props: any) => {
                     };
                     return (
                         <View key={String(index)}>
-                            <TouchableOpacity
+                            <Pressable
                                 accessibilityRole="button"
                                 accessibilityState={isFocused ? { selected: true } : {}}
                                 accessibilityLabel={options.tabBarAccessibilityLabel}
                                 testID={options.tabBarTestID}
                                 onPress={onPress}
+                                hitSlop={HIT_SLOP_PROP}
                                 onLongPress={onLongPress}
                                 style={[styles.touchContainer]}>
                                 {tabIcon && tabIcon(isFocused)}
@@ -62,14 +68,14 @@ const BottomTabCustom = (props: any) => {
                                     }}>
                                     {label}
                                 </Text>
-                            </TouchableOpacity>
+                            </Pressable>
                         </View>
                     );
                 })}
             </View>
         </View>
     );
-};
+});
 
 export default BottomTabCustom;
 

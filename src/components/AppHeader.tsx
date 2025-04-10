@@ -2,9 +2,9 @@ import { Image, Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from '
 import React from 'react'
 import imagePath from '../assets/imagePath'
 
-const AppHeader = ({
+const AppHeader = React.memo(({
     titile = 'App Header',
-    isBack = true,
+    isBack = false,
     isFilter = false,
     isShare = false,
     onBackPress,
@@ -36,7 +36,7 @@ const AppHeader = ({
             </View>
         </View>
     )
-}
+})
 
 export default AppHeader
 

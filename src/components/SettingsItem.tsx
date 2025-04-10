@@ -3,7 +3,7 @@ import React from 'react'
 import imagePath from '../assets/imagePath'
 import colors from '../constants/colors'
 
-const SettingsItem = ({
+const SettingsItem = React.memo(({
     item,
     onPress,
 }: {
@@ -23,7 +23,7 @@ const SettingsItem = ({
             </View>
         </Pressable>
     )
-}
+})
 
 export default SettingsItem
 

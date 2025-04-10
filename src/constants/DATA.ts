@@ -1,4 +1,4 @@
-const items = [
+export default  [
     // Beverages
     {
       name: "Diet Coke",

@@ -2,18 +2,19 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import NavigationStrings from '../constants/NavigationStrings'
 import ComingSoon from '../components/ComingSoon'
-import { SettingScreen } from '../Screens'
+import { FavoutiteScreen, SettingScreen } from '../Screens'
 import imagePath from '../assets/imagePath'
 import { Image } from 'react-native'
 import colors from '../constants/colors'
 import BottomTabCustom from '../components/BottomTabCustom'
+import React from 'react'
 
 const Tab = createBottomTabNavigator()
 
-const BottomTabs = () => {
+const BottomTabs = React.memo(() => {
     return (
         <Tab.Navigator
-            screenOptions={{ headerShown: false }}
+            screenOptions={{ headerShown: false, animation: 'shift' }}
             backBehavior='initialRoute'
             initialRouteName={NavigationStrings.SHOP}
             tabBar={(props) => <BottomTabCustom {...props} />}
@@ -36,7 +37,7 @@ const BottomTabs = () => {
                     tabBarLabel: 'Explore',
                     tabBarIcon: (focused) => (
                         <Image
-                            style={[{ height: 24, width: 24 },focused && { tintColor: colors.themeColor }]}
+                            style={[{ height: 24, width: 24 }, focused && { tintColor: colors.themeColor }]}
                             source={imagePath.explore}
                         />
                     ),
@@ -48,19 +49,19 @@ const BottomTabs = () => {
                     tabBarLabel: 'Cart',
                     tabBarIcon: (focused) => (
                         <Image
-                            style={[{ height: 24, width: 24 },focused && { tintColor: colors.themeColor }]}
+                            style={[{ height: 24, width: 24 }, focused && { tintColor: colors.themeColor }]}
                             source={imagePath.cart}
                         />
                     ),
                 }}
             />
             <Tab.Screen
-                name={NavigationStrings.FAVOURITE} component={ComingSoon}
+                name={NavigationStrings.FAVOURITE} component={FavoutiteScreen}
                 options={{
                     tabBarLabel: 'Favourite',
                     tabBarIcon: (focused) => (
                         <Image
-                            style={[{ height: 24, width: 24 },focused && { tintColor: colors.themeColor }]}
+                            style={[{ height: 24, width: 24 }, focused && { tintColor: colors.themeColor }]}
                             source={imagePath.favourite}
                         />
                     ),
@@ -72,7 +73,7 @@ const BottomTabs = () => {
                     tabBarLabel: 'Account',
                     tabBarIcon: (focused) => (
                         <Image
-                            style={[{ height: 24, width: 24 },focused && { tintColor: colors.themeColor }]}
+                            style={[{ height: 24, width: 24 }, focused && { tintColor: colors.themeColor }]}
                             source={imagePath.settings}
                         />
                     ),
@@ -80,6 +81,6 @@ const BottomTabs = () => {
             />
         </Tab.Navigator>
     )
-}
+})
 
 export default BottomTabs
