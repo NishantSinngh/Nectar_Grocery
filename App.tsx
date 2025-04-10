@@ -1,11 +1,14 @@
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView, StatusBar } from 'react-native'
 import React from 'react'
-import { SettingsScreen } from './src/Screens'
+import { SettingScreen } from './src/Screens'
+import MainStack from './src/Navigation/MainStack'
 const App = () => {
   return (
-    <View style={{ flex: 1 }}>
-      <SettingsScreen />
-    </View>
+    <>
+      <MainStack />
+      <StatusBar translucent backgroundColor={"transparent"} barStyle={'dark-content'} />
+    </>
+
   )
 }
 

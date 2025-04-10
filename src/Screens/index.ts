@@ -1,2 +1,2 @@
-export {default as SettingsScreen} from "./SettingsScreen/SettingScreen";
+export {default as SettingScreen} from "./SettingsScreen/SettingScreen";
 

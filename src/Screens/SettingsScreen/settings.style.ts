@@ -10,7 +10,8 @@ export default StyleSheet.create({
     headerContent: {
         flexDirection: 'row',
         paddingHorizontal: 20,
-        paddingVertical: 25,
+        paddingTop: 50,
+        paddingBottom: 30,
         alignItems: 'center',
         justifyContent: 'flex-start',
         borderBottomWidth: 1,
@@ -52,7 +53,7 @@ export default StyleSheet.create({
     },
     logOutText: {
         fontSize: 18,
-        color: colors.green,
+        color: colors.themeColor,
         fontWeight: '600',
         textAlign: 'center',
         textAlignVertical: 'center',
