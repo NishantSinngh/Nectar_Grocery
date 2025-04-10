@@ -3,7 +3,7 @@ import colors from "../../constants/colors";
 export default StyleSheet.create({
     appContainer: {
         flex: 1,
-        backgroundColor: '#F9F9F9',
+        backgroundColor: colors.white,
         justifyContent: 'flex-start',
         paddingBottom: 100,
     },

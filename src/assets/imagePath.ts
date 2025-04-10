@@ -40,4 +40,11 @@ export default {
     res_capsicum: require('./images/red_capsicum.png'),
     ginger: require('./images/ginger.png'),
 
+    // tab icons
+    store: require('./images/store.png'),
+    explore: require('./images/explore.png'),
+    cart: require('./images/cart.png'),
+    favourite: require('./images/fav.png'),
+    settings: require('./images/user.png'),
+
 }
