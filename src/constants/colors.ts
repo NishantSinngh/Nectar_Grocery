@@ -6,5 +6,6 @@ export default {
     themeColor:'#53B175',
     unSelectColor: 'rgba(17, 27, 52, 0.5)',
     black: '#000000',
-    white:'#fff'
+    white:'#fff',
+    buttonText:"#FCFCFC"
 }

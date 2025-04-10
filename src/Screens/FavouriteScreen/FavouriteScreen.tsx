@@ -8,6 +8,7 @@ import FavouriteItem from '../../components/FavouriteItem'
 import DATA from '../../constants/DATA'
 import imagePath from '../../assets/imagePath'
 import Spacer from '../../components/Spacer'
+import ButtonComp from '../../components/ButtonComp'
 
 const FavouriteScreen = () => {
     const DummyData = [
@@ -69,21 +70,24 @@ const FavouriteScreen = () => {
         },
     ]
     return (
-        <View style={FavStyles.appContainer}>
-            <AppHeader mainViewStyle={commonStyles.appHeader} titile='Favourite' />
-            <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
-                <FlatList
-                    scrollEnabled={false}
-                    data={DummyData}
-                    ListFooterComponent={<Spacer space={100} />}
-                    ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', top: "50%" }}>
-                        <Text style={{ fontSize: 24 }}>You have no favourites</Text>
-                    </View>}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <FavouriteItem item={item} />}
-                />
-            </ScrollView>
-        </View>
+        <>
+            <View style={FavStyles.appContainer}>
+                <AppHeader mainViewStyle={commonStyles.appHeader} titile='Favourite' />
+                <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
+                    <FlatList
+                        scrollEnabled={false}
+                        data={DummyData}
+                        ListFooterComponent={<Spacer space={180} />}
+                        ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', top: "50%" }}>
+                            <Text style={{ fontSize: 24 }}>You have no favourites</Text>
+                        </View>}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item }) => <FavouriteItem item={item} />}
+                    />
+                </ScrollView>
+            </View>
+            <ButtonComp title='Add All To Cart' />
+        </>
     )
 }
 
