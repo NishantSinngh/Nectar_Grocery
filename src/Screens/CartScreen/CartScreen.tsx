@@ -14,7 +14,7 @@ const CartScreen = () => {
             id: '1',
             name: 'Sprite Can',
             quantity: "300mL",
-            price: 40,
+            price: 40000000,
             path: imagePath.sprite,
 
         },

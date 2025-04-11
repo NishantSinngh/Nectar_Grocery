@@ -16,19 +16,25 @@ const CartItem = React.memo(({
             style={styles.container}>
             <Image source={item.path} style={styles.itemImage} />
             <View style={styles.innerContainer}>
-                <View>
-                    <Text style={styles.text}>{item?.name ?? "Name"}</Text>
-                    <Text style={styles.subText}>{item?.quantity ?? "Quantity"}</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <View style={{ flex: 1, }}>
+                        <Text style={styles.text}>{item?.name ?? "Name"}</Text>
+                        <Text style={styles.subText}>{item?.quantity ?? "Quantity"}</Text>
+                    </View>
+                    <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-end' }}>
+                        <ImageButton onPress={() => console.log("crossss")} imgSrc={imagePath.cross} imgStyle={{ marginLeft: 10, }} />
+                    </View>
                 </View>
-                <View style={styles.countContainer}>
-                    <ImageButton onPress={() => console.log("minus")} imgSrc={imagePath.minus} />
-                    <Text style={{ marginHorizontal: 10, fontSize: 16 }}>{item?.count ?? 0}</Text>
-                    <ImageButton onPress={() => console.log("plus")} imgSrc={imagePath.plus} />
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={styles.countContainer}>
+                        <ImageButton onPress={() => console.log("minus")} imgSrc={imagePath.minus} />
+                        <Text style={{ marginHorizontal: 10, fontSize: 16 }}>{item?.count ?? 0}</Text>
+                        <ImageButton onPress={() => console.log("plus")} imgSrc={imagePath.plus} />
+                    </View>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end' }}>
+                        <Text style={styles.priceText}>₹{item?.price ?? "Price"}</Text>
+                    </View>
                 </View>
-            </View>
-            <View style={{ height: "100%", justifyContent: 'space-between', alignItems: 'center' }}>
-                <ImageButton imgSrc={imagePath.cross} imgStyle={{ marginLeft: 10, }} />
-                <Text style={styles.priceText}>₹{item?.price ?? "Price"}</Text>
             </View>
         </View>
     )
@@ -72,7 +78,7 @@ const styles = StyleSheet.create({
     countContainer: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         marginTop: 12,
     },
