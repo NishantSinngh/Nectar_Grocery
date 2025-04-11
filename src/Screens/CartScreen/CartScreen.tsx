@@ -72,7 +72,7 @@ const CartScreen = () => {
     return (
         <>
             <View style={styles.appContainer}>
-                <AppHeader mainViewStyle={commonStyles.appHeader} titile='My Cart' />
+                <AppHeader mainViewStyle={commonStyles.appHeader} title='My Cart' />
                 <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                     <FlatList
                         scrollEnabled={false}

@@ -3,7 +3,7 @@ import React from 'react'
 import imagePath from '../assets/imagePath'
 
 const AppHeader = React.memo(({
-    titile = 'App Header',
+    title = 'App Header',
     isBack = false,
     isFilter = false,
     isShare = false,
@@ -11,7 +11,7 @@ const AppHeader = React.memo(({
     onRightPress,
     mainViewStyle,
 }: {
-    titile?: string,
+    title?: string,
     isBack?: boolean,
     isFilter?: boolean,
     isShare?: boolean,
@@ -27,7 +27,7 @@ const AppHeader = React.memo(({
                 </Pressable>
             </View>
             <View style={styles.titleContainer}>
-                <Text style={styles.title}>{titile}</Text>
+                <Text style={styles.title}>{title}</Text>
             </View>
             <View style={styles.imageContainer}>
                 <Pressable hitSlop={30} onPress={onRightPress} disabled={!isFilter && !isShare}>

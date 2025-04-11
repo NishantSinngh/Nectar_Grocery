@@ -70,7 +70,7 @@ const FavouriteScreen = () => {
     return (
         <>
             <View style={FavStyles.appContainer}>
-                <AppHeader mainViewStyle={commonStyles.appHeader} titile='Favourite' />
+                <AppHeader mainViewStyle={commonStyles.appHeader} title='Favourite' />
                 <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                     <FlatList
                         scrollEnabled={false}

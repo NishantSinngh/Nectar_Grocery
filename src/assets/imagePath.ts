@@ -22,7 +22,15 @@ export default {
     minus: require('./images/minus.png'),
     plus: require('./images/plus.png'),
     cross: require('./images/cross.png'),
-    
+    search: require('./images/search.png'),
+
+    // explore
+    veggies_icon: require('./images/veggies_icon.png'),
+    oil_icon: require('./images/oil_icon.png'),
+    meat_icon: require('./images/meat_icon.png'),
+    snacks_icon: require('./images/snacks_icon.png'),
+    dairy_icon: require('./images/dairy_icon.png'),
+    beverages_icon: require('./images/beverages_icon.png'),
 
     // beverages
     diet_coke: require('./images/diet_coke.png'),
