@@ -1,22 +1,24 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import colors from '../constants/colors'
-import imagePath from '../assets/imagePath'
 
 const ExploreItem = ({
     item,
+    index,
     onPress
 }: {
-    item: { title: string, path: any }
-    onPress: () => void
+    item: { id: string, title: string, path: any, color: string, BorderColor: string }
+    index: number
+    onPress: (index: number) => void
 }) => {
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { borderColor: item.BorderColor, backgroundColor: item.color, }]}>
             <Pressable
-                onPress={onPress}
+                onPress={() => onPress(index)}
                 style={{ ...StyleSheet.absoluteFillObject, justifyContent: 'center', alignItems: 'center' }}
-                android_ripple={{ color: colors.purpleOpacity }}>
-                <Image source={imagePath.snacks_icon} style={{ alignSelf: 'center' }} />
+                android_ripple={{ color: item.color }}>
+                <Image source={item.path} style={{ alignSelf: 'center' }} />
                 <Text style={styles.textStyle}>{item?.title ?? "Title"}</Text>
             </Pressable>
         </View>
@@ -32,8 +34,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 200,
         borderWidth: 1,
-        borderColor: colors.redBorder,
-        backgroundColor: colors.redOpacity,
         margin: 8,
         borderRadius: 18,
         overflow: 'hidden'
