@@ -3,6 +3,7 @@ export default {
     grey: '#7C7C7C',
     grey1: '#E2E2E2',
     grey2: '#F2F3F2',
+    darkGrey: '#4C4F4D',
     themeColor: '#53B175',
     unSelectColor: 'rgba(17, 27, 52, 0.5)',
     black: '#000000',

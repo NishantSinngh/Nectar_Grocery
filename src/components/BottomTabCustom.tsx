@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import colors from '../constants/colors';
 
 const HIT_SLOP_PROP = {
@@ -10,7 +10,6 @@ const HIT_SLOP_PROP = {
 };
 const BottomTabCustom = React.memo((props: any) => {
     const { state, descriptors, navigation } = props;
-
     return (
         <View style={styles.container}>
             <View style={styles.bottomTabContainer}>
@@ -50,7 +49,10 @@ const BottomTabCustom = React.memo((props: any) => {
                                 accessibilityState={isFocused ? { selected: true } : {}}
                                 accessibilityLabel={options.tabBarAccessibilityLabel}
                                 testID={options.tabBarTestID}
-                                onPress={onPress}
+                                onPress={() => {
+                                    onPress()
+                                    Keyboard.dismiss()
+                                }}
                                 hitSlop={HIT_SLOP_PROP}
                                 onLongPress={onLongPress}
                                 style={[styles.touchContainer]}>
