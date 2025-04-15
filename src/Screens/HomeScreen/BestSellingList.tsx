@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import imagePath from '../../assets/imagePath'
 import ItemComponent from '../../components/ItemComponent'
@@ -28,14 +28,15 @@ const BestSellingList = () => {
 
     return (
         <View style={{ marginLeft: 10, }}>
-            <FlatList
-                data={DATA}
-                contentContainerStyle={{ flexGrow: 1, }}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item) => item.id}
-                renderItem={ItemComponent}
-            />
+            <ScrollView horizontal>
+                {DATA.map((item, index) => (
+                    <ItemComponent
+                        key={index}
+                        item={item}
+                        index={index}
+                    />
+                ))}
+            </ScrollView>
         </View>
     )
 }

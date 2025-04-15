@@ -24,13 +24,14 @@ const styles = StyleSheet.create({
         backgroundColor: colors.grey2,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        padding:4,
+        padding: 4,
         paddingHorizontal: 18,
         marginHorizontal: 18,
         borderRadius: 10,
-        marginVertical:6,
+        marginVertical: 6,
     },
     inputStyle: {
         flex: 1,
+        color: colors.grey
     }
 })

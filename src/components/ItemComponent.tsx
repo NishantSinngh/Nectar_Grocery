@@ -13,7 +13,7 @@ export default function ItemComponent({
 }) {
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} key={index}>
             <Image source={item.path} style={styles.imageStyle} />
             <View style={{ marginTop: 20, marginHorizontal: 10, }}>
                 <Text style={styles.titleText}>{item?.title}</Text>

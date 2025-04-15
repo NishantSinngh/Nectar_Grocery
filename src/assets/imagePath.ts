@@ -24,6 +24,8 @@ export default {
     cross: require('./images/cross.png'),
     search: require('./images/search.png'),
     add: require('./images/add.png'),
+    pulses: require('./images/Pulses.png'),
+    rice: require('./images/Rice.png'),
 
     // explore
     veggies_icon: require('./images/veggies_icon.png'),

@@ -6,7 +6,7 @@ const HIT_SLOP_PROP = {
     top: 10,
     right: 20,
     left: 20,
-    bottom: 20,
+    bottom: 30,
 };
 const BottomTabCustom = React.memo((props: any) => {
     const { state, descriptors, navigation } = props;
