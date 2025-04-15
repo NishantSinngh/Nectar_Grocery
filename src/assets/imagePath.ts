@@ -23,6 +23,7 @@ export default {
     plus: require('./images/plus.png'),
     cross: require('./images/cross.png'),
     search: require('./images/search.png'),
+    add: require('./images/add.png'),
 
     // explore
     veggies_icon: require('./images/veggies_icon.png'),

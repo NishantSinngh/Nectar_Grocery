@@ -30,11 +30,12 @@ export default StyleSheet.create({
         marginHorizontal: 20,
     },
     headingText: {
-        fontWeight: '800',
+        fontWeight: '500',
         fontSize: 24
     },
     seeAllText: {
         color: colors.themeColor,
-        fontSize: 16
+        fontSize: 16,
+        textAlignVertical:'bottom',
     }
 })
