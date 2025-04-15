@@ -12,10 +12,12 @@ import Animated, {
 const ButtonComp = ({
   title,
   price,
+  onPress,
   mainViewStyle,
 }: {
   title: string;
   price?: number;
+  onPress?: () => void
   mainViewStyle?: StyleProp<ViewStyle>;
 }) => {
   const animatedValue = useSharedValue(0);
@@ -30,7 +32,7 @@ const ButtonComp = ({
 
   const animatedStyle = useAnimatedStyle(() => {
     const translateX = interpolate(animatedValue.value, [0, 1], [-300, 300]);
-    const rotate = '25deg'; 
+    const rotate = '25deg';
     return {
       transform: [
         { translateX },
@@ -41,7 +43,7 @@ const ButtonComp = ({
 
   return (
     <View style={[styles.buttonContainer, mainViewStyle]}>
-      <Pressable android_ripple={{ color: colors.ripple }} style={styles.button}>
+      <Pressable onPress={onPress} android_ripple={{ color: colors.ripple }} style={styles.button}>
         <Animated.View style={[styles.shinyEffect, animatedStyle]} />
         <Text style={styles.titleStyle}>{title ?? 'Button'}</Text>
         {price && (

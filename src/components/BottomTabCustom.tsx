@@ -1,6 +1,7 @@
 import React from 'react';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import colors from '../constants/colors';
+import { useAppSelector } from '../redux/hooks';
 
 const HIT_SLOP_PROP = {
     top: 10,
@@ -9,6 +10,10 @@ const HIT_SLOP_PROP = {
     bottom: 30,
 };
 const BottomTabCustom = React.memo((props: any) => {
+
+    const isVisible = useAppSelector(state => state.bottomTab.isVisible)
+
+    if (!isVisible) return null;
     const { state, descriptors, navigation } = props;
     return (
         <View style={styles.container}>

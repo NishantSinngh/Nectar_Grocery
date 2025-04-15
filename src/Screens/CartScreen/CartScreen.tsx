@@ -1,5 +1,5 @@
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AppHeader from '../../components/AppHeader'
 import commonStyles from '../../helperFunctions/commonStyles'
 import imagePath from '../../assets/imagePath'
@@ -7,6 +7,7 @@ import Spacer from '../../components/Spacer'
 import ButtonComp from '../../components/ButtonComp'
 import colors from '../../constants/colors'
 import CartItem from '../../components/CartItem'
+import CheckOutModal from '../../components/CheckOutModal'
 
 const CartScreen = () => {
     const DummyData = [
@@ -68,6 +69,13 @@ const CartScreen = () => {
         },
     ]
 
+    const [show, setShow] = useState<boolean>(false)
+
+    function HandleBottomSheet() {
+        setShow(prev => !prev)
+    }
+
+
     const totalPrice = DummyData.reduce((sum, item) => sum += item.price, 0)
     return (
         <>
@@ -86,7 +94,8 @@ const CartScreen = () => {
                     />
                 </ScrollView>
             </View>
-            <ButtonComp title='Go To Checkout' price={totalPrice} />
+            <ButtonComp title='Go To Checkout' price={totalPrice} onPress={HandleBottomSheet} />
+            {show && <CheckOutModal isVisible={show} onClose={HandleBottomSheet} />}
         </>
     )
 }
