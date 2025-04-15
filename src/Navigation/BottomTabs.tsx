@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import NavigationStrings from '../constants/NavigationStrings'
 import { CartScreen, ExploreScreen, FavoutiteScreen, HomeScreen, SettingScreen } from '../Screens'
 import imagePath from '../assets/imagePath'
-import { Image } from 'react-native'
+import { Image, View } from 'react-native'
 import colors from '../constants/colors'
 import BottomTabCustom from '../components/BottomTabCustom'
 import React from 'react'
@@ -46,10 +46,13 @@ const BottomTabs = React.memo(() => {
                 options={{
                     tabBarLabel: 'Cart',
                     tabBarIcon: (focused) => (
-                        <Image
-                            style={[{ height: 24, width: 24 }, focused && { tintColor: colors.themeColor }]}
-                            source={imagePath.cart}
-                        />
+                        <>
+                            {false && <View style={{ position: 'absolute', top: -8, alignSelf: 'center', padding: 4, backgroundColor: colors.themeColor, borderRadius: 30, }} />}
+                            <Image
+                                style={[{ height: 24, width: 24 }, focused && { tintColor: colors.themeColor }]}
+                                source={imagePath.cart}
+                            />
+                        </>
                     ),
                 }}
             />
