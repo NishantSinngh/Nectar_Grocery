@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BackHandler, Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import colors from '../constants/colors';
 import { useAppSelector } from '../redux/hooks';
-import CheckOutModal from './CheckOutModal';
+import CheckOutModal from './CheckOutSheet';
 import actions from '../redux/actions';
 
 const HIT_SLOP_PROP = {

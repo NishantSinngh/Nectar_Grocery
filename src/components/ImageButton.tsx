@@ -11,7 +11,7 @@ const ImageButton = ({
     onPress?: () => void
 }) => {
     return (
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={onPress} hitSlop={20}>
             <Image source={src} style={imgStyle}/>
         </TouchableOpacity>
     )

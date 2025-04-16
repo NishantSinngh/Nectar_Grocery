@@ -7,7 +7,7 @@ import Spacer from '../../components/Spacer'
 import ButtonComp from '../../components/ButtonComp'
 import colors from '../../constants/colors'
 import CartItem from '../../components/CartItem'
-import CheckOutModal from '../../components/CheckOutModal'
+import CheckOutModal from '../../components/CheckOutSheet'
 import actions from '../../redux/actions'
 
 const CartScreen = () => {

@@ -22,6 +22,7 @@ export default {
     minus: require('./images/minus.png'),
     plus: require('./images/plus.png'),
     cross: require('./images/cross.png'),
+    card: require('./images/card.png'),
     search: require('./images/search.png'),
     add: require('./images/add.png'),
     pulses: require('./images/Pulses.png'),
