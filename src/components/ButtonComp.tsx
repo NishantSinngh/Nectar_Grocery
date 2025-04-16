@@ -1,5 +1,13 @@
-import { Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
-import React, { useEffect } from 'react';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+  ActivityIndicator,
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import colors from '../constants/colors';
 import Animated, {
   interpolate,
@@ -14,13 +22,19 @@ const ButtonComp = ({
   price,
   onPress,
   mainViewStyle,
+  isAnimated,
 }: {
   title: string;
   price?: number;
-  onPress?: () => void
+  onPress?: () => void;
   mainViewStyle?: StyleProp<ViewStyle>;
+  isAnimated?: boolean;
 }) => {
+  const [loading, setLoading] = useState(false);
+
   const animatedValue = useSharedValue(0);
+  const animatedWidth = useSharedValue(300);
+  const animatedRadius = useSharedValue(18);
 
   useEffect(() => {
     animatedValue.value = withRepeat(
@@ -30,29 +44,62 @@ const ButtonComp = ({
     );
   }, []);
 
-  const animatedStyle = useAnimatedStyle(() => {
+  const shineStyle = useAnimatedStyle(() => {
     const translateX = interpolate(animatedValue.value, [0, 1], [-300, 300]);
-    const rotate = '25deg';
     return {
-      transform: [
-        { translateX },
-        { rotate },
-      ],
+      transform: [{ translateX }, { rotate: '25deg' }],
     };
   });
 
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      width: animatedWidth.value,
+      borderRadius: animatedRadius.value
+    };
+  });
+
+  function handlePress() {
+    if (isAnimated) {
+      setLoading(true);
+      animatedWidth.value = withTiming(60, { duration: 300 });
+      animatedRadius.value = withTiming(30, { duration: 300, })
+
+      setTimeout(() => {
+        setLoading(false);
+        animatedWidth.value = withTiming(300, { duration: 300 });
+        animatedRadius.value = withTiming(18, { duration: 300, })
+      }, 2000);
+
+      onPress && onPress();
+
+    } else {
+      onPress && onPress()
+    }
+  }
+
   return (
-    <View style={[styles.buttonContainer, mainViewStyle]}>
-      <Pressable onPress={onPress} android_ripple={{ color: colors.ripple }} style={styles.button}>
-        <Animated.View style={[styles.shinyEffect, animatedStyle]} />
-        <Text style={styles.titleStyle}>{title ?? 'Button'}</Text>
-        {price && (
-          <View style={styles.priceTextContainer}>
-            <Text style={styles.priceText}>₹{price}</Text>
-          </View>
+    <Animated.View style={[styles.buttonContainer, mainViewStyle, isAnimated && animatedStyle]}>
+      <Pressable
+        onPress={handlePress}
+        android_ripple={{ color: colors.ripple }}
+        style={styles.button}
+        disabled={loading}
+      >
+        <Animated.View style={[styles.shinyEffect, shineStyle]} />
+        {loading ? (
+          <ActivityIndicator size={40} color={colors.buttonText} />
+        ) : (
+          <>
+            <Text style={styles.titleStyle}>{title ?? 'Button'}</Text>
+            {price && (
+              <View style={styles.priceTextContainer}>
+                <Text style={styles.priceText}>₹{price}</Text>
+              </View>
+            )}
+          </>
         )}
       </Pressable>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -65,8 +112,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 67,
-    width: '90%',
+    height: 60,
+    width: 300,
     bottom: 100,
     backgroundColor: colors.themeColor,
     borderRadius: 18,

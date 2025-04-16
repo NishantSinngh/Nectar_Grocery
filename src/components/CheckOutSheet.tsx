@@ -1,6 +1,6 @@
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated'
+import Animated, { FadeIn, FadeOut, SlideInDown, ZoomOutEasyDown } from 'react-native-reanimated'
 import colors from '../constants/colors'
 import ImageButton from './ImageButton'
 import imagePath from '../assets/imagePath'
@@ -26,7 +26,7 @@ const CheckOutModal = ({
             />
             <Animated.View
                 entering={SlideInDown}
-                exiting={SlideOutDown}
+                exiting={ZoomOutEasyDown}
                 style={styles.modalContainer}>
                 <View style={styles.headerContainer}>
                     <Text style={styles.headerText}>Checkout</Text>
@@ -66,7 +66,10 @@ const CheckOutModal = ({
                         <Text style={{ color: colors.black, fontWeight: '500' }}> Condition</Text>
                     </Text>
                 </View>
-                <ButtonComp title='Place Order' mainViewStyle={{bottom:30,}} />
+                <ButtonComp
+                    title='Place Order'
+                    mainViewStyle={{ bottom: 30, }}
+                    isAnimated />
             </Animated.View>
         </React.Fragment>
     )
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         position: 'absolute',
-        top: height * 0.45,
+        top: height * 0.42,
         left: 0,
         right: 0,
         bottom: 0,
@@ -121,7 +124,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 12,
+        paddingVertical: 15,
         paddingHorizontal: 6,
         borderBottomWidth: 1,
         borderBottomColor: colors.grey2
