@@ -1,10 +1,11 @@
-import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Animated, { FadeIn, FadeOut, SlideInDown, ZoomOutEasyDown } from 'react-native-reanimated'
+import { Alert, Dimensions, Image, Linking, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useState } from 'react'
+import Animated, { FadeIn, FadeOut, SlideInDown, SlideInRight, ZoomIn, ZoomOutEasyDown } from 'react-native-reanimated'
 import colors from '../constants/colors'
 import ImageButton from './ImageButton'
 import imagePath from '../assets/imagePath'
 import ButtonComp from './ButtonComp'
+import { generateUpiUrl } from '../helperFunctions/utils'
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 const { height, width } = Dimensions.get('window');
@@ -16,12 +17,39 @@ const CheckOutModal = ({
     onClose: () => void
 }) => {
 
+    const [delivery, setDelivery] = useState<'pay' | 'cod'>('pay');
+    const deliveryText = delivery === 'cod' ? 'Cash On Delivery' : 'Pay Online';
+
+    const [currentScreen, setCurrentScreen] = useState<'main' | 'delivery' | 'payment' | 'cost'>('main');
+    const [loading, setLoading] = useState(false);
+    
+    
+    const openUpiPayment = async (paymentParams: PaymentParams) => {
+        const url = generateUpiUrl(paymentParams);
+        try {
+            await Linking.openURL(url);
+        } catch (error) {
+            Alert.alert('Error', 'An error occurred while trying to open the payment app.');
+        }
+    };
+
+    const paymentParams = {
+        pa: '9929770168@ptyes',
+        pn: 'Nishant Singh',
+        tr: 'TXN123456',                // Transaction reference ID
+        am: 100000.00,
+        cu: 'INR',                      // Currency
+        tn: 'Payment for order #1234'   // Transaction note
+    };
+
+
     return (
         <React.Fragment>
             <AnimatedPressable
                 entering={FadeIn.duration(300)}
                 exiting={FadeOut.duration(300)}
-                onPress={onClose}
+                onPress={() => !loading && onClose()}
+                disabled={currentScreen !== 'main'}
                 style={styles.backDrop}
             />
             <Animated.View
@@ -30,34 +58,49 @@ const CheckOutModal = ({
                 style={styles.modalContainer}>
                 <View style={styles.headerContainer}>
                     <Text style={styles.headerText}>Checkout</Text>
-                    <ImageButton imgSrc={imagePath.cross} imgStyle={{ tintColor: colors.black }} onPress={onClose} />
+                    <ImageButton imgSrc={imagePath.cross} imgStyle={{ tintColor: colors.black }} onPress={onClose} disabled={loading} />
                 </View>
-                <Pressable android_ripple={{ color: colors.grey1 }} style={styles.itemContainer}>
+                <Pressable
+                    android_ripple={{ color: colors.grey1 }}
+                    style={styles.itemContainer}
+                    onPress={() => setCurrentScreen('delivery')}
+                >
                     <Text style={styles.itemText}>Delivery</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={styles.rightText}>Select Method</Text>
-                        <ImageButton imgSrc={imagePath.right_arrow} onPress={onClose} />
+                        <Text style={styles.rightText}>{deliveryText ?? 'Select Method'}</Text>
+                        <Image source={imagePath.right_arrow} />
                     </View>
                 </Pressable>
-                <Pressable android_ripple={{ color: colors.grey1 }} style={styles.itemContainer}>
+
+                <Pressable
+                    android_ripple={{ color: colors.grey1 }}
+                    style={styles.itemContainer}
+                    onPress={() => setCurrentScreen('payment')}
+                >
                     <Text style={styles.itemText}>Payment</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Image source={imagePath.card} style={{ marginRight: 10, }} />
-                        <ImageButton imgSrc={imagePath.right_arrow} onPress={onClose} />
+                        <Image source={imagePath.upi} style={{ marginRight: 10, height: 20, width: 40, }} />
+                        <Image source={imagePath.right_arrow} />
                     </View>
                 </Pressable>
-                <Pressable android_ripple={{ color: colors.grey1 }} style={styles.itemContainer}>
+
+                {/* <Pressable android_ripple={{ color: colors.grey1 }} style={styles.itemContainer}>
                     <Text style={styles.itemText}>Promo Code</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={styles.rightText}>Pick Discount</Text>
-                        <ImageButton imgSrc={imagePath.right_arrow} onPress={onClose} />
+                        <Image source={imagePath.right_arrow} />
                     </View>
-                </Pressable>
-                <Pressable android_ripple={{ color: colors.grey1 }} style={styles.itemContainer}>
+                </Pressable> */}
+
+                <Pressable
+                    android_ripple={{ color: colors.grey1 }}
+                    style={styles.itemContainer}
+                    onPress={() => setCurrentScreen('cost')}
+                >
                     <Text style={styles.itemText}>Total Cost</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={styles.rightText}>₹50000</Text>
-                        <ImageButton imgSrc={imagePath.right_arrow} onPress={onClose} />
+                        <Image source={imagePath.right_arrow} />
                     </View>
                 </Pressable>
                 <View style={styles.tncContainer}>
@@ -69,8 +112,90 @@ const CheckOutModal = ({
                 <ButtonComp
                     title='Place Order'
                     mainViewStyle={{ bottom: 30, }}
-                    isAnimated />
+                    isAnimated
+                    loading={loading}
+                    setLoading={setLoading}
+                />
             </Animated.View>
+
+
+            {currentScreen === 'delivery' && (
+                <Animated.View
+                    entering={SlideInRight}
+                    exiting={FadeOut.duration(200)}
+                    style={[StyleSheet.absoluteFillObject, styles.secondScreen]}
+                >
+                    <View style={styles.innerViewHeader}>
+                        <ImageButton
+                            imgSrc={imagePath.back}
+                            imgStyle={{ marginRight: 20 }}
+                            onPress={() => setCurrentScreen('main')} />
+                        <Text style={styles.innerViewHeaderText}>Delivery</Text>
+                    </View>
+                    <View style={styles.deliveryItem}>
+                        <Pressable style={styles.circle} onPress={() => setDelivery('pay')} >
+                            {delivery === 'pay' && <Animated.View entering={ZoomIn.springify()} style={styles.dotView} />}
+                        </Pressable>
+                        <Text style={styles.payText}>Pay Online</Text>
+                    </View>
+                    <View style={styles.deliveryItem}>
+                        <Pressable style={styles.circle} onPress={() => setDelivery('cod')} >
+                            {delivery === 'cod' && <Animated.View entering={ZoomIn.springify()} style={styles.dotView} />}
+                        </Pressable>
+                        <Text style={styles.payText}>Cash on delivery</Text>
+                    </View>
+                </Animated.View>
+            )}
+
+            {currentScreen === 'payment' && (
+                <Animated.View
+                    entering={SlideInRight}
+                    exiting={FadeOut.duration(200)}
+                    style={[StyleSheet.absoluteFillObject, styles.secondScreen]}
+                >
+                    <View style={styles.innerViewHeader}>
+                        <ImageButton
+                            imgSrc={imagePath.back}
+                            imgStyle={{ marginRight: 20 }}
+                            onPress={() => setCurrentScreen('main')} />
+                        <Text style={styles.innerViewHeaderText}>Payment</Text>
+                    </View>
+                    <View style={styles.payment}>
+                        <ImageButton
+                            imgSrc={imagePath.paytm}
+                            imgStyle={{ height: 80, width: 80, }}
+                            onPress={() => openUpiPayment(paymentParams)}
+                        />
+                        <ImageButton
+                            imgSrc={imagePath.gpay}
+                            imgStyle={{ height: 80, width: 80, }}
+                        onPress={() => openUpiPayment(paymentParams)}
+                        />
+                        <ImageButton
+                            imgSrc={imagePath.phonepe}
+                            imgStyle={{ height: 80, width: 80, }}
+                        onPress={() => openUpiPayment(paymentParams)}
+                        />
+                    </View>
+                </Animated.View>
+            )}
+
+            {currentScreen === 'cost' && (
+                <Animated.View
+                    entering={SlideInRight}
+                    exiting={FadeOut.duration(200)}
+                    style={[StyleSheet.absoluteFillObject, styles.secondScreen]}
+                >
+                    <View style={styles.innerViewHeader}>
+                        <ImageButton
+                            imgSrc={imagePath.back}
+                            imgStyle={{ marginRight: 20 }}
+                            onPress={() => setCurrentScreen('main')} />
+                        <Text style={styles.innerViewHeaderText}>Cost</Text>
+                    </View>
+                </Animated.View>
+            )}
+
         </React.Fragment>
     )
 }
@@ -84,7 +209,7 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         position: 'absolute',
-        top: height * 0.42,
+        top: height * 0.5,
         left: 0,
         right: 0,
         bottom: 0,
@@ -134,5 +259,59 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginLeft: 20,
         marginTop: 20,
+    },
+    innerViewHeaderText: {
+        fontSize: 24,
+        fontWeight: '600',
+        color: colors.black,
+    },
+    secondScreen: {
+        backgroundColor: colors.white,
+        zIndex: 20,
+        padding: 20,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        top: height * 0.5,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+
+    },
+    innerViewHeader: {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 40,
+    },
+    deliveryItem: {
+        width: "100%",
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        marginBottom: 20,
+    },
+    circle: {
+        height: 24,
+        width: 24,
+        borderWidth: 2,
+        borderColor: colors.grey,
+        borderRadius: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10,
+    },
+    dotView: {
+        height: 16,
+        width: 16,
+        borderRadius: 10,
+        backgroundColor: colors.themeColor
+    },
+    payText: {
+        fontSize: 18,
+        fontWeight: '600'
+    },
+    payment: {
+        // width: "100%"
     }
 })

@@ -23,14 +23,17 @@ const ButtonComp = ({
   onPress,
   mainViewStyle,
   isAnimated,
+  loading,
+  setLoading,
 }: {
   title: string;
   price?: number;
   onPress?: () => void;
   mainViewStyle?: StyleProp<ViewStyle>;
   isAnimated?: boolean;
+  loading?: boolean;
+  setLoading?: (state: boolean) => void
 }) => {
-  const [loading, setLoading] = useState(false);
 
   const animatedValue = useSharedValue(0);
   const animatedWidth = useSharedValue(300);
@@ -60,12 +63,12 @@ const ButtonComp = ({
 
   function handlePress() {
     if (isAnimated) {
-      setLoading(true);
+      setLoading && setLoading(true);
       animatedWidth.value = withTiming(60, { duration: 300 });
       animatedRadius.value = withTiming(30, { duration: 300, })
 
       setTimeout(() => {
-        setLoading(false);
+        setLoading && setLoading(false)
         animatedWidth.value = withTiming(300, { duration: 300 });
         animatedRadius.value = withTiming(18, { duration: 300, })
       }, 2000);

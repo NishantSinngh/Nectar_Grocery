@@ -27,6 +27,10 @@ export default {
     add: require('./images/add.png'),
     pulses: require('./images/Pulses.png'),
     rice: require('./images/Rice.png'),
+    upi: require('./images/upi_logo.png'),
+    paytm: require('./images/paytm_icon.png'),
+    gpay: require('./images/gpay_icon.png'),
+    phonepe: require('./images/phonepe_icon.png'),
 
     // explore
     veggies_icon: require('./images/veggies_icon.png'),
