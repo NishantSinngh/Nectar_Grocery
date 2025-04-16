@@ -22,8 +22,8 @@ const CheckOutModal = ({
 
     const [currentScreen, setCurrentScreen] = useState<'main' | 'delivery' | 'payment' | 'cost'>('main');
     const [loading, setLoading] = useState(false);
-    
-    
+
+
     const openUpiPayment = async (paymentParams: PaymentParams) => {
         const url = generateUpiUrl(paymentParams);
         try {
@@ -37,7 +37,7 @@ const CheckOutModal = ({
         pa: '9929770168@ptyes',
         pn: 'Nishant Singh',
         tr: 'TXN123456',                // Transaction reference ID
-        am: 100000.00,
+        am: 99999.00,
         cu: 'INR',                      // Currency
         tn: 'Payment for order #1234'   // Transaction note
     };
@@ -132,18 +132,19 @@ const CheckOutModal = ({
                             onPress={() => setCurrentScreen('main')} />
                         <Text style={styles.innerViewHeaderText}>Delivery</Text>
                     </View>
-                    <View style={styles.deliveryItem}>
-                        <Pressable style={styles.circle} onPress={() => setDelivery('pay')} >
+                    <Pressable style={styles.deliveryItem} onPress={() => setDelivery('pay')} >
+                        <View style={styles.circle} >
                             {delivery === 'pay' && <Animated.View entering={ZoomIn.springify()} style={styles.dotView} />}
-                        </Pressable>
+                        </View>
                         <Text style={styles.payText}>Pay Online</Text>
-                    </View>
-                    <View style={styles.deliveryItem}>
-                        <Pressable style={styles.circle} onPress={() => setDelivery('cod')} >
+                    </Pressable>
+
+                    <Pressable style={styles.deliveryItem} onPress={() => setDelivery('cod')} >
+                        <View style={styles.circle} >
                             {delivery === 'cod' && <Animated.View entering={ZoomIn.springify()} style={styles.dotView} />}
-                        </Pressable>
+                        </View>
                         <Text style={styles.payText}>Cash on delivery</Text>
-                    </View>
+                    </Pressable>
                 </Animated.View>
             )}
 
@@ -160,7 +161,7 @@ const CheckOutModal = ({
                             onPress={() => setCurrentScreen('main')} />
                         <Text style={styles.innerViewHeaderText}>Payment</Text>
                     </View>
-                    <View style={styles.payment}>
+                    <View>
                         <ImageButton
                             imgSrc={imagePath.paytm}
                             imgStyle={{ height: 80, width: 80, }}
@@ -169,12 +170,12 @@ const CheckOutModal = ({
                         <ImageButton
                             imgSrc={imagePath.gpay}
                             imgStyle={{ height: 80, width: 80, }}
-                        onPress={() => openUpiPayment(paymentParams)}
+                            onPress={() => openUpiPayment(paymentParams)}
                         />
                         <ImageButton
                             imgSrc={imagePath.phonepe}
                             imgStyle={{ height: 80, width: 80, }}
-                        onPress={() => openUpiPayment(paymentParams)}
+                            onPress={() => openUpiPayment(paymentParams)}
                         />
                     </View>
                 </Animated.View>
@@ -284,7 +285,7 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
     deliveryItem: {
-        width: "100%",
+        alignSelf: 'flex-start',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -311,7 +312,4 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600'
     },
-    payment: {
-        // width: "100%"
-    }
 })
