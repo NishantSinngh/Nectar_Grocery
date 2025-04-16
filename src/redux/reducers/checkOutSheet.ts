@@ -4,10 +4,10 @@ interface Bottomtab {
     isVisible: boolean
 }
 
-const initialState: Bottomtab = { isVisible: true }
+const initialState: Bottomtab = { isVisible: false }
 
-const bottomTabSlice = createSlice({
-    name: 'BottomTab',
+const checkOutSheetSlice = createSlice({
+    name: 'CheckOutSheet',
     initialState: initialState,
     reducers: {
         toggleVisibility: (state, action) => {
@@ -17,6 +17,6 @@ const bottomTabSlice = createSlice({
 })
 
 
-export default bottomTabSlice.reducer
+export default checkOutSheetSlice.reducer
 
-export const { toggleVisibility } = bottomTabSlice.actions
+export const { toggleVisibility } = checkOutSheetSlice.actions

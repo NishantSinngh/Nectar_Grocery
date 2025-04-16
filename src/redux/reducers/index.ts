@@ -1,7 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import bottomTab from "./bottomTab";
+import checkOutSheet from "./checkOutSheet";
 
 
 export default combineReducers({
-    bottomTab,
+    checkOutSheet,
 })

@@ -1,6 +1,6 @@
-import * as bottomTab from './bottomTab'
+import * as checkOutSheet from './CheckOutSheet'
 
 
 export default {
-    ...bottomTab,
+    ...checkOutSheet,
 }

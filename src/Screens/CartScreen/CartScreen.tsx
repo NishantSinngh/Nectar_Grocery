@@ -8,6 +8,7 @@ import ButtonComp from '../../components/ButtonComp'
 import colors from '../../constants/colors'
 import CartItem from '../../components/CartItem'
 import CheckOutModal from '../../components/CheckOutModal'
+import actions from '../../redux/actions'
 
 const CartScreen = () => {
     const DummyData = [
@@ -94,8 +95,7 @@ const CartScreen = () => {
                     />
                 </ScrollView>
             </View>
-            <ButtonComp title='Go To Checkout' price={totalPrice} onPress={HandleBottomSheet} />
-            {show && <CheckOutModal isVisible={show} onClose={HandleBottomSheet} />}
+            <ButtonComp title='Go To Checkout' price={totalPrice} onPress={() => actions.ToggleCheckoutSheet(true)} />
         </>
     )
 }
