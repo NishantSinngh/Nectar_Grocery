@@ -6,15 +6,18 @@ const ImageButton = React.memo(({
     imgStyle,
     onPress,
     disabled,
+    vibrate
 }: {
     imgSrc: ImageSourcePropType
     imgStyle?: StyleProp<ImageStyle>
     onPress?: () => void
     disabled?: boolean
+    vibrate?: boolean
 }) => {
 
     function OnPress() {
-        Vibration.vibrate(50)
+
+        vibrate && Vibration.vibrate(40)
         onPress && onPress()
     }
 

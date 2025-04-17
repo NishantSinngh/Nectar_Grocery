@@ -30,7 +30,7 @@ const CartScreen = () => {
                     contentContainerStyle={{ flexGrow: 1, }}
                     ListFooterComponent={<Spacer space={180} />}
                     ListEmptyComponent={() => (
-                        <Animated.View entering={ZoomIn} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Animated.View entering={ZoomIn.springify().delay(200)} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 24 }}>Your cart is empty</Text>
                         </Animated.View>
                     )}

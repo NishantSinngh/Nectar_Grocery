@@ -25,7 +25,7 @@ const cartSlice = createSlice({
             if (existingItem) {
                 existingItem.count += action.payload.count
             } else {
-                state.push({ item: action.payload.item, count: action.payload.count });
+                state.push({ item: action.payload.item, count: 1 });
             }
         },
         removeItem: (state, action) => {

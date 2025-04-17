@@ -6,10 +6,14 @@ import { Image, View } from 'react-native'
 import colors from '../constants/colors'
 import BottomTabCustom from '../components/BottomTabCustom'
 import React from 'react'
+import { useAppSelector } from '../redux/hooks'
 
 const Tab = createBottomTabNavigator()
 
+
 const BottomTabs = React.memo(() => {
+    const cart = useAppSelector(state => state.cartSlice)
+
     return (
         <Tab.Navigator
             screenOptions={{ headerShown: false, animation: 'shift' }}
@@ -47,7 +51,7 @@ const BottomTabs = React.memo(() => {
                     tabBarLabel: 'Cart',
                     tabBarIcon: (focused) => (
                         <>
-                            {false && <View style={{ position: 'absolute', top: -8, alignSelf: 'center', padding: 4, backgroundColor: colors.themeColor, borderRadius: 30, }} />}
+                            {cart.length > 0 && <View style={{ position: 'absolute', top: -8, alignSelf: 'center', padding: 4, backgroundColor: colors.themeColor, borderRadius: 30, }} />}
                             <Image
                                 style={[{ height: 24, width: 24 }, focused && { tintColor: colors.themeColor }]}
                                 source={imagePath.cart}

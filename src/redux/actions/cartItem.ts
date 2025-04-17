@@ -4,8 +4,8 @@ import store from "../store";
 
 const { dispatch } = store
 
-export function addToCart(item: {}, count: number) {
-    dispatch(addItem({ item, count }))
+export function addToCart(item: {}) {
+    dispatch(addItem({ item }))
 }
 export function removeFromCart(id: number) {
     dispatch(removeItem({ id }))

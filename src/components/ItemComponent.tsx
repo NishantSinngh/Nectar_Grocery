@@ -4,6 +4,7 @@ import ImageButton from "./ImageButton";
 import imagePath from "../assets/imagePath";
 import React from "react";
 import actions from "../redux/actions";
+import { useAppSelector } from "../redux/hooks";
 
 
 function ItemComponent({
@@ -14,8 +15,18 @@ function ItemComponent({
     index: number,
 }) {
 
+    const cart = useAppSelector(state => state.cartSlice)
+    const isPresent = cart.find(cart => cart.item.id === item.id)
+
+
+    function Increase() {
+        actions.IncreaseCount(item.id)
+    }
+    function Decrease() {
+        actions.DecreaseCount(item.id)
+    }
     function AddToCart() {
-        actions.addToCart(item, 1);
+        actions.addToCart(item);
     }
 
     return (
@@ -27,7 +38,22 @@ function ItemComponent({
             </View>
             <View style={styles.footer}>
                 <Text style={{ fontSize: 18, fontWeight: '600' }}>₹{item?.cost}</Text>
-                <ImageButton imgSrc={imagePath.add} onPress={AddToCart} />
+                {!isPresent ? <ImageButton imgSrc={imagePath.add} onPress={AddToCart} vibrate /> :
+                    <View style={styles.counterView}>
+                        <ImageButton
+                            imgSrc={imagePath.descrease}
+                            imgStyle={styles.counterImage}
+                            onPress={Decrease}
+                            vibrate
+                        />
+                        <Text style={{ color: colors.white }}>{isPresent?.count}</Text>
+                        <ImageButton
+                            imgSrc={imagePath.increase}
+                            imgStyle={styles.counterImage}
+                            onPress={Increase}
+                            vibrate
+                        />
+                    </View>}
             </View>
         </View>
     )
@@ -70,5 +96,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 10,
         marginLeft: 10,
-    }
+    },
+    counterView: {
+        flexDirection: 'row',
+        height: 47,
+        width: 80,
+        padding: 10,
+        backgroundColor: colors.themeColor,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderRadius: 20,
+    },
+    counterImage: {
+        height: 18,
+        width: 18,
+        tintColor: colors.white
+    },
+
 })

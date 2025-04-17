@@ -4,6 +4,7 @@ import imagePath from '../assets/imagePath'
 import colors from '../constants/colors'
 import ImageButton from './ImageButton'
 import actions from '../redux/actions'
+import Animated, { FadeOutDown, FadeOutRight, SlideOutRight, ZoomOut, ZoomOutRight } from 'react-native-reanimated'
 
 const CartItem = React.memo(({
     item,
@@ -15,19 +16,18 @@ const CartItem = React.memo(({
     count?: number
 }) => {
 
-    function RemoveItem() {        
+    function RemoveItem() {
         actions.removeFromCart(item.id)
     }
-    function Increase() {        
+    function Increase() {
         actions.IncreaseCount(item.id)
     }
-    function Decrease() {        
+    function Decrease() {
         actions.DecreaseCount(item.id)
     }
 
     return (
-        <View
-            style={styles.container}>
+        <Animated.View exiting={FadeOutRight} style={styles.container}>
             <Image source={item.path} style={styles.itemImage} />
             <View style={styles.innerContainer}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -36,21 +36,21 @@ const CartItem = React.memo(({
                         <Text style={styles.subText}>{item?.quantity ?? "Quantity"}</Text>
                     </View>
                     <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-                        <ImageButton onPress={RemoveItem} imgSrc={imagePath.cross} imgStyle={{ marginLeft: 10, }} />
+                        <ImageButton onPress={RemoveItem} imgSrc={imagePath.cross} imgStyle={{ marginLeft: 10, }} vibrate />
                     </View>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={styles.countContainer}>
-                        <ImageButton onPress={Decrease} imgSrc={imagePath.minus} />
-                        <Text style={{ marginHorizontal: 10, fontSize: 16 }}>{String(count) ?? 0}</Text>
-                        <ImageButton onPress={Increase} imgSrc={imagePath.plus} />
+                        <ImageButton onPress={Decrease} imgSrc={imagePath.minus} vibrate />
+                        <Text style={{ marginHorizontal: 10, fontSize: 16 }}>{count ?? 0}</Text>
+                        <ImageButton onPress={Increase} imgSrc={imagePath.plus} vibrate />
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end' }}>
                         <Text style={styles.priceText}>₹{item?.cost ?? "Price"}</Text>
                     </View>
                 </View>
             </View>
-        </View>
+        </Animated.View>
     )
 })
 

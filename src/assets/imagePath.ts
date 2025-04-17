@@ -31,6 +31,8 @@ export default {
     paytm: require('./images/paytm_icon.png'),
     gpay: require('./images/gpay_icon.png'),
     phonepe: require('./images/phonepe_icon.png'),
+    increase: require('./images/increase.png'),
+    descrease: require('./images/decrease.png'),
 
     // explore
     veggies_icon: require('./images/veggies_icon.png'),
