@@ -3,6 +3,7 @@ import React from 'react'
 import imagePath from '../../assets/imagePath'
 import ItemComponent from '../../components/ItemComponent'
 import DATA from '../../constants/DATA'
+import actions from '../../redux/actions'
 
 const ExclusiveOfferList = () => {
 

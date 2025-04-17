@@ -7,9 +7,11 @@ import colors from '../constants/colors'
 import { generateUpiUrl, height } from '../helperFunctions/utils'
 
 const PaymentComponent = React.memo(({
-    onBack
+    onBack,
+    amount
 }: {
     onBack: () => void
+    amount: number
 }) => {
 
     const openUpiPayment = useCallback(async (paymentParams: PaymentParams) => {
@@ -25,10 +27,10 @@ const PaymentComponent = React.memo(({
         pa: '9929770168@ptyes',
         pn: 'Nishant Singh',
         tr: 'TXN123456',
-        am: 99999.00,
+        am: amount,
         cu: 'INR',
         tn: 'Payment for order #1234'
-    }), []);
+    }), [amount]);
 
     return (
         <Animated.View

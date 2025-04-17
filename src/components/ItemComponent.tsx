@@ -3,15 +3,20 @@ import colors from "../constants/colors";
 import ImageButton from "./ImageButton";
 import imagePath from "../assets/imagePath";
 import React from "react";
+import actions from "../redux/actions";
 
 
 function ItemComponent({
     item,
-    index
+    index,
 }: {
-    item: { id: number, path: any, name: string, cost: number, quantity: string },
-    index: number
+    item: CartItem,
+    index: number,
 }) {
+
+    function AddToCart() {
+        actions.addToCart(item, 1);
+    }
 
     return (
         <View style={styles.container} key={index}>
@@ -22,7 +27,7 @@ function ItemComponent({
             </View>
             <View style={styles.footer}>
                 <Text style={{ fontSize: 18, fontWeight: '600' }}>₹{item?.cost}</Text>
-                <ImageButton imgSrc={imagePath.add} />
+                <ImageButton imgSrc={imagePath.add} onPress={AddToCart} />
             </View>
         </View>
     )

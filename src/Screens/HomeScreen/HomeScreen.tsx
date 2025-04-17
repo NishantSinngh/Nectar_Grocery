@@ -43,7 +43,7 @@ const HomeScreen = () => {
                 </View>
                 <ScrollView horizontal contentContainerStyle={{ flexGrow: 1, }} >
                     <ImageButton imgSrc={imagePath.pulses} imgStyle={{ marginRight: 10, marginLeft: 20, }} />
-                    <ImageButton imgSrc={imagePath.pulses} imgStyle={{ marginRight: 10 }}/>
+                    <ImageButton imgSrc={imagePath.pulses} imgStyle={{ marginRight: 10 }} />
                 </ScrollView>
                 <GroceriesList />
                 <Spacer space={100} />

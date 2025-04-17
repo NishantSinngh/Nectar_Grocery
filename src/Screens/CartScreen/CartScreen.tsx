@@ -2,103 +2,43 @@ import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AppHeader from '../../components/AppHeader'
 import commonStyles from '../../helperFunctions/commonStyles'
-import imagePath from '../../assets/imagePath'
 import Spacer from '../../components/Spacer'
 import ButtonComp from '../../components/ButtonComp'
 import colors from '../../constants/colors'
 import CartItem from '../../components/CartItem'
-import CheckOutModal from '../../components/CheckOutSheet'
 import actions from '../../redux/actions'
-import { height } from '../../helperFunctions/utils'
+import { useAppSelector } from '../../redux/hooks'
 
 const CartScreen = () => {
-    const DummyData = [
-        {
-            id: '1',
-            name: 'Sprite Can',
-            quantity: "300mL",
-            price: 40000000,
-            path: imagePath.sprite,
 
-        },
-        {
-            id: '2',
-            name: 'Pepsi Can',
-            quantity: "300mL",
-            price: 40,
-            path: imagePath.pepsi,
+    const cart = useAppSelector(state => state.cartSlice)
+    const totalCost = cart.reduce((sum, item) => sum += (item.item.cost * item.count), 0)
 
-        },
-        {
-            id: '3',
-            name: 'Apple & Grape Juice',
-            quantity: "2L",
-            price: 200,
-            path: imagePath.apple_juice,
-
-        },
-        {
-            id: '4',
-            name: 'Coca Cola Can',
-            quantity: "300mL",
-            price: 20,
-            path: imagePath.coke,
-
-        },
-        {
-            id: '5',
-            name: 'Pepsi Can',
-            quantity: "300mL",
-            price: 20,
-            path: imagePath.pepsi,
-
-        },
-        {
-            id: '6',
-            name: 'Pepsi Can',
-            quantity: "300mL",
-            price: 20,
-            path: imagePath.pepsi,
-
-        },
-        {
-            id: '7',
-            name: 'Pepsi Can',
-            quantity: "300mL",
-            price: 20,
-            path: imagePath.pepsi,
-
-        },
-    ]
-
-    const [show, setShow] = useState<boolean>(false)
-
-    function HandleBottomSheet() {
-        setShow(prev => !prev)
-    }
 
     function openCheckoutSheet() {
         actions.ToggleCheckoutSheet(true)
     }
 
-    const totalPrice = DummyData.reduce((sum, item) => sum += item.price, 0)
+
     return (
         <>
             <View style={styles.appContainer}>
                 <AppHeader mainViewStyle={commonStyles.appHeader} title='My Cart' />
                 <FlatList
-                    data={DummyData}
+                    data={cart}
                     style={{ flex: 1, }}
                     contentContainerStyle={{ flexGrow: 1, }}
                     ListFooterComponent={<Spacer space={180} />}
-                    ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 24 }}>Your cart is empty</Text>
-                    </View>}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <CartItem item={item} />}
+                    ListEmptyComponent={
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ fontSize: 24 }}>Your cart is empty</Text>
+                        </View>
+                    }
+                    keyExtractor={(item) => String(item.item.id)}
+                    renderItem={({ item }) => <CartItem item={item.item} count={item.count} />}
                 />
             </View>
-            <ButtonComp title='Go To Checkout' price={totalPrice} onPress={openCheckoutSheet} />
+            <ButtonComp title='Go To Checkout' price={totalCost} onPress={openCheckoutSheet} />
         </>
     )
 }

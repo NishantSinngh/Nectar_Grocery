@@ -10,6 +10,7 @@ import DeliveryComponent from './DeliveryComponent'
 import PaymentComponent from './PaymentComponent'
 import CostComponent from './CostComponent'
 import DATA from '../constants/DATA'
+import { useAppSelector } from '../redux/hooks'
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 const CheckOutModal = React.memo(({
@@ -18,9 +19,12 @@ const CheckOutModal = React.memo(({
     onClose: () => void
 }) => {
 
+    const cart = useAppSelector(state => state.cartSlice)
+    console.log(cart);
 
-    console.log(DATA);
-    
+
+    const totalCost = cart.reduce((sum, item) => sum + (item.item.cost * item.count), 0)
+
 
     const [delivery, setDelivery] = useState<'pay' | 'cod'>('pay');
     const deliveryText = delivery === 'cod' ? 'Cash On Delivery' : 'Pay Online';
@@ -37,7 +41,7 @@ const CheckOutModal = React.memo(({
             case 'delivery':
                 return <DeliveryComponent onBack={GoToMain} delivery={delivery} setDelivery={setDelivery} />
             case 'payment':
-                return <PaymentComponent onBack={GoToMain} />
+                return <PaymentComponent onBack={GoToMain} amount={totalCost} />
             case 'cost':
                 return <CostComponent onBack={GoToMain} cost={0} />
             default:
@@ -93,7 +97,7 @@ const CheckOutModal = React.memo(({
                 >
                     <Text style={styles.itemText}>Total Cost</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={styles.rightText}>₹50000</Text>
+                        <Text style={styles.rightText}>₹{totalCost}</Text>
                         <Image source={imagePath.right_arrow} />
                     </View>
                 </Pressable>

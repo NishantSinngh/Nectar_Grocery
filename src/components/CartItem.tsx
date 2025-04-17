@@ -7,9 +7,11 @@ import ImageButton from './ImageButton'
 const CartItem = React.memo(({
     item,
     onPress,
+    count = 0,
 }: {
-    item: { id: string, name: string, quantity: string, price: number, path: any, count?: number },
-    onPress?: () => void
+    item: CartItem;
+    onPress?: () => void;
+    count?: number
 }) => {
     return (
         <View
@@ -28,11 +30,11 @@ const CartItem = React.memo(({
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={styles.countContainer}>
                         <ImageButton onPress={() => console.log("minus")} imgSrc={imagePath.minus} />
-                        <Text style={{ marginHorizontal: 10, fontSize: 16 }}>{item?.count ?? 0}</Text>
+                        <Text style={{ marginHorizontal: 10, fontSize: 16 }}>{String(count) ?? 0}</Text>
                         <ImageButton onPress={() => console.log("plus")} imgSrc={imagePath.plus} />
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end' }}>
-                        <Text style={styles.priceText}>₹{item?.price ?? "Price"}</Text>
+                        <Text style={styles.priceText}>₹{item?.cost ?? "Price"}</Text>
                     </View>
                 </View>
             </View>
