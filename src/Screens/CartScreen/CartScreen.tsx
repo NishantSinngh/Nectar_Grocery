@@ -9,6 +9,7 @@ import colors from '../../constants/colors'
 import CartItem from '../../components/CartItem'
 import CheckOutModal from '../../components/CheckOutSheet'
 import actions from '../../redux/actions'
+import { height } from '../../helperFunctions/utils'
 
 const CartScreen = () => {
     const DummyData = [
@@ -76,26 +77,28 @@ const CartScreen = () => {
         setShow(prev => !prev)
     }
 
+    function openCheckoutSheet() {
+        actions.ToggleCheckoutSheet(true)
+    }
 
     const totalPrice = DummyData.reduce((sum, item) => sum += item.price, 0)
     return (
         <>
             <View style={styles.appContainer}>
                 <AppHeader mainViewStyle={commonStyles.appHeader} title='My Cart' />
-                <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
-                    <FlatList
-                        scrollEnabled={false}
-                        data={DummyData}
-                        ListFooterComponent={<Spacer space={180} />}
-                        ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', top: "50%" }}>
-                            <Text style={{ fontSize: 24 }}>You have no favourites</Text>
-                        </View>}
-                        keyExtractor={(item) => item.id}
-                        renderItem={({ item }) => <CartItem item={item} />}
-                    />
-                </ScrollView>
+                <FlatList
+                    data={DummyData}
+                    style={{ flex: 1, }}
+                    contentContainerStyle={{ flexGrow: 1, }}
+                    ListFooterComponent={<Spacer space={180} />}
+                    ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 24 }}>Your cart is empty</Text>
+                    </View>}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => <CartItem item={item} />}
+                />
             </View>
-            <ButtonComp title='Go To Checkout' price={totalPrice} onPress={() => actions.ToggleCheckoutSheet(true)} />
+            <ButtonComp title='Go To Checkout' price={totalPrice} onPress={openCheckoutSheet} />
         </>
     )
 }

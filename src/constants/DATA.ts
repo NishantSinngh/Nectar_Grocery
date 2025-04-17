@@ -105,22 +105,45 @@ export default {
       path: imagePath.apple,
       cost: 80,
       quantity: "1 kg",
-    },
+    }
   ],
   Veggies: [
     {
-      id: 15,
+      id: 16,
       name: "Red Capsicum",
       path: imagePath.red_capsicum,
       cost: 30,
       quantity: "500 g",
     },
     {
-      id: 16,
+      id: 17,
       name: "Ginger",
       path: imagePath.ginger,
       cost: 20,
       quantity: "250 g",
+    },
+  ],
+  BestSelling: [
+    {
+      id: 16,
+      name: "Red Capsicum",
+      path: imagePath.red_capsicum,
+      cost: 30,
+      quantity: "500 g",
+    },
+    {
+      id: 17,
+      name: "Ginger",
+      path: imagePath.ginger,
+      cost: 20,
+      quantity: "250 g",
+    },
+    {
+      id: 13,
+      name: "Banana",
+      path: imagePath.banana,
+      cost: 20,
+      quantity: "1 kg",
     },
   ],
 };

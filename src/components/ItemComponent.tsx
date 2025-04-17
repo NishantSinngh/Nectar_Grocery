@@ -9,7 +9,7 @@ function ItemComponent({
     item,
     index
 }: {
-    item: { path: any, title: string, price: number, quantity: number },
+    item: { id: number, path: any, name: string, cost: number, quantity: string },
     index: number
 }) {
 
@@ -17,11 +17,11 @@ function ItemComponent({
         <View style={styles.container} key={index}>
             <Image source={item.path} style={styles.imageStyle} />
             <View style={{ marginTop: 20, marginHorizontal: 10, }}>
-                <Text style={styles.titleText}>{item?.title}</Text>
-                <Text style={styles.quantityText}>{item?.quantity}Kg</Text>
+                <Text style={styles.titleText}>{item?.name}</Text>
+                <Text style={styles.quantityText}>{item?.quantity}</Text>
             </View>
             <View style={styles.footer}>
-                <Text style={{ fontSize: 18, fontWeight: '600' }}>₹{item?.price}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '600' }}>₹{item?.cost}</Text>
                 <ImageButton imgSrc={imagePath.add} />
             </View>
         </View>
