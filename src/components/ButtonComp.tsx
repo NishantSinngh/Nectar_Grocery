@@ -17,7 +17,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-const ButtonComp = ({
+const ButtonComp = React.memo(({
   title,
   price,
   onPress,
@@ -104,7 +104,7 @@ const ButtonComp = ({
       </Pressable>
     </Animated.View>
   );
-};
+})
 
 export default ButtonComp;
 

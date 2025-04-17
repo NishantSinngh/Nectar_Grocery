@@ -2,9 +2,10 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import colors from "../constants/colors";
 import ImageButton from "./ImageButton";
 import imagePath from "../assets/imagePath";
+import React from "react";
 
 
-export default function ItemComponent({
+function ItemComponent({
     item,
     index
 }: {
@@ -26,7 +27,7 @@ export default function ItemComponent({
         </View>
     )
 }
-
+export default React.memo(ItemComponent)
 
 const styles = StyleSheet.create({
     container: {

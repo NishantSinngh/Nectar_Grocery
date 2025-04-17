@@ -3,7 +3,7 @@ import React from 'react'
 import colors from '../constants/colors'
 import imagePath from '../assets/imagePath'
 
-const SearchBar = () => {
+const SearchBar = React.memo(() => {
     return (
         <View style={styles.inputContainer} >
             <Image source={imagePath.search} />
@@ -14,7 +14,7 @@ const SearchBar = () => {
             />
         </View>
     )
-}
+})
 
 export default SearchBar
 

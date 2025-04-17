@@ -2,6 +2,8 @@
 
 // upi://pay — UPI scheme for payment intent.
 
+import { Dimensions } from "react-native";
+
 // pa — Payee address (VPA or UPI ID).
 
 // pn — Payee name.
@@ -18,3 +20,6 @@ export function generateUpiUrl({ pa, pn, tr, am, cu, tn }: PaymentParams) {
     const amount = am.toFixed(2);
     return `upi://pay?pa=${encodeURIComponent(pa)}&pn=${encodeURIComponent(pn)}&tr=${encodeURIComponent(tr)}&am=${encodeURIComponent(amount)}&cu=${encodeURIComponent(cu)}&tn=${encodeURIComponent(tn)}`;
 };
+
+
+export const { height, width } = Dimensions.get('window');

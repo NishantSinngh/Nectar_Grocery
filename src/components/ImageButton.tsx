@@ -1,7 +1,7 @@
 import { Image, ImageSourcePropType, ImageStyle, Pressable, StyleProp, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const ImageButton = ({
+const ImageButton = React.memo(({
     imgSrc: src,
     imgStyle,
     onPress,
@@ -17,7 +17,7 @@ const ImageButton = ({
             <Image source={src} style={imgStyle}/>
         </TouchableOpacity>
     )
-}
+})
 
 export default ImageButton
 

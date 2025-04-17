@@ -1,15 +1,17 @@
 import { Alert, Dimensions, Image, Linking, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
-import Animated, { FadeIn, FadeOut, SlideInDown, SlideInRight, ZoomIn, ZoomOutEasyDown } from 'react-native-reanimated'
+import React, { useCallback, useMemo, useState } from 'react'
+import Animated, { FadeIn, FadeOut, SlideInDown, SlideInRight, ZoomIn, ZoomInEasyDown, ZoomInEasyUp, ZoomOutEasyDown } from 'react-native-reanimated'
 import colors from '../constants/colors'
 import ImageButton from './ImageButton'
 import imagePath from '../assets/imagePath'
 import ButtonComp from './ButtonComp'
-import { generateUpiUrl } from '../helperFunctions/utils'
+import { generateUpiUrl, height } from '../helperFunctions/utils'
+import DeliveryComponent from './DeliveryComponent'
+import PaymentComponent from './PaymentComponent'
+import CostComponent from './CostComponent'
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
-const { height, width } = Dimensions.get('window');
-const CheckOutModal = ({
+const CheckOutModal = React.memo(({
     isVisible,
     onClose,
 }: {
@@ -23,38 +25,35 @@ const CheckOutModal = ({
     const [currentScreen, setCurrentScreen] = useState<'main' | 'delivery' | 'payment' | 'cost'>('main');
     const [loading, setLoading] = useState(false);
 
+    function GoToMain() {
+        setCurrentScreen('main')
+    }
 
-    const openUpiPayment = async (paymentParams: PaymentParams) => {
-        const url = generateUpiUrl(paymentParams);
-        try {
-            await Linking.openURL(url);
-        } catch (error) {
-            Alert.alert('Error', 'An error occurred while trying to open the payment app.');
+    const renderScreen = () => {
+        switch (currentScreen) {
+            case 'delivery':
+                return <DeliveryComponent onBack={GoToMain} delivery={delivery} setDelivery={setDelivery} />
+            case 'payment':
+                return <PaymentComponent onBack={GoToMain} />
+            case 'cost':
+                return <CostComponent onBack={GoToMain} cost={0} />
+            default:
+                return <View />;
         }
-    };
-
-    const paymentParams = {
-        pa: '9929770168@ptyes',
-        pn: 'Nishant Singh',
-        tr: 'TXN123456',                // Transaction reference ID
-        am: 99999.00,
-        cu: 'INR',                      // Currency
-        tn: 'Payment for order #1234'   // Transaction note
-    };
-
+    }
 
     return (
         <React.Fragment>
             <AnimatedPressable
-                entering={FadeIn.duration(300)}
-                exiting={FadeOut.duration(300)}
+                entering={FadeIn.duration(500)}
+                exiting={FadeOut.duration(400)}
                 onPress={() => !loading && onClose()}
                 disabled={currentScreen !== 'main'}
                 style={styles.backDrop}
             />
             <Animated.View
-                entering={SlideInDown}
-                exiting={ZoomOutEasyDown}
+                entering={SlideInDown.duration(500)}
+                exiting={ZoomOutEasyDown.duration(400)}
                 style={styles.modalContainer}>
                 <View style={styles.headerContainer}>
                     <Text style={styles.headerText}>Checkout</Text>
@@ -84,14 +83,6 @@ const CheckOutModal = ({
                     </View>
                 </Pressable>
 
-                {/* <Pressable android_ripple={{ color: colors.grey1 }} style={styles.itemContainer}>
-                    <Text style={styles.itemText}>Promo Code</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={styles.rightText}>Pick Discount</Text>
-                        <Image source={imagePath.right_arrow} />
-                    </View>
-                </Pressable> */}
-
                 <Pressable
                     android_ripple={{ color: colors.grey1 }}
                     style={styles.itemContainer}
@@ -118,88 +109,11 @@ const CheckOutModal = ({
                 />
             </Animated.View>
 
-
-            {currentScreen === 'delivery' && (
-                <Animated.View
-                    entering={SlideInRight}
-                    exiting={FadeOut.duration(200)}
-                    style={[StyleSheet.absoluteFillObject, styles.secondScreen]}
-                >
-                    <View style={styles.innerViewHeader}>
-                        <ImageButton
-                            imgSrc={imagePath.back}
-                            imgStyle={{ marginRight: 20 }}
-                            onPress={() => setCurrentScreen('main')} />
-                        <Text style={styles.innerViewHeaderText}>Delivery</Text>
-                    </View>
-                    <Pressable style={styles.deliveryItem} onPress={() => setDelivery('pay')} >
-                        <View style={styles.circle} >
-                            {delivery === 'pay' && <Animated.View entering={ZoomIn.springify()} style={styles.dotView} />}
-                        </View>
-                        <Text style={styles.payText}>Pay Online</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.deliveryItem} onPress={() => setDelivery('cod')} >
-                        <View style={styles.circle} >
-                            {delivery === 'cod' && <Animated.View entering={ZoomIn.springify()} style={styles.dotView} />}
-                        </View>
-                        <Text style={styles.payText}>Cash on delivery</Text>
-                    </Pressable>
-                </Animated.View>
-            )}
-
-            {currentScreen === 'payment' && (
-                <Animated.View
-                    entering={SlideInRight}
-                    exiting={FadeOut.duration(200)}
-                    style={[StyleSheet.absoluteFillObject, styles.secondScreen]}
-                >
-                    <View style={styles.innerViewHeader}>
-                        <ImageButton
-                            imgSrc={imagePath.back}
-                            imgStyle={{ marginRight: 20 }}
-                            onPress={() => setCurrentScreen('main')} />
-                        <Text style={styles.innerViewHeaderText}>Payment</Text>
-                    </View>
-                    <View>
-                        <ImageButton
-                            imgSrc={imagePath.paytm}
-                            imgStyle={{ height: 80, width: 80, }}
-                            onPress={() => openUpiPayment(paymentParams)}
-                        />
-                        <ImageButton
-                            imgSrc={imagePath.gpay}
-                            imgStyle={{ height: 80, width: 80, }}
-                            onPress={() => openUpiPayment(paymentParams)}
-                        />
-                        <ImageButton
-                            imgSrc={imagePath.phonepe}
-                            imgStyle={{ height: 80, width: 80, }}
-                            onPress={() => openUpiPayment(paymentParams)}
-                        />
-                    </View>
-                </Animated.View>
-            )}
-
-            {currentScreen === 'cost' && (
-                <Animated.View
-                    entering={SlideInRight}
-                    exiting={FadeOut.duration(200)}
-                    style={[StyleSheet.absoluteFillObject, styles.secondScreen]}
-                >
-                    <View style={styles.innerViewHeader}>
-                        <ImageButton
-                            imgSrc={imagePath.back}
-                            imgStyle={{ marginRight: 20 }}
-                            onPress={() => setCurrentScreen('main')} />
-                        <Text style={styles.innerViewHeaderText}>Cost</Text>
-                    </View>
-                </Animated.View>
-            )}
+            {renderScreen()}
 
         </React.Fragment>
     )
-}
+})
 
 export default CheckOutModal
 
@@ -260,56 +174,5 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginLeft: 20,
         marginTop: 20,
-    },
-    innerViewHeaderText: {
-        fontSize: 24,
-        fontWeight: '600',
-        color: colors.black,
-    },
-    secondScreen: {
-        backgroundColor: colors.white,
-        zIndex: 20,
-        padding: 20,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        top: height * 0.5,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-
-    },
-    innerViewHeader: {
-        flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginBottom: 40,
-    },
-    deliveryItem: {
-        alignSelf: 'flex-start',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-        marginBottom: 20,
-    },
-    circle: {
-        height: 24,
-        width: 24,
-        borderWidth: 2,
-        borderColor: colors.grey,
-        borderRadius: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 10,
-    },
-    dotView: {
-        height: 16,
-        width: 16,
-        borderRadius: 10,
-        backgroundColor: colors.themeColor
-    },
-    payText: {
-        fontSize: 18,
-        fontWeight: '600'
     },
 })

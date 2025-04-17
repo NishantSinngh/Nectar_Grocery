@@ -1,8 +1,7 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import colors from '../constants/colors'
 
-const ExploreItem = ({
+const ExploreItem = React.memo(({
     item,
     index,
     onPress
@@ -23,7 +22,7 @@ const ExploreItem = ({
             </Pressable>
         </View>
     )
-}
+})
 
 export default ExploreItem
 
