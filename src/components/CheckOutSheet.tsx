@@ -20,9 +20,6 @@ const CheckOutModal = React.memo(({
 }) => {
 
     const cart = useAppSelector(state => state.cartSlice)
-    console.log(cart);
-
-
     const totalCost = cart.reduce((sum, item) => sum + (item.item.cost * item.count), 0)
 
 
@@ -102,9 +99,11 @@ const CheckOutModal = React.memo(({
                     </View>
                 </Pressable>
                 <View style={styles.tncContainer}>
-                    <Text style={{ color: colors.grey, fontWeight: '400' }}>By placing an order you agree to our <Text style={{ color: colors.black, fontWeight: '500' }}>Terms </Text>
-                        and
-                        <Text style={{ color: colors.black, fontWeight: '500' }}> Condition</Text>
+                    <Text style={{ color: colors.grey, fontWeight: '400' }}>
+                        By placing an order you agree to our
+                        <Text style={{ color: colors.black, fontWeight: '500' }}> Terms </Text>
+                        <Text style={{ color: colors.grey, fontWeight: '400' }}> and </Text>
+                        <Text style={{ color: colors.black, fontWeight: '500' }}> Conditions</Text>
                     </Text>
                 </View>
                 <ButtonComp

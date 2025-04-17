@@ -94,7 +94,7 @@ const ButtonComp = React.memo(({
         ) : (
           <>
             <Text style={styles.titleStyle}>{title ?? 'Button'}</Text>
-            {price && (
+            {typeof price === 'number'  && (
               <View style={styles.priceTextContainer}>
                 <Text style={styles.priceText}>₹{price}</Text>
               </View>

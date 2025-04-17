@@ -27,10 +27,29 @@ const cartSlice = createSlice({
             } else {
                 state.push({ item: action.payload.item, count: action.payload.count });
             }
-        }
+        },
+        removeItem: (state, action) => {
+            return state.filter((item) => item.item.id !== action.payload.id);
+        },
+        increaseCount: (state, action) => {
+            const item = state.find(cart => cart.item.id === action.payload.id)
+            if (item) {
+                item.count += 1;
+            }
+        },
+        decreaseCount: (state, action) => {
+            const item = state.find(cart => cart.item.id === action.payload.id)
+            if (item) {
+                if (item.count > 1) {
+                    item.count -= 1;
+                } else {
+                    return state.filter((item) => item.item.id !== action.payload.id);
+                }
+            }
+        },
     }
 })
 
 
 export default cartSlice.reducer;
-export const { addItem } = cartSlice.actions
+export const { addItem, removeItem, increaseCount, decreaseCount } = cartSlice.actions

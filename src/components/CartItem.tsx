@@ -3,6 +3,7 @@ import React from 'react'
 import imagePath from '../assets/imagePath'
 import colors from '../constants/colors'
 import ImageButton from './ImageButton'
+import actions from '../redux/actions'
 
 const CartItem = React.memo(({
     item,
@@ -13,6 +14,17 @@ const CartItem = React.memo(({
     onPress?: () => void;
     count?: number
 }) => {
+
+    function RemoveItem() {        
+        actions.removeFromCart(item.id)
+    }
+    function Increase() {        
+        actions.IncreaseCount(item.id)
+    }
+    function Decrease() {        
+        actions.DecreaseCount(item.id)
+    }
+
     return (
         <View
             style={styles.container}>
@@ -24,14 +36,14 @@ const CartItem = React.memo(({
                         <Text style={styles.subText}>{item?.quantity ?? "Quantity"}</Text>
                     </View>
                     <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-                        <ImageButton onPress={() => console.log("crossss")} imgSrc={imagePath.cross} imgStyle={{ marginLeft: 10, }} />
+                        <ImageButton onPress={RemoveItem} imgSrc={imagePath.cross} imgStyle={{ marginLeft: 10, }} />
                     </View>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={styles.countContainer}>
-                        <ImageButton onPress={() => console.log("minus")} imgSrc={imagePath.minus} />
+                        <ImageButton onPress={Decrease} imgSrc={imagePath.minus} />
                         <Text style={{ marginHorizontal: 10, fontSize: 16 }}>{String(count) ?? 0}</Text>
-                        <ImageButton onPress={() => console.log("plus")} imgSrc={imagePath.plus} />
+                        <ImageButton onPress={Increase} imgSrc={imagePath.plus} />
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end' }}>
                         <Text style={styles.priceText}>₹{item?.cost ?? "Price"}</Text>

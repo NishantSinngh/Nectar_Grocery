@@ -1,5 +1,5 @@
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import AppHeader from '../../components/AppHeader'
 import commonStyles from '../../helperFunctions/commonStyles'
 import Spacer from '../../components/Spacer'
@@ -8,6 +8,7 @@ import colors from '../../constants/colors'
 import CartItem from '../../components/CartItem'
 import actions from '../../redux/actions'
 import { useAppSelector } from '../../redux/hooks'
+import Animated, { ZoomIn } from 'react-native-reanimated'
 
 const CartScreen = () => {
 
@@ -19,7 +20,6 @@ const CartScreen = () => {
         actions.ToggleCheckoutSheet(true)
     }
 
-
     return (
         <>
             <View style={styles.appContainer}>
@@ -29,11 +29,11 @@ const CartScreen = () => {
                     style={{ flex: 1, }}
                     contentContainerStyle={{ flexGrow: 1, }}
                     ListFooterComponent={<Spacer space={180} />}
-                    ListEmptyComponent={
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    ListEmptyComponent={() => (
+                        <Animated.View entering={ZoomIn} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 24 }}>Your cart is empty</Text>
-                        </View>
-                    }
+                        </Animated.View>
+                    )}
                     keyExtractor={(item) => String(item.item.id)}
                     renderItem={({ item }) => <CartItem item={item.item} count={item.count} />}
                 />

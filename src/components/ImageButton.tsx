@@ -1,4 +1,4 @@
-import { Image, ImageSourcePropType, ImageStyle, Pressable, StyleProp, StyleSheet, TouchableOpacity } from 'react-native'
+import { Image, ImageSourcePropType, ImageStyle, Pressable, StyleProp, StyleSheet, TouchableOpacity, Vibration } from 'react-native'
 import React from 'react'
 
 const ImageButton = React.memo(({
@@ -12,9 +12,15 @@ const ImageButton = React.memo(({
     onPress?: () => void
     disabled?: boolean
 }) => {
+
+    function OnPress() {
+        Vibration.vibrate(50)
+        onPress && onPress()
+    }
+
     return (
-        <TouchableOpacity onPress={onPress} hitSlop={20} disabled={disabled}>
-            <Image source={src} style={imgStyle}/>
+        <TouchableOpacity onPress={OnPress} hitSlop={20} disabled={disabled}>
+            <Image source={src} style={imgStyle} />
         </TouchableOpacity>
     )
 })
