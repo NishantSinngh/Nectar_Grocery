@@ -5,19 +5,22 @@ import colors from '../constants/colors'
 import ImageButton from './ImageButton'
 import imagePath from '../assets/imagePath'
 import ButtonComp from './ButtonComp'
-import { generateUpiUrl, height } from '../helperFunctions/utils'
+import { height } from '../helperFunctions/utils'
 import DeliveryComponent from './DeliveryComponent'
 import PaymentComponent from './PaymentComponent'
 import CostComponent from './CostComponent'
+import DATA from '../constants/DATA'
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 const CheckOutModal = React.memo(({
-    isVisible,
     onClose,
 }: {
-    isVisible: boolean
     onClose: () => void
 }) => {
+
+
+    console.log(DATA);
+    
 
     const [delivery, setDelivery] = useState<'pay' | 'cod'>('pay');
     const deliveryText = delivery === 'cod' ? 'Cash On Delivery' : 'Pay Online';

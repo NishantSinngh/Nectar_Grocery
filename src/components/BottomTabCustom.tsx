@@ -83,7 +83,7 @@ const BottomTabCustom = React.memo((props: any) => {
                     })}
                 </View>
             </View>
-            {isVisible && <CheckOutModal isVisible={isVisible} onClose={() => actions.ToggleCheckoutSheet(false)} />}
+            {isVisible && <CheckOutModal onClose={() => actions.ToggleCheckoutSheet(false)} />}
         </>
     );
 });

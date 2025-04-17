@@ -1,70 +1,126 @@
-export default  [
-    // Beverages
+import imagePath from "../assets/imagePath";
+
+export default {
+  Beverages: [
     {
+      id: 1,
       name: "Diet Coke",
-      imagePath: require('./images/diet_coke.png'),
-      categories: ["beverage"]
+      path: imagePath.diet_coke,
+      cost: 40,
+      quantity: "500 mL",
     },
     {
+      id: 2,
       name: "Coke",
-      imagePath: require('./images/coke.png'),
-      categories: ["beverage"]
+      path: imagePath.coke,
+      cost: 50,
+      quantity: "500 mL",
     },
     {
+      id: 3,
       name: "Sprite",
-      imagePath: require('./images/sprite.png'),
-      categories: ["beverage"]
+      path: imagePath.sprite,
+      cost: 30,
+      quantity: "500 mL",
     },
     {
+      id: 4,
       name: "Pepsi",
-      imagePath: require('./images/pepsi.png'),
-      categories: ["beverage"]
+      path: imagePath.pepsi,
+      cost: 40,
+      quantity: "500 mL",
     },
     {
+      id: 5,
       name: "Apple Juice",
-      imagePath: require('./images/apple_juice.png'),
-      categories: ["beverage"]
+      path: imagePath.apple_juice,
+      cost: 60,
+      quantity: "1 L",
     },
     {
+      id: 6,
       name: "Orange Juice",
-      imagePath: require('./images/orage_juice.png'),
-      categories: ["beverage"]
+      path: imagePath.orange_juice,
+      cost: 70,
+      quantity: "1 L",
     },
-  
-    // Non-Veg
+  ],
+  NonVeg: [
     {
-      name: "Beef",
-      imagePath: require('./images/beef.png'),
-      categories: ["non-veg"]
-    },
-    {
+      id: 7,
       name: "Chicken",
-      imagePath: require('./images/chicken.png'),
-      categories: ["non-veg"]
+      path: imagePath.chicken,
+      cost: 90,
+      quantity: "500 g",
     },
-  
-    // Fruits
     {
+      id: 8,
+      name: "Beef",
+      path: imagePath.beef,
+      cost: 100,
+      quantity: "1 kg",
+    },
+  ],
+  Egg: [
+    {
+      id: 9,
+      name: "Egg",
+      path: imagePath.egg,
+      cost: 30,
+      quantity: "6 pcs",
+    },
+    {
+      id: 10,
+      name: "Red Egg",
+      path: imagePath.egg_red,
+      cost: 40,
+      quantity: "6 pcs",
+    },
+    {
+      id: 11,
+      name: "Egg Pasta",
+      path: imagePath.egg_pasta,
+      cost: 60,
+      quantity: "250 g",
+    },
+    {
+      id: 12,
+      name: "Egg Noodle",
+      path: imagePath.egg_noodle,
+      cost: 50,
+      quantity: "300 g",
+    },
+  ],
+  Fruits: [
+    {
+      id: 13,
       name: "Banana",
-      imagePath: require('./images/banana.png'),
-      categories: ["fruit"]
+      path: imagePath.banana,
+      cost: 20,
+      quantity: "1 kg",
     },
     {
+      id: 14,
       name: "Apple",
-      imagePath: require('./images/apple.png'),
-      categories: ["fruit"]
+      path: imagePath.apple,
+      cost: 80,
+      quantity: "1 kg",
     },
-  
-    // Veggies
+  ],
+  Veggies: [
     {
+      id: 15,
       name: "Red Capsicum",
-      imagePath: require('./images/red_capsicum.png'),
-      categories: ["vegetable"]
+      path: imagePath.red_capsicum,
+      cost: 30,
+      quantity: "500 g",
     },
     {
+      id: 16,
       name: "Ginger",
-      imagePath: require('./images/ginger.png'),
-      categories: ["vegetable"]
-    }
-  ];
-  
+      path: imagePath.ginger,
+      cost: 20,
+      quantity: "250 g",
+    },
+  ],
+};

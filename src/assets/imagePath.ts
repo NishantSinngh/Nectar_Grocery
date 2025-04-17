@@ -52,12 +52,18 @@ export default {
     beef: require('./images/beef.png'),
     chicken: require('./images/chicken.png'),
 
+    // egg
+    egg: require('./images/egg.png'),
+    egg_red: require('./images/egg_red.png'),
+    egg_pasta: require('./images/egg_pasta.png'),
+    egg_noodle: require('./images/egg_noodle.png'),
+
     // fruites
     banana: require('./images/banana.png'),
     apple: require('./images/apple.png'),
 
     // veggies
-    res_capsicum: require('./images/red_capsicum.png'),
+    red_capsicum: require('./images/red_capsicum.png'),
     ginger: require('./images/ginger.png'),
 
     // tab icons
