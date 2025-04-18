@@ -66,15 +66,14 @@ const ButtonComp = React.memo(({
       setLoading && setLoading(true);
       animatedWidth.value = withTiming(60, { duration: 300 });
       animatedRadius.value = withTiming(30, { duration: 300, })
-
+      
       setTimeout(() => {
         setLoading && setLoading(false)
         animatedWidth.value = withTiming(300, { duration: 300 });
         animatedRadius.value = withTiming(18, { duration: 300, })
+        onPress && onPress();
       }, 2000);
-
-      onPress && onPress();
-
+      
     } else {
       onPress && onPress()
     }
@@ -94,7 +93,7 @@ const ButtonComp = React.memo(({
         ) : (
           <>
             <Text style={styles.titleStyle}>{title ?? 'Button'}</Text>
-            {typeof price === 'number'  && (
+            {typeof price === 'number' && (
               <View style={styles.priceTextContainer}>
                 <Text style={styles.priceText}>₹{price}</Text>
               </View>

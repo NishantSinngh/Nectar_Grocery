@@ -1,13 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 interface ICartItem {
-    item: {
-        id: number;
-        name: string;
-        path: any;
-        cost: number;
-        quantity: string
-    };
+    item: CartItem
     count: number
 }
 
@@ -47,9 +41,21 @@ const cartSlice = createSlice({
                 }
             }
         },
+        addAllToCart: (state, action: PayloadAction<CartItem[]>) => {
+            const itemsToAdd = action.payload.map(item => ({ item, count: 1 }));
+        
+            const newItems = itemsToAdd.filter(newItem => {
+                const alreadyExists = state.some(cartItem => cartItem.item.id === newItem.item.id); // if returns false then its added --- if true drops it
+                return !alreadyExists;
+            });
+            console.log(newItems);
+            
+        
+            state.push(...newItems);
+        }
     }
 })
 
 
 export default cartSlice.reducer;
-export const { addItem, removeItem, increaseCount, decreaseCount } = cartSlice.actions
+export const { addItem, removeItem, increaseCount, decreaseCount, addAllToCart } = cartSlice.actions

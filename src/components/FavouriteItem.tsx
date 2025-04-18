@@ -7,7 +7,7 @@ const FavouriteItem = React.memo(({
     item,
     onPress,
 }: {
-    item: { id: string, name: string, quantity: string, price: string, path: any },
+    item: CartItem,
     onPress?: () => void
 }) => {
     return (
@@ -21,7 +21,7 @@ const FavouriteItem = React.memo(({
                     <Text style={styles.subText}>{item?.quantity ?? "Quantity"}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.priceText}>₹{item?.price ?? "Price"}</Text>
+                    <Text style={styles.priceText}>₹{item?.cost ?? "Price"}</Text>
                     <Image source={imagePath.right_arrow} style={{ marginLeft: 10, }} />
                 </View>
             </View>

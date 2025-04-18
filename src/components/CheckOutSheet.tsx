@@ -9,7 +9,6 @@ import { height } from '../helperFunctions/utils'
 import DeliveryComponent from './DeliveryComponent'
 import PaymentComponent from './PaymentComponent'
 import CostComponent from './CostComponent'
-import DATA from '../constants/DATA'
 import { useAppSelector } from '../redux/hooks'
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
@@ -28,6 +27,7 @@ const CheckOutModal = React.memo(({
 
     const [currentScreen, setCurrentScreen] = useState<'main' | 'delivery' | 'payment' | 'cost'>('main');
     const [loading, setLoading] = useState(false);
+    const [paymentError, setPaymentError] = useState(false);
 
     function GoToMain() {
         setCurrentScreen('main')
@@ -44,6 +44,10 @@ const CheckOutModal = React.memo(({
             default:
                 return <View />;
         }
+    }
+
+    function handlePress(){
+        setPaymentError(true)
     }
 
     return (
@@ -80,7 +84,7 @@ const CheckOutModal = React.memo(({
                     style={styles.itemContainer}
                     onPress={() => setCurrentScreen('payment')}
                 >
-                    <Text style={styles.itemText}>Payment</Text>
+                    <Text style={[styles.itemText, paymentError && { color: 'red' }]}>Payment</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Image source={imagePath.upi} style={{ marginRight: 10, height: 20, width: 40, }} />
                         <Image source={imagePath.right_arrow} />
@@ -112,6 +116,7 @@ const CheckOutModal = React.memo(({
                     isAnimated
                     loading={loading}
                     setLoading={setLoading}
+                    onPress={handlePress}
                 />
             </Animated.View>
 

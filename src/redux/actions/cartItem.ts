@@ -1,4 +1,4 @@
-import { addItem, decreaseCount, increaseCount, removeItem } from "../reducers/cartItem";
+import { addItem, decreaseCount, increaseCount, removeItem,addAllToCart } from "../reducers/cartItem";
 import store from "../store";
 
 
@@ -6,6 +6,9 @@ const { dispatch } = store
 
 export function addToCart(item: {}) {
     dispatch(addItem({ item }))
+}
+export function AddAllToCart(data: CartItem[]) {
+    dispatch(addAllToCart(data))
 }
 export function removeFromCart(id: number) {
     dispatch(removeItem({ id }))

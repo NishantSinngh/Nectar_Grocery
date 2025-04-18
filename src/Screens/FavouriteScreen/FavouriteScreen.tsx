@@ -7,66 +7,25 @@ import FavouriteItem from '../../components/FavouriteItem'
 import imagePath from '../../assets/imagePath'
 import Spacer from '../../components/Spacer'
 import ButtonComp from '../../components/ButtonComp'
+import { useAppSelector } from '../../redux/hooks'
+import DATA from '../../constants/DATA'
+import actions from '../../redux/actions'
 
 const FavouriteScreen = () => {
-    const DummyData = [
-        {
-            id: '1',
-            name: 'Sprite Can',
-            quantity: "300mL",
-            price: "20",
-            path: imagePath.sprite,
 
-        },
-        {
-            id: '2',
-            name: 'Pepsi Can',
-            quantity: "300mL",
-            price: "20",
-            path: imagePath.pepsi,
+    const favsId = useAppSelector(state => state.favSlice);
 
-        },
-        {
-            id: '3',
-            name: 'Apple & Grape Juice',
-            quantity: "2L",
-            price: "200",
-            path: imagePath.apple_juice,
+    const allItems = Object.values(DATA).flat();
+    const favsItem = favsId
+        .map(id => allItems.find(item => item.id === id))
+        .filter((item): item is CartItem => item !== undefined);
 
-        },
-        {
-            id: '4',
-            name: 'Coca Cola Can',
-            quantity: "300mL",
-            price: "20",
-            path: imagePath.coke,
+    console.log(favsItem);
 
-        },
-        {
-            id: '5',
-            name: 'Pepsi Can',
-            quantity: "300mL",
-            price: "20",
-            path: imagePath.pepsi,
+    function handlePress() {
+        actions.AddAllToCart(favsItem)
+    }
 
-        },
-        {
-            id: '6',
-            name: 'Pepsi Can',
-            quantity: "300mL",
-            price: "20",
-            path: imagePath.pepsi,
-
-        },
-        {
-            id: '7',
-            name: 'Pepsi Can',
-            quantity: "300mL",
-            price: "20",
-            path: imagePath.pepsi,
-
-        },
-    ]
     return (
         <>
             <View style={FavStyles.appContainer}>
@@ -74,17 +33,17 @@ const FavouriteScreen = () => {
                 <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                     <FlatList
                         scrollEnabled={false}
-                        data={DummyData}
+                        data={favsItem}
                         ListFooterComponent={<Spacer space={180} />}
                         ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', top: "50%" }}>
                             <Text style={{ fontSize: 24 }}>You have no favourites</Text>
                         </View>}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => String(item.id)}
                         renderItem={({ item }) => <FavouriteItem item={item} />}
                     />
                 </ScrollView>
             </View>
-            <ButtonComp title='Add All To Cart' />
+            <ButtonComp title='Add All To Cart' onPress={handlePress} />
         </>
     )
 }
