@@ -17,7 +17,10 @@ function ItemComponent({
 
     const cart = useAppSelector(state => state.cartSlice)
     const isPresent = cart.find(cart => cart.item.id === item.id)
+    const favs = useAppSelector(state => state.favSlice)
+    const isFav = favs.includes(item.id);
 
+    console.log(favs);
 
     function Increase() {
         actions.IncreaseCount(item.id)
@@ -28,9 +31,15 @@ function ItemComponent({
     function AddToCart() {
         actions.addToCart(item);
     }
+    function ToggleFav() {
+        actions.ToggleFav(item.id)
+    }
+
+
 
     return (
         <View style={styles.container} key={index}>
+            <ImageButton imgSrc={imagePath.favourite} imgStyle={[styles.favIcon, { tintColor: isFav ? 'red' : colors.grey }]} onPress={ToggleFav} />
             <Image source={item.path} style={styles.imageStyle} />
             <View style={{ marginTop: 20, marginHorizontal: 10, }}>
                 <Text style={styles.titleText}>{item?.name}</Text>
@@ -63,8 +72,8 @@ export default React.memo(ItemComponent)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        height: 220,
-        width: 150,
+        height: 230,
+        width: 160,
         backgroundColor: 'white',
         margin: 10,
         borderWidth: 1,
@@ -74,7 +83,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     imageStyle: {
-        height: 70,
+        height: 60,
         width: 90,
         marginTop: 20,
         alignSelf: 'center'
@@ -90,11 +99,10 @@ const styles = StyleSheet.create({
         textAlign: 'left'
     },
     footer: {
-        width: "89%",
+        width: "90%",
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 10,
         marginLeft: 10,
     },
     counterView: {
@@ -112,5 +120,11 @@ const styles = StyleSheet.create({
         width: 18,
         tintColor: colors.white
     },
+    favIcon: {
+        height: 20,
+        width: 20,
+        marginLeft:120,
+        marginTop:10,
+    }
 
 })
