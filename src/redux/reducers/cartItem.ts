@@ -44,7 +44,7 @@ const cartSlice = createSlice({
         addAllToCart: (state, action: PayloadAction<CartItem[]>) => {
             const itemsToAdd = action.payload.map(item => ({ item, count: 1 }));
         
-            const newItems = itemsToAdd.filter(newItem => {
+            const newItems = itemsToAdd.filter(newItem => { // true to add --- false to drop
                 const alreadyExists = state.some(cartItem => cartItem.item.id === newItem.item.id); // if returns false then its added --- if true drops it
                 return !alreadyExists;
             });
