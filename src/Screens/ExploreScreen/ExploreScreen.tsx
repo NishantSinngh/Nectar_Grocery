@@ -1,4 +1,4 @@
-import { FlatList, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Button, FlatList, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import exploreStyles from './exploreStyles'
 import AppHeader from '../../components/AppHeader'
@@ -7,8 +7,9 @@ import imagePath from '../../assets/imagePath'
 import colors from '../../constants/colors'
 import Spacer from '../../components/Spacer'
 import SearchBar from '../../components/SearchBar'
+import NavigationStrings from '../../constants/NavigationStrings'
 
-const ExploreScreen = () => {
+const ExploreScreen = ({ navigation, routes }: { navigation: any, routes: any }) => {
     const DATA = [{
         id: '1',
         title: 'Fresh Fruits & Vegetables',
@@ -50,29 +51,25 @@ const ExploreScreen = () => {
 
 
     function handleItemPress(index: number) {
-        console.log(index);
-
+        navigation.navigate(NavigationStrings.PRODUCT_SCREEN)
     }
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1, }}>
             <View style={exploreStyles.appContainer}>
                 <AppHeader mainViewStyle={{ paddingTop: 30, }} title='Find Products' />
-                <ScrollView style={{ flex: 1, }}>
                     <SearchBar />
                     <FlatList
                         data={DATA}
-                        scrollEnabled={false}
+                        keyboardDismissMode='on-drag'
+                        keyboardShouldPersistTaps='handled'
                         contentContainerStyle={{ flexGrow: 1, }}
                         ListFooterComponent={<Spacer space={120} />}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item)=> item.id}
                         style={{ flex: 1, }}
                         numColumns={2}
                         renderItem={({ item, index }) => <ExploreItem item={item} index={index} onPress={handleItemPress} />}
                     />
-                </ScrollView>
             </View>
-        </KeyboardAvoidingView>
     )
 }
 

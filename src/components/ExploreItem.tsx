@@ -12,7 +12,7 @@ const ExploreItem = React.memo(({
 }) => {
 
     return (
-        <View style={[styles.container, { borderColor: item.BorderColor, backgroundColor: item.color, }]}>
+        <View key={index} style={[styles.container, { borderColor: item.BorderColor, backgroundColor: item.color, }]}>
             <Pressable
                 onPress={() => onPress(index)}
                 style={{ ...StyleSheet.absoluteFillObject, justifyContent: 'center', alignItems: 'center' }}

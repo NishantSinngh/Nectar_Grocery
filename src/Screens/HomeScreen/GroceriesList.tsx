@@ -11,7 +11,7 @@ const GroceriesList = () => {
 
 
     return (
-        <View style={{ marginLeft: 10, }}>
+        <View style={{ marginLeft: 10, }} key={3}>
             <ScrollView horizontal>
                 {DATA.NonVeg.map((item, index) => (
                     <ItemComponent

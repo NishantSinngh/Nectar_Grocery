@@ -33,6 +33,7 @@ export default {
     phonepe: require('./images/phonepe_icon.png'),
     increase: require('./images/increase.png'),
     descrease: require('./images/decrease.png'),
+    heart_red: require('./images/heart_red.png'),
 
     // explore
     veggies_icon: require('./images/veggies_icon.png'),

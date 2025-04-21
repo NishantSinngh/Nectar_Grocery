@@ -6,4 +6,5 @@ export default {
     CART : "cart",
     FAVOURITE : "favourite",
     COMING_SOON : "comingSoon",
+    PRODUCT_SCREEN : "productScreen",
 }

@@ -9,7 +9,7 @@ const ExclusiveOfferList = () => {
 
 
     return (
-        <View style={{ marginLeft: 10, }}>
+        <View style={{ marginLeft: 10, }} key={1}>
             <ScrollView horizontal>
                 {DATA.Fruits.map((item, index) => (
                     <ItemComponent

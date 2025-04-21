@@ -48,8 +48,6 @@ const cartSlice = createSlice({
                 const alreadyExists = state.some(cartItem => cartItem.item.id === newItem.item.id); // if returns false then its added --- if true drops it
                 return !alreadyExists;
             });
-            console.log(newItems);
-            
         
             state.push(...newItems);
         }

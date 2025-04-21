@@ -4,12 +4,12 @@ import FavStyles from './FavStyles'
 import AppHeader from '../../components/AppHeader'
 import commonStyles from '../../helperFunctions/commonStyles'
 import FavouriteItem from '../../components/FavouriteItem'
-import imagePath from '../../assets/imagePath'
 import Spacer from '../../components/Spacer'
 import ButtonComp from '../../components/ButtonComp'
 import { useAppSelector } from '../../redux/hooks'
 import DATA from '../../constants/DATA'
 import actions from '../../redux/actions'
+import Animated, { ZoomIn } from 'react-native-reanimated'
 
 const FavouriteScreen = () => {
 
@@ -19,8 +19,6 @@ const FavouriteScreen = () => {
     const favsItem = favsId
         .map(id => allItems.find(item => item.id === id))
         .filter((item): item is CartItem => item !== undefined);
-
-    console.log(favsItem);
 
     function handlePress() {
         actions.AddAllToCart(favsItem)
@@ -34,10 +32,14 @@ const FavouriteScreen = () => {
                     <FlatList
                         scrollEnabled={false}
                         data={favsItem}
+                        style={{ flex: 1, }}
+                        contentContainerStyle={{ flexGrow: 1, }}
                         ListFooterComponent={<Spacer space={180} />}
-                        ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', top: "50%" }}>
-                            <Text style={{ fontSize: 24 }}>You have no favourites</Text>
-                        </View>}
+                        ListEmptyComponent={() => (
+                            <Animated.View entering={ZoomIn.springify().delay(200)} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontSize: 24 }}>You have no favourites</Text>
+                            </Animated.View>
+                        )}
                         keyExtractor={(item) => String(item.id)}
                         renderItem={({ item }) => <FavouriteItem item={item} />}
                     />

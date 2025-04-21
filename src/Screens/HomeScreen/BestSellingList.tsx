@@ -8,7 +8,7 @@ const BestSellingList = () => {
 
 
     return (
-        <View style={{ marginLeft: 10, }}>
+        <View style={{ marginLeft: 10, }} key={2}>
             <ScrollView horizontal>
                 {DATA.BestSelling.map((item, index) => (
                     <ItemComponent

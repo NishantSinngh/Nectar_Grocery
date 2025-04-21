@@ -20,8 +20,6 @@ function ItemComponent({
     const favs = useAppSelector(state => state.favSlice)
     const isFav = favs.includes(item.id);
 
-    console.log(favs);
-
     function Increase() {
         actions.IncreaseCount(item.id)
     }
@@ -39,14 +37,14 @@ function ItemComponent({
 
     return (
         <View style={styles.container} key={index}>
-            <ImageButton imgSrc={imagePath.favourite} imgStyle={[styles.favIcon, { tintColor: isFav ? 'red' : colors.grey }]} onPress={ToggleFav} />
+            <ImageButton imgSrc={isFav ? imagePath.heart_red : imagePath.favourite} imgStyle={[styles.favIcon]} onPress={ToggleFav} vibrate />
             <Image source={item.path} style={styles.imageStyle} />
             <View style={{ marginTop: 20, marginHorizontal: 10, }}>
-                <Text style={styles.titleText}>{item?.name}</Text>
-                <Text style={styles.quantityText}>{item?.quantity}</Text>
+                <Text style={styles.titleText}>{item?.name ?? ''}</Text>
+                <Text style={styles.quantityText}>{item?.quantity ?? ''}</Text>
             </View>
             <View style={styles.footer}>
-                <Text style={{ fontSize: 18, fontWeight: '600' }}>₹{item?.cost}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '600' }}>₹{item?.cost ?? ''}</Text>
                 {!isPresent ? <ImageButton imgSrc={imagePath.add} onPress={AddToCart} vibrate /> :
                     <View style={styles.counterView}>
                         <ImageButton
@@ -55,7 +53,7 @@ function ItemComponent({
                             onPress={Decrease}
                             vibrate
                         />
-                        <Text style={{ color: colors.white }}>{isPresent?.count}</Text>
+                        <Text style={{ color: colors.white }}>{isPresent?.count ?? ''}</Text>
                         <ImageButton
                             imgSrc={imagePath.increase}
                             imgStyle={styles.counterImage}
@@ -74,7 +72,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 230,
         width: 160,
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         margin: 10,
         borderWidth: 1,
         borderColor: colors.grey1,
@@ -123,8 +121,8 @@ const styles = StyleSheet.create({
     favIcon: {
         height: 20,
         width: 20,
-        marginLeft:120,
-        marginTop:10,
+        marginLeft: 120,
+        marginTop: 10,
     }
 
 })
