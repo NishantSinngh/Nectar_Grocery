@@ -29,17 +29,17 @@ const HomeScreen = () => {
                 <SearchBar />
                 <View style={homeStyles.offerContainer} >
                     <Text style={homeStyles.headingText}>Exclusive Offer</Text>
-                    <Text style={homeStyles.seeAllText}>See all</Text>
+                    {/* <Text style={homeStyles.seeAllText}>See all</Text> */}
                 </View>
                 <ExclusiveOfferList />
                 <View style={homeStyles.offerContainer} >
                     <Text style={homeStyles.headingText}>Best Selling</Text>
-                    <Text style={homeStyles.seeAllText}>See all</Text>
+                    {/* <Text style={homeStyles.seeAllText}>See all</Text> */}
                 </View>
                 <BestSellingList />
                 <View style={homeStyles.offerContainer} >
                     <Text style={homeStyles.headingText}>Groceries </Text>
-                    <Text style={homeStyles.seeAllText}>See all</Text>
+                    {/* <Text style={homeStyles.seeAllText}>See all</Text> */}
                 </View>
                 <ScrollView horizontal contentContainerStyle={{ flexGrow: 1,marginTop:10, }} >
                     <ImageButton imgSrc={imagePath.pulses} imgStyle={{ marginRight: 10, marginLeft: 20, }} />

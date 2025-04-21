@@ -50,7 +50,7 @@ const ProductScreen = (props: any) => {
                 contentContainerStyle={{ flexGrow: 1, }}
                 ListEmptyComponent={() => (
                     <Animated.View entering={ZoomIn.springify().delay(200)} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 24 }}>No items available</Text>
+                        <Text style={{ fontSize: 24 }}>Product unavailable</Text>
                     </Animated.View>
                 )}
                 removeClippedSubviews={false}
