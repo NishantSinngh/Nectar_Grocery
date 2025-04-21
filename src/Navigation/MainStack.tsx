@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator()
 const MainStack = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Navigator screenOptions={{ headerShown: false, animation:'ios_from_right', }}>
                 <Stack.Screen name={NavigationStrings.BOTTOM_TABS} component={BottomTabs} />
                 <Stack.Screen name={NavigationStrings.PRODUCT_SCREEN} component={ProductScreen} />
             </Stack.Navigator>

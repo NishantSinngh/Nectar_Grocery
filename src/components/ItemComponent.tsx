@@ -69,7 +69,6 @@ export default React.memo(ItemComponent)
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         height: 230,
         width: 160,
         backgroundColor: colors.white,

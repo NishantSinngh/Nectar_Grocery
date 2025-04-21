@@ -9,7 +9,8 @@ import Spacer from '../../components/Spacer'
 import SearchBar from '../../components/SearchBar'
 import NavigationStrings from '../../constants/NavigationStrings'
 
-const ExploreScreen = ({ navigation, routes }: { navigation: any, routes: any }) => {
+const ExploreScreen = (props: any) => {
+    const { navigation } = props
     const DATA = [{
         id: '1',
         title: 'Fresh Fruits & Vegetables',
@@ -49,28 +50,32 @@ const ExploreScreen = ({ navigation, routes }: { navigation: any, routes: any })
     },]
 
 
-
-    function handleItemPress(index: number) {
-        navigation.navigate(NavigationStrings.PRODUCT_SCREEN)
+    function handleItemPress(id: string) {
+        const item = DATA.find(item => item.id === id);
+        const title = item ? item.title : 'Not Found';
+        navigation.navigate(NavigationStrings.PRODUCT_SCREEN, { header: title })
     }
 
     return (
-            <View style={exploreStyles.appContainer}>
-                <AppHeader mainViewStyle={{ paddingTop: 30, }} title='Find Products' />
-                    <SearchBar />
-                    <FlatList
-                        data={DATA}
-                        keyboardDismissMode='on-drag'
-                        keyboardShouldPersistTaps='handled'
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{ flexGrow: 1, }}
-                        ListFooterComponent={<Spacer space={120} />}
-                        keyExtractor={(item)=> item.id}
-                        style={{ flex: 1, }}
-                        numColumns={2}
-                        renderItem={({ item, index }) => <ExploreItem item={item} index={index} onPress={handleItemPress} />}
-                    />
-            </View>
+        <View style={exploreStyles.appContainer}>
+            <AppHeader mainViewStyle={{ paddingTop: 30, }} title='Find Products' />
+            <SearchBar />
+            <FlatList
+                data={DATA}
+                keyboardDismissMode='on-drag'
+                keyboardShouldPersistTaps='handled'
+                showsVerticalScrollIndicator={false}
+                style={{ flex: 1, }}
+                removeClippedSubviews={false}
+                contentContainerStyle={{ flexGrow: 1, }}
+                ListFooterComponent={<Spacer space={120} />}
+                keyExtractor={(item) => item.id}
+                numColumns={2}
+                renderItem={({ item, index }) => <View style={{ flex: 1, alignItems: 'center' }}>
+                    <ExploreItem item={item} onPress={handleItemPress} />
+                </View>}
+            />
+        </View>
     )
 }
 

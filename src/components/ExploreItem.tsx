@@ -1,20 +1,19 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { width } from '../helperFunctions/utils'
 
 const ExploreItem = React.memo(({
     item,
-    index,
     onPress
 }: {
     item: { id: string, title: string, path: any, color: string, BorderColor: string }
-    index: number
-    onPress: (index: number) => void
+    onPress: (id: string) => void
 }) => {
 
     return (
-        <View key={index} style={[styles.container, { borderColor: item.BorderColor, backgroundColor: item.color, }]}>
+        <View style={[styles.container, { borderColor: item.BorderColor, backgroundColor: item.color, }]}>
             <Pressable
-                onPress={() => onPress(index)}
+                onPress={() => onPress(item.id)}
                 style={{ ...StyleSheet.absoluteFillObject, justifyContent: 'center', alignItems: 'center' }}
                 android_ripple={{ color: item.color }}>
                 <Image source={item.path} style={{ alignSelf: 'center' }} />
@@ -28,7 +27,7 @@ export default ExploreItem
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: width * 0.46,
         justifyContent: 'center',
         alignItems: 'center',
         height: 200,
