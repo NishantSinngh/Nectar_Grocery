@@ -62,6 +62,7 @@ const ExploreScreen = ({ navigation, routes }: { navigation: any, routes: any })
                         data={DATA}
                         keyboardDismissMode='on-drag'
                         keyboardShouldPersistTaps='handled'
+                        showsVerticalScrollIndicator={false}
                         contentContainerStyle={{ flexGrow: 1, }}
                         ListFooterComponent={<Spacer space={120} />}
                         keyExtractor={(item)=> item.id}

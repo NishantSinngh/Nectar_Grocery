@@ -17,7 +17,7 @@ const HomeScreen = () => {
 
     return (
 
-        <ScrollView style={{ flex: 1, flexGrow: 1, }} keyboardDismissMode='on-drag' keyboardShouldPersistTaps='handled' >
+        <ScrollView style={{ flex: 1, flexGrow: 1, }} keyboardDismissMode='on-drag' keyboardShouldPersistTaps='handled' showsVerticalScrollIndicator={false} >
             <View style={homeStyles.appContainer}>
                 <View style={homeStyles.headerStyle}>
                     <Image source={imagePath.carrot} />
