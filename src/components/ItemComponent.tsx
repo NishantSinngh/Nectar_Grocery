@@ -37,7 +37,13 @@ function ItemComponent({
 
     return (
         <View style={styles.container} key={index}>
-            <ImageButton imgSrc={isFav ? imagePath.heart_red : imagePath.favourite} imgStyle={[styles.favIcon]} onPress={ToggleFav} vibrate />
+            <View style={{ width: '90%', alignItems: 'flex-end' }}>
+                <ImageButton
+                    imgSrc={isFav ? imagePath.heart_red : imagePath.favourite}
+                    imgStyle={[styles.favIcon]}
+                    onPress={ToggleFav}
+                    vibrate />
+            </View>
             <Image source={item.path} style={styles.imageStyle} />
             <View style={{ marginTop: 20, marginHorizontal: 10, }}>
                 <Text style={styles.titleText}>{item?.name ?? ''}</Text>
@@ -120,7 +126,6 @@ const styles = StyleSheet.create({
     favIcon: {
         height: 20,
         width: 20,
-        marginLeft: 120,
         marginTop: 10,
     }
 
