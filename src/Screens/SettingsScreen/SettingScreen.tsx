@@ -34,13 +34,13 @@ const SettingScreen = () => {
                     />
                 </View>
 
-                <View style={settingsStyle.sliderContainer}>
+                {/* <View style={settingsStyle.sliderContainer}>
                     <Image source={imagePath.darkMode} style={{ height: 20, width: 20, transform: [{ scale: 1.5 }] }} />
                     <View style={settingsStyle.innerContainer}>
                         <Text style={settingsStyle.text}>Dark Mode</Text>
                     </View>
                     <Slider />
-                </View>
+                </View> */}
 
                 <Pressable
                     style={settingsStyle.logOutButton}

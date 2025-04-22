@@ -5,7 +5,7 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: colors.white,
         justifyContent: 'flex-start',
-        paddingBottom: 100,
+        paddingBottom: 200,
     },
     headerContent: {
         flexDirection: 'row',
