@@ -28,4 +28,8 @@ export default {
 
     blueBorder: "rgba(183,223,245,0.7)",
     blueOpacity: "rgba(183,223,245,0.1)",
+
+    bgGrey : '#121212',
+    cardGrey:'#1E1E1E',
+    
 }

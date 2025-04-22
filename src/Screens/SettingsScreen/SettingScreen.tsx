@@ -5,6 +5,7 @@ import ImageButton from '../../components/ImageButton'
 import settingsStyle from './settings.style'
 import SettingsItem from '../../components/SettingsItem'
 import SettingsList from './SettingsList'
+import Slider from '../../components/Slider'
 
 
 const SettingScreen = () => {
@@ -32,6 +33,15 @@ const SettingScreen = () => {
                         renderItem={({ item }: { item: { id: string, title: string, path: any } }) => <SettingsItem item={item} />}
                     />
                 </View>
+
+                <View style={settingsStyle.sliderContainer}>
+                    <Image source={imagePath.darkMode} style={{ height: 20, width: 20, transform: [{ scale: 1.5 }] }} />
+                    <View style={settingsStyle.innerContainer}>
+                        <Text style={settingsStyle.text}>Dark Mode</Text>
+                    </View>
+                    <Slider />
+                </View>
+
                 <Pressable
                     style={settingsStyle.logOutButton}
                     onPress={() => console.log('Log Out')}

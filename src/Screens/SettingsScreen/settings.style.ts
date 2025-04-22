@@ -57,5 +57,24 @@ export default StyleSheet.create({
         fontWeight: '600',
         textAlign: 'center',
         textAlignVertical: 'center',
-    }
+    },
+    sliderContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.grey1,
+    },
+    text: {
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    innerContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginLeft: 20,
+    },
 })

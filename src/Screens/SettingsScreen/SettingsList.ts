@@ -17,10 +17,6 @@ export default [{
     title: 'Payment Methods',
     path: imagePath.payment_card,
 }, {
-    id: '5',
-    title: 'Promo Card',
-    path: imagePath.promo_card,
-}, {
     id: '6',
     title: 'Notifications',
     path: imagePath.bell,
