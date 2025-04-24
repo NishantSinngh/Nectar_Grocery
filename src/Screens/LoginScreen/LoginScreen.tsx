@@ -1,0 +1,46 @@
+import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import imagePath from '../../assets/imagePath'
+import Spacer from '../../components/Spacer'
+import loginStyles from './login.styles'
+import colors from '../../constants/colors'
+import TextInputWithLabel from '../../components/TextInputWithLabel'
+import ButtonComp from '../../components/ButtonComp'
+import NavigationStrings from '../../constants/NavigationStrings'
+
+const LoginScreen = (props: any) => {
+  const { navigation } = props;
+
+  return (
+    <ScrollView
+      style={{ flex: 1, backgroundColor: colors.white }}
+      contentContainerStyle={{ flexGrow: 1, }}
+      keyboardDismissMode='interactive'
+      keyboardShouldPersistTaps='handled'>
+      <ImageBackground source={imagePath.blur_background} style={loginStyles.topBG} resizeMode='cover' />
+      <Image source={imagePath.carrot} style={{ alignSelf: 'center', marginTop: 50, }} />
+
+      <Spacer space={100} />
+      <View style={loginStyles.headerContainer}>
+        <Text style={loginStyles.loginText}>Login</Text>
+        <Text style={loginStyles.text2}>Enter your email and password</Text>
+      </View>
+      <Spacer space={20} />
+      <TextInputWithLabel />
+      <TextInputWithLabel />
+
+      <View style={loginStyles.fpContainer}>
+        <Text style={loginStyles.fpText}>Forgot Password?</Text>
+      </View>
+
+      <ButtonComp title='Login' onPress={() => navigation.navigate(NavigationStrings.BOTTOM_TABS)} mainViewStyle={loginStyles.button} />
+      <View style={loginStyles.footerContainer} >
+        <Text>Don't have an account? </Text>
+        <Text style={loginStyles.signupText}>Signup</Text>
+      </View>
+
+    </ScrollView>
+  )
+}
+
+export default LoginScreen
