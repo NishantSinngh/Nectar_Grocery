@@ -7,7 +7,7 @@ import TextInputWithLabel from '../../components/TextInputWithLabel'
 import ButtonComp from '../../components/ButtonComp'
 import NavigationStrings from '../../constants/NavigationStrings'
 import signupStyle from './signup.style'
-
+// previous push by wrong account
 const LoginScreen = (props: any) => {
   const { navigation } = props;
 
