@@ -11,6 +11,10 @@ import NavigationStrings from '../../constants/NavigationStrings'
 const LoginScreen = (props: any) => {
   const { navigation } = props;
 
+  function NavigateToSingup() {
+    navigation.navigate(NavigationStrings.SIGNUP)
+  }
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.white }}
@@ -35,8 +39,8 @@ const LoginScreen = (props: any) => {
 
       <ButtonComp title='Login' onPress={() => navigation.navigate(NavigationStrings.BOTTOM_TABS)} mainViewStyle={loginStyles.button} />
       <View style={loginStyles.footerContainer} >
-        <Text>Don't have an account? </Text>
-        <Text style={loginStyles.signupText}>Signup</Text>
+        <Text style={loginStyles.footerText}>Don't have an account? </Text>
+        <Text onPress={NavigateToSingup} style={loginStyles.signupText}>Signup</Text>
       </View>
 
     </ScrollView>

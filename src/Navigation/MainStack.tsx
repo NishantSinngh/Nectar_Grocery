@@ -14,6 +14,7 @@ const MainStack = () => {
             <Stack.Navigator initialRouteName={NavigationStrings.LOGIN} screenOptions={{ headerShown: false, animation: 'ios_from_right' }}>
                 <Stack.Screen name={NavigationStrings.BOTTOM_TABS} component={BottomTabs} />
                 <Stack.Screen name={NavigationStrings.LOGIN} component={LoginScreen} />
+                <Stack.Screen name={NavigationStrings.SIGNUP} component={SignupScreen} />
                 <Stack.Screen options={{ presentation: 'containedTransparentModal' }} name={NavigationStrings.PRODUCT_SCREEN} component={ProductScreen} />
             </Stack.Navigator>
         </NavigationContainer>

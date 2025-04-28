@@ -21,15 +21,15 @@ export default StyleSheet.create({
         color: colors.grey
     },
     fpContainer: {
-        alignSelf: 'flex-end',
         marginHorizontal: 20,
     },
     fpText: {
-        fontWeight: '300'
+        fontWeight: '400',
+        color: colors.grey
     },
     button: {
         position: 'relative',
-        top: 40,
+        top: 30,
     },
     footerContainer: {
         flexDirection: 'row',
