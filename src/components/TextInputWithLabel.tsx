@@ -1,24 +1,52 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
-import React from 'react'
+import { NativeSyntheticEvent, ReturnKeyTypeOptions, StyleSheet, Text, TextInput, TextInputSubmitEditingEventData, View } from 'react-native'
+import React, { Ref, useState } from 'react'
 import colors from '../constants/colors'
 import ImageButton from './ImageButton'
 import imagePath from '../assets/imagePath'
 
-const TextInputWithLabel = () => {
+const TextInputWithLabel = ({
+    reference,
+    secure = false,
+    label = '',
+    placeholder = '',
+    returnType = 'done',
+    onSubmitEditing,
+}: {
+    reference?: Ref<TextInput>
+    secure?: boolean
+    label: string,
+    placeholder: string,
+    returnType?: ReturnKeyTypeOptions
+    onSubmitEditing?: (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void
+}) => {
+
+    const [getShow, setShow] = useState(secure);
+    const [isFocused, setIsFocused] = useState(false);
+
+
     return (
         <View style={styles.conatiner}>
             <View style={styles.labelConatiner}>
-                <Text style={styles.labelText}>Label</Text>
+                <Text style={styles.labelText}>{label}</Text>
             </View>
             <View style={styles.inputContainer}>
                 <TextInput
-                    placeholder='placeholder'
-                    style={[styles.inputStyle]}
+                    ref={reference}
+                    placeholder={placeholder}
+                    style={[[styles.inputStyle, isFocused && { borderBottomColor: colors.black }]]}
                     cursorColor={colors.grey}
-                    multiline
-
+                    placeholderTextColor={colors.grey}
+                    secureTextEntry={getShow}
+                    onBlur={() => setIsFocused(false)}
+                    onFocus={() => setIsFocused(true)}
+                    onSubmitEditing={onSubmitEditing}
+                    returnKeyType={returnType}
                 />
-                <ImageButton imgSrc={imagePath.eye_close} imgStyle={{ right: 30, height: 24, width: 24, }} onPress={() => console.log('kjsjhsjhshjsddhj')} />
+                {secure && <ImageButton
+                    imgSrc={getShow ? imagePath.eye_close : imagePath.eye_open}
+                    imgStyle={{ right: 30, height: 24, width: 24, }}
+                    onPress={() => setShow(!getShow)}
+                />}
             </View>
         </View>
     )
@@ -55,7 +83,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         // backgroundColor: 'red',
         borderBottomWidth: 1,
-        paddingRight:30,
+        paddingRight: 30,
         borderBottomColor: colors.grey1
     }
 })

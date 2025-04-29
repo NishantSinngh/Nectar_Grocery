@@ -1,5 +1,5 @@
-import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useRef } from 'react'
 import imagePath from '../../assets/imagePath'
 import Spacer from '../../components/Spacer'
 import loginStyles from './login.styles'
@@ -14,6 +14,9 @@ const LoginScreen = (props: any) => {
   function NavigateToSingup() {
     navigation.navigate(NavigationStrings.SIGNUP)
   }
+
+  const emailRef = useRef<TextInput>(null)
+  const passwordRef = useRef<TextInput>(null)
 
   return (
     <ScrollView
@@ -30,14 +33,32 @@ const LoginScreen = (props: any) => {
         <Text style={loginStyles.text2}>Enter your email and password</Text>
       </View>
       <Spacer space={20} />
-      <TextInputWithLabel />
-      <TextInputWithLabel />
+
+
+      <TextInputWithLabel
+        label='Email'
+        placeholder='Enter your email'
+        reference={emailRef}
+        onSubmitEditing={() => passwordRef.current?.focus()}
+        returnType='next'
+      />
+      <TextInputWithLabel
+        placeholder='Enter your password'
+        label='Password'
+        reference={passwordRef}
+        secure
+      />
+
 
       <View style={loginStyles.fpContainer}>
         <Text style={loginStyles.fpText}>Forgot Password?</Text>
       </View>
 
-      <ButtonComp title='Login' onPress={() => navigation.navigate(NavigationStrings.BOTTOM_TABS)} mainViewStyle={loginStyles.button} />
+      <ButtonComp
+        title='Login'
+        onPress={() => navigation.navigate(NavigationStrings.BOTTOM_TABS)}
+        mainViewStyle={loginStyles.button}
+      />
       <View style={loginStyles.footerContainer} >
         <Text style={loginStyles.footerText}>Don't have an account? </Text>
         <Text onPress={NavigateToSingup} style={loginStyles.signupText}>Signup</Text>

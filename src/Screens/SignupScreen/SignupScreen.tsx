@@ -1,5 +1,5 @@
-import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useRef } from 'react'
 import imagePath from '../../assets/imagePath'
 import Spacer from '../../components/Spacer'
 import colors from '../../constants/colors'
@@ -10,6 +10,20 @@ import signupStyle from './signup.style'
 // previous push by wrong account
 const LoginScreen = (props: any) => {
   const { navigation } = props;
+
+
+  const emailRef = useRef<TextInput>(null)
+  const passwordRef = useRef<TextInput>(null)
+  const usernameRef = useRef<TextInput>(null)
+
+
+  function handleValidation() {
+
+  }
+
+
+
+
 
   return (
     <ScrollView
@@ -26,9 +40,28 @@ const LoginScreen = (props: any) => {
         <Text style={signupStyle.text2}>Enter your email and password</Text>
       </View>
       <Spacer space={20} />
-      <TextInputWithLabel />
-      <TextInputWithLabel />
-      <TextInputWithLabel />
+
+
+      <TextInputWithLabel
+        placeholder='Enter your name  '
+        label='Username'
+        reference={usernameRef}
+        onSubmitEditing={() => emailRef.current?.focus()}
+        returnType='next'
+      />
+      <TextInputWithLabel
+        label='Email'
+        placeholder='Enter your email'
+        reference={emailRef}
+        onSubmitEditing={() => passwordRef.current?.focus()}
+        returnType='next'
+      />
+      <TextInputWithLabel
+        placeholder='Enter your password'
+        label='Password'
+        reference={passwordRef}
+        secure
+      />
 
       <View style={signupStyle.fpContainer}>
         <Text style={signupStyle.fpText}>By Continuing you agree to our
@@ -39,8 +72,9 @@ const LoginScreen = (props: any) => {
       </View>
 
       <ButtonComp
-        title='Login'
-        onPress={() => navigation.navigate(NavigationStrings.BOTTOM_TABS)}
+        title='Sign Up'
+        // onPress={() => navigation.navigate(NavigationStrings.BOTTOM_TABS)}
+        onPress={handleValidation}
         mainViewStyle={signupStyle.button}
       />
       <View style={signupStyle.footerContainer} >
