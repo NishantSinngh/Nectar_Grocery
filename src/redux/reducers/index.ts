@@ -3,6 +3,7 @@ import checkOutSheet from "./checkOutSheet";
 import cartSlice from './cartItem'
 import favSlice from './favs'
 import darkModeSlice from './darkMode'
+import authSlice from './auth'
 
 
 export default combineReducers({
@@ -10,4 +11,5 @@ export default combineReducers({
     cartSlice,
     favSlice,
     darkModeSlice,
+    authSlice,
 })

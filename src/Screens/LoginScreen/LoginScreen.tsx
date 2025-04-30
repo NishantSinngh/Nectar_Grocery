@@ -8,6 +8,7 @@ import TextInputWithLabel from '../../components/TextInputWithLabel'
 import ButtonComp from '../../components/ButtonComp'
 import NavigationStrings from '../../constants/NavigationStrings'
 import { guestLogin, login } from '../../helperFunctions/auth'
+import actions from '../../redux/actions'
 
 const LoginScreen = (props: any) => {
   const { navigation } = props;
@@ -22,7 +23,8 @@ const LoginScreen = (props: any) => {
   }
 
   function handleLogin() {
-    login(email,password)
+    actions
+      .userLogin(email, password)
   }
 
 

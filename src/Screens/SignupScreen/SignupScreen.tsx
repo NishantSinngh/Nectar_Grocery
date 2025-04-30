@@ -9,7 +9,8 @@ import NavigationStrings from '../../constants/NavigationStrings'
 import app from '@react-native-firebase/app';
 import signupStyle from './signup.style'
 import { signup } from '../../helperFunctions/auth'
-// previous push by wrong account
+import actions from '../../redux/actions'
+
 const LoginScreen = (props: any) => {
   const { navigation } = props;
 
@@ -25,7 +26,7 @@ const LoginScreen = (props: any) => {
 
 
   function handleValidation() {
-    signup(name, email, password)
+    actions.userSignUp(name, email, password)
   }
 
   return (

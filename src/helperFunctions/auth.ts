@@ -1,26 +1,25 @@
 
 import auth from '@react-native-firebase/auth'
 
-export function login(email: string, password: string) {
-    auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((res) => console.log(res?.user))
-        .catch((error) => console.error(error))
+export async function login(email: string, password: string) {
+    return new Promise((resolve, reject) => {
+        auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(res => resolve(res))
+            .catch(error => reject(error))
+    })
 }
 
 
-export function signup(name: string, email: string, password: string) {
-    auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(async res => {
-            await res.user.updateProfile({ displayName: name })
-            await res.user.reload()
-            return auth().currentUser?.displayName
-        })
-        .then(name => console.log('User created with display name', name))
-        .catch(error => console.error(error))
-}
+export async function signup(email: string, password: string) {
+    return new Promise((resolve, reject) => {
+        auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(res => resolve(res))
+            .catch(error => reject(error))
+    })
 
+}
 
 
 export async function guestLogin() {
