@@ -1,5 +1,5 @@
 import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import imagePath from '../../assets/imagePath'
 import Spacer from '../../components/Spacer'
 import loginStyles from './login.styles'
@@ -7,16 +7,24 @@ import colors from '../../constants/colors'
 import TextInputWithLabel from '../../components/TextInputWithLabel'
 import ButtonComp from '../../components/ButtonComp'
 import NavigationStrings from '../../constants/NavigationStrings'
+import { guestLogin, login } from '../../helperFunctions/auth'
 
 const LoginScreen = (props: any) => {
   const { navigation } = props;
+
+  const emailRef = useRef<TextInput>(null)
+  const passwordRef = useRef<TextInput>(null)
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
 
   function NavigateToSingup() {
     navigation.navigate(NavigationStrings.SIGNUP)
   }
 
-  const emailRef = useRef<TextInput>(null)
-  const passwordRef = useRef<TextInput>(null)
+  function handleLogin() {
+    login(email,password)
+  }
+
 
   return (
     <ScrollView
@@ -39,12 +47,18 @@ const LoginScreen = (props: any) => {
         label='Email'
         placeholder='Enter your email'
         reference={emailRef}
+        onSetData={(email: React.SetStateAction<string>) => {
+          setEmail(email)
+        }}
         onSubmitEditing={() => passwordRef.current?.focus()}
         returnType='next'
       />
       <TextInputWithLabel
         placeholder='Enter your password'
         label='Password'
+        onSetData={(password: React.SetStateAction<string>) => {
+          setPassword(password)
+        }}
         reference={passwordRef}
         secure
       />
@@ -56,7 +70,7 @@ const LoginScreen = (props: any) => {
 
       <ButtonComp
         title='Login'
-        onPress={() => navigation.navigate(NavigationStrings.BOTTOM_TABS)}
+        onPress={handleLogin}
         mainViewStyle={loginStyles.button}
       />
       <View style={loginStyles.footerContainer} >

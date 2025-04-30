@@ -1,12 +1,14 @@
 import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import imagePath from '../../assets/imagePath'
 import Spacer from '../../components/Spacer'
 import colors from '../../constants/colors'
 import TextInputWithLabel from '../../components/TextInputWithLabel'
 import ButtonComp from '../../components/ButtonComp'
 import NavigationStrings from '../../constants/NavigationStrings'
+import app from '@react-native-firebase/app';
 import signupStyle from './signup.style'
+import { signup } from '../../helperFunctions/auth'
 // previous push by wrong account
 const LoginScreen = (props: any) => {
   const { navigation } = props;
@@ -16,14 +18,15 @@ const LoginScreen = (props: any) => {
   const passwordRef = useRef<TextInput>(null)
   const usernameRef = useRef<TextInput>(null)
 
+  const [name, setName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+
+
 
   function handleValidation() {
-
+    signup(name, email, password)
   }
-
-
-
-
 
   return (
     <ScrollView
@@ -46,6 +49,9 @@ const LoginScreen = (props: any) => {
         placeholder='Enter your name  '
         label='Username'
         reference={usernameRef}
+        onSetData={(name: React.SetStateAction<string>) => {
+          setName(name)
+        }}
         onSubmitEditing={() => emailRef.current?.focus()}
         returnType='next'
       />
@@ -53,12 +59,18 @@ const LoginScreen = (props: any) => {
         label='Email'
         placeholder='Enter your email'
         reference={emailRef}
+        onSetData={(email: React.SetStateAction<string>) => {
+          setEmail(email)
+        }}
         onSubmitEditing={() => passwordRef.current?.focus()}
         returnType='next'
       />
       <TextInputWithLabel
         placeholder='Enter your password'
         label='Password'
+        onSetData={(password: React.SetStateAction<string>) => {
+          setPassword(password)
+        }}
         reference={passwordRef}
         secure
       />

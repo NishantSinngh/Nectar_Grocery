@@ -9,6 +9,7 @@ const TextInputWithLabel = ({
     secure = false,
     label = '',
     placeholder = '',
+    onSetData,
     returnType = 'done',
     onSubmitEditing,
 }: {
@@ -16,6 +17,7 @@ const TextInputWithLabel = ({
     secure?: boolean
     label: string,
     placeholder: string,
+    onSetData?: any;
     returnType?: ReturnKeyTypeOptions
     onSubmitEditing?: (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void
 }) => {
@@ -39,6 +41,11 @@ const TextInputWithLabel = ({
                     secureTextEntry={getShow}
                     onBlur={() => setIsFocused(false)}
                     onFocus={() => setIsFocused(true)}
+                    onChangeText={textIn => {
+                        const trimmedText = textIn.replace(/^[\s]+/g, '');
+                        const formattedText = trimmedText.replace(/[ ]+/g, ' ');
+                        onSetData(formattedText);
+                      }}
                     onSubmitEditing={onSubmitEditing}
                     returnKeyType={returnType}
                 />
