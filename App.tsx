@@ -1,22 +1,23 @@
-import { View, Text, SafeAreaView, StatusBar } from 'react-native'
+import { StatusBar } from 'react-native'
 import React, { useEffect } from 'react'
-import { SettingScreen } from './src/Screens'
-import MainStack from './src/Navigation/MainStack'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import store from './src/redux/store'
 import BootSplash from "react-native-bootsplash";
+import { RootSiblingParent } from 'react-native-root-siblings'
+import Routes from './src/Navigation/Routes'
 const App = () => {
 
-  useEffect(()=>{
+  useEffect(() => {
     BootSplash.hide({ fade: true });
-  },[])
+  }, [])
 
   return (
-    <Provider store={store}>
-      <MainStack />
-      <StatusBar translucent backgroundColor={"transparent"} barStyle={'dark-content'} />
-    </Provider>
+    <RootSiblingParent>
+      <Provider store={store}>
+        <Routes />
+        <StatusBar translucent backgroundColor={"transparent"} barStyle={'dark-content'} />
+      </Provider>
+    </RootSiblingParent>
   )
 }
 

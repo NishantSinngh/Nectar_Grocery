@@ -5,11 +5,10 @@ import Spacer from '../../components/Spacer'
 import colors from '../../constants/colors'
 import TextInputWithLabel from '../../components/TextInputWithLabel'
 import ButtonComp from '../../components/ButtonComp'
-import NavigationStrings from '../../constants/NavigationStrings'
-import app from '@react-native-firebase/app';
 import signupStyle from './signup.style'
-import { signup } from '../../helperFunctions/auth'
 import actions from '../../redux/actions'
+import validation from '../../helperFunctions/validation'
+import { showToast } from '../../components/Toast'
 
 const LoginScreen = (props: any) => {
   const { navigation } = props;
@@ -23,19 +22,50 @@ const LoginScreen = (props: any) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
+  const [nameError, setNameError] = useState<string>('')
+  const [emailError, setEmailError] = useState<string>('')
+  const [passwordError, setPasswordError] = useState<string>('')
 
+  const [loading, setLoading] = useState<boolean>(false)
 
   function handleValidation() {
-    actions.userSignUp(name, email, password)
+    setNameError('');
+    setEmailError('');
+    setPasswordError('')
+
+    let emailError = validation({
+      email: email.toString().trim().toLowerCase(),
+    });
+    let nameError = validation({
+      name: name.toString().trim().toLowerCase(),
+    });
+
+    let passwordError = validation({ password: password.toString().trim() });
+    if (!!emailError || !!passwordError || !!nameError) {
+      setNameError(!!nameError ? nameError.toString() : '');
+      setEmailError(!!emailError ? emailError.toString() : '');
+      setPasswordError(!!passwordError ? passwordError.toString() : '');
+    } else {
+      setLoading(true)
+      actions.userSignUp(name, email, password)
+        .catch(error => {
+          console.log('error=====>', error);
+          showToast(error?.message || 'Something went wrong')
+        })
+        .finally(() => {
+          setLoading(false)
+        });
+    }
   }
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.white }}
+      style={{ flex: 1 }}
       contentContainerStyle={{ flexGrow: 1, }}
+      showsVerticalScrollIndicator={false}
       keyboardDismissMode='interactive'
       keyboardShouldPersistTaps='handled'>
-      <ImageBackground source={imagePath.blur_background} style={signupStyle.topBG} resizeMode='cover' />
+      {/* <ImageBackground source={imagePath.blur_background} style={signupStyle.topBG} resizeMode='cover' /> */}
       <Image source={imagePath.carrot} style={{ alignSelf: 'center', marginTop: 50, }} />
 
       <Spacer space={100} />
@@ -50,8 +80,10 @@ const LoginScreen = (props: any) => {
         placeholder='Enter your name  '
         label='Username'
         reference={usernameRef}
+        error={nameError}
         onSetData={(name: React.SetStateAction<string>) => {
           setName(name)
+          setNameError('')
         }}
         onSubmitEditing={() => emailRef.current?.focus()}
         returnType='next'
@@ -60,8 +92,10 @@ const LoginScreen = (props: any) => {
         label='Email'
         placeholder='Enter your email'
         reference={emailRef}
+        error={emailError}
         onSetData={(email: React.SetStateAction<string>) => {
           setEmail(email)
+          setEmailError('')
         }}
         onSubmitEditing={() => passwordRef.current?.focus()}
         returnType='next'
@@ -69,10 +103,12 @@ const LoginScreen = (props: any) => {
       <TextInputWithLabel
         placeholder='Enter your password'
         label='Password'
+        reference={passwordRef}
+        error={passwordError}
         onSetData={(password: React.SetStateAction<string>) => {
           setPassword(password)
+          setPasswordError('')
         }}
-        reference={passwordRef}
         secure
       />
 
@@ -86,15 +122,17 @@ const LoginScreen = (props: any) => {
 
       <ButtonComp
         title='Sign Up'
-        // onPress={() => navigation.navigate(NavigationStrings.BOTTOM_TABS)}
+        isAnimated
+        loading={loading}
         onPress={handleValidation}
+
         mainViewStyle={signupStyle.button}
       />
       <View style={signupStyle.footerContainer} >
         <Text style={signupStyle.footerText}>Already have an account? </Text>
         <Text onPress={() => navigation.goBack()} style={signupStyle.signupText}>Login</Text>
       </View>
-
+      <Spacer space={100} />
     </ScrollView>
   )
 }

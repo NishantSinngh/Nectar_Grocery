@@ -5,10 +5,19 @@ import ImageButton from '../../components/ImageButton'
 import settingsStyle from './settings.style'
 import SettingsItem from '../../components/SettingsItem'
 import SettingsList from './SettingsList'
-import Slider from '../../components/Slider'
+import { useAppSelector } from '../../redux/hooks'
+import actions from '../../redux/actions'
 
 
 const SettingScreen = () => {
+
+    const userData = useAppSelector(state => state.authSlice.userData)
+    console.log(userData);
+
+    function handleLogout() {
+        actions
+            .userLogout()
+    }
 
     return (
         <ScrollView style={{ flexGrow: 1, }} showsVerticalScrollIndicator={false}>
@@ -19,16 +28,17 @@ const SettingScreen = () => {
                     </View>
                     <View style={settingsStyle.profileDetails}>
                         <View style={[settingsStyle.center, { flexDirection: 'row' }]}>
-                            <Text style={settingsStyle.userText}>User name</Text>
+                            <Text style={settingsStyle.userText}>{userData?.displayName}</Text>
                             <ImageButton imgSrc={imagePath.edit} />
                         </View>
-                        <Text style={settingsStyle.mailText}>example@gmail.com</Text>
+                        <Text style={settingsStyle.mailText}>{userData?.email}</Text>
                     </View>
                 </View>
                 <View style={{ flex: 1, }} >
                     <FlatList
                         data={SettingsList}
                         scrollEnabled={false}
+                        removeClippedSubviews={false}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }: { item: { id: string, title: string, path: any } }) => <SettingsItem item={item} />}
                     />
@@ -44,7 +54,7 @@ const SettingScreen = () => {
 
                 <Pressable
                     style={settingsStyle.logOutButton}
-                    onPress={() => console.log('Log Out')}
+                    onPress={handleLogout}
                 >
                     <Image source={imagePath.exit} />
                     <View style={[{ flex: 1, }, settingsStyle.center]}>

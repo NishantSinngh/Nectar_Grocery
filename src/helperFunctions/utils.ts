@@ -21,5 +21,8 @@ export function generateUpiUrl({ pa, pn, tr, am, cu, tn }: PaymentParams) {
     return `upi://pay?pa=${encodeURIComponent(pa)}&pn=${encodeURIComponent(pn)}&tr=${encodeURIComponent(tr)}&am=${encodeURIComponent(amount)}&cu=${encodeURIComponent(cu)}&tn=${encodeURIComponent(tn)}`;
 };
 
+export const APP_LOG = (message?: any, ...optionalParams: any[]) => {
+    console.log(message, ...optionalParams);
+};
 
 export const { height, width } = Dimensions.get('window');

@@ -11,6 +11,7 @@ const TextInputWithLabel = ({
     placeholder = '',
     onSetData,
     returnType = 'done',
+    error,
     onSubmitEditing,
 }: {
     reference?: Ref<TextInput>
@@ -19,6 +20,7 @@ const TextInputWithLabel = ({
     placeholder: string,
     onSetData?: any;
     returnType?: ReturnKeyTypeOptions
+    error?: string;
     onSubmitEditing?: (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void
 }) => {
 
@@ -45,7 +47,7 @@ const TextInputWithLabel = ({
                         const trimmedText = textIn.replace(/^[\s]+/g, '');
                         const formattedText = trimmedText.replace(/[ ]+/g, ' ');
                         onSetData(formattedText);
-                      }}
+                    }}
                     onSubmitEditing={onSubmitEditing}
                     returnKeyType={returnType}
                 />
@@ -55,6 +57,9 @@ const TextInputWithLabel = ({
                     onPress={() => setShow(!getShow)}
                 />}
             </View>
+            {!!error && <View style={styles.errorContainer}>
+                <Text style={styles.error}>{error}</Text>
+            </View>}
         </View>
     )
 }
@@ -92,5 +97,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         paddingRight: 30,
         borderBottomColor: colors.grey1
+    },
+    errorContainer: {
+        alignSelf: 'flex-start'
+    },
+    error: {
+        color: 'red'
     }
 })

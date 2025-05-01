@@ -7,14 +7,16 @@ import {
   ViewStyle,
   ActivityIndicator,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import colors from '../constants/colors';
 import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
+  withSpring,
   withTiming,
+  ZoomIn,
 } from 'react-native-reanimated';
 
 const ButtonComp = React.memo(({
@@ -24,7 +26,6 @@ const ButtonComp = React.memo(({
   mainViewStyle,
   isAnimated,
   loading,
-  setLoading,
 }: {
   title: string;
   price?: number;
@@ -32,7 +33,6 @@ const ButtonComp = React.memo(({
   mainViewStyle?: StyleProp<ViewStyle>;
   isAnimated?: boolean;
   loading?: boolean;
-  setLoading?: (state: boolean) => void
 }) => {
 
   const animatedValue = useSharedValue(0);
@@ -60,23 +60,20 @@ const ButtonComp = React.memo(({
       borderRadius: animatedRadius.value
     };
   });
+  useEffect(() => {
+    if (isAnimated) {
+      if (loading) {
+        animatedWidth.value = withTiming(60, { duration: 300 });
+        animatedRadius.value = withTiming(30, { duration: 300 });
+      } else {
+        animatedWidth.value = withSpring(300);
+        animatedRadius.value = withTiming(18, { duration: 300 });
+      }
+    }
+  }, [loading, isAnimated]);
 
   function handlePress() {
-    if (isAnimated) {
-      setLoading && setLoading(true);
-      animatedWidth.value = withTiming(60, { duration: 300 });
-      animatedRadius.value = withTiming(30, { duration: 300, })
-      
-      setTimeout(() => {
-        setLoading && setLoading(false)
-        animatedWidth.value = withTiming(300, { duration: 300 });
-        animatedRadius.value = withTiming(18, { duration: 300, })
-        onPress && onPress();
-      }, 2000);
-      
-    } else {
-      onPress && onPress()
-    }
+    onPress && onPress()
   }
 
   return (
@@ -92,7 +89,7 @@ const ButtonComp = React.memo(({
           <ActivityIndicator size={40} color={colors.buttonText} />
         ) : (
           <>
-            <Text style={styles.titleStyle}>{title ?? 'Button'}</Text>
+            <Animated.Text entering={ZoomIn} style={styles.titleStyle}>{title ?? 'Button'}</Animated.Text>
             {typeof price === 'number' && (
               <View style={styles.priceTextContainer}>
                 <Text style={styles.priceText}>₹{price}</Text>
