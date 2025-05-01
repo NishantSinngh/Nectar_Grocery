@@ -10,6 +10,7 @@ const TextInputWithLabel = ({
     label = '',
     placeholder = '',
     onSetData,
+    disabled,
     returnType = 'done',
     error,
     onSubmitEditing,
@@ -17,6 +18,7 @@ const TextInputWithLabel = ({
     reference?: Ref<TextInput>
     secure?: boolean
     label: string,
+    disabled: boolean,
     placeholder: string,
     onSetData?: any;
     returnType?: ReturnKeyTypeOptions
@@ -41,6 +43,7 @@ const TextInputWithLabel = ({
                     cursorColor={colors.grey}
                     placeholderTextColor={colors.grey}
                     secureTextEntry={getShow}
+                    editable={disabled}
                     onBlur={() => setIsFocused(false)}
                     onFocus={() => setIsFocused(true)}
                     onChangeText={textIn => {

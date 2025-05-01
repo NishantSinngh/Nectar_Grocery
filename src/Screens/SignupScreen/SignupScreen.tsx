@@ -85,6 +85,7 @@ const LoginScreen = (props: any) => {
           setName(name)
           setNameError('')
         }}
+        disabled={!loading}
         onSubmitEditing={() => emailRef.current?.focus()}
         returnType='next'
       />
@@ -97,6 +98,7 @@ const LoginScreen = (props: any) => {
           setEmail(email)
           setEmailError('')
         }}
+        disabled={!loading}
         onSubmitEditing={() => passwordRef.current?.focus()}
         returnType='next'
       />
@@ -109,7 +111,9 @@ const LoginScreen = (props: any) => {
           setPassword(password)
           setPasswordError('')
         }}
+        disabled={!loading}
         secure
+        returnType='done'
       />
 
       <View style={signupStyle.fpContainer}>
