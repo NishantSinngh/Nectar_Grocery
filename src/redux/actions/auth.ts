@@ -26,6 +26,7 @@ export async function userLogin(email: string, password: string) {
         .catch(() => {            
             showToast(STRINGS.INCORRECT_CREDENTIALS)
         })
+        .finally(()=> showToast(STRINGS.SIGNIN_SUCCESSFUL))
 }
 
 export async function userSignUp(name: string, email: string, password: string) {
@@ -54,6 +55,8 @@ export async function userSignUp(name: string, email: string, password: string) 
         } else if (error?.message?.includes('auth/email-already-in-use')) {
             throw new Error('Email already in use');
         }
+    } finally {
+        showToast(STRINGS.SIGNIN_SUCCESSFUL)
     }
 }
 

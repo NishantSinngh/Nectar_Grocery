@@ -17,8 +17,6 @@ const HomeScreen = () => {
 
     const { loading, currentPosition } = useHomeScreen()
 
-    const userID = useAppSelector(state => state.authSlice.userData?.uid)
-    if (userID) showToast(STRINGS.SIGNIN_SUCCESSFUL)
     return (
         <KeyboardAvoidingView style={{ flex: 1, flexGrow: 1, }}>
             <ScrollView style={{ flex: 1, flexGrow: 1, }} keyboardDismissMode='on-drag' keyboardShouldPersistTaps='handled' showsVerticalScrollIndicator={false} >

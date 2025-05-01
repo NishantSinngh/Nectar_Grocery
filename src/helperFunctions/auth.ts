@@ -8,7 +8,7 @@ import {
   signOut,
 } from '@react-native-firebase/auth';
 
-const auth = getAuth(getApp());
+export const auth = getAuth(getApp());
 
 export async function login(email: string, password: string) {
   return signInWithEmailAndPassword(auth, email, password);
