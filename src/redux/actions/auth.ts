@@ -5,6 +5,7 @@ import { saveUserData } from "../reducers/auth";
 import store from "../store";
 import auth, { reload, updateProfile } from '@react-native-firebase/auth'
 import { showToast } from "../../components/Toast";
+import STRINGS from "../../constants/STRINGS";
 
 
 const { dispatch } = store
@@ -15,8 +16,16 @@ export async function onSaveUserData(data: Auth) {
 
 export async function userLogin(email: string, password: string) {
     login(email, password)
-        .then((res) => console.log('from actions', res?.user?.displayName))
-        .catch((error) => console.error(error))
+        .then(async (res) => {
+            await onSaveUserData({
+                displayName: res.user?.displayName ?? null,
+                email: res.user?.email ?? null,
+                uid: res.user?.uid ?? null
+            })
+        })
+        .catch(() => {            
+            showToast(STRINGS.INCORRECT_CREDENTIALS)
+        })
 }
 
 export async function userSignUp(name: string, email: string, password: string) {
@@ -55,5 +64,5 @@ export async function userLogout() {
             email: null,
             uid: null
         }))
-        .finally(() => showToast('User Logged Out'))
+        .finally(() => showToast(STRINGS.LOGOUT_SUCCESSFUL))
 }

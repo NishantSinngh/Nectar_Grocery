@@ -17,12 +17,14 @@ const LoginScreen = (props: any) => {
   const passwordRef = useRef<TextInput>(null)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
   function NavigateToSingup() {
     navigation.navigate(NavigationStrings.SIGNUP)
   }
 
   function handleLogin() {
+    setLoading(true)
     actions
       .userLogin(email, password)
   }
@@ -49,6 +51,7 @@ const LoginScreen = (props: any) => {
         label='Email'
         placeholder='Enter your email'
         reference={emailRef}
+        disabled={!loading}
         onSetData={(email: React.SetStateAction<string>) => {
           setEmail(email)
         }}
@@ -58,11 +61,13 @@ const LoginScreen = (props: any) => {
       <TextInputWithLabel
         placeholder='Enter your password'
         label='Password'
+        reference={passwordRef}
+        disabled={!loading}
         onSetData={(password: React.SetStateAction<string>) => {
           setPassword(password)
         }}
-        reference={passwordRef}
         secure
+        returnType='done'
       />
 
 
@@ -73,6 +78,8 @@ const LoginScreen = (props: any) => {
       <ButtonComp
         title='Login'
         onPress={handleLogin}
+        isAnimated
+        loading={loading}
         mainViewStyle={loginStyles.button}
       />
       <View style={loginStyles.footerContainer} >

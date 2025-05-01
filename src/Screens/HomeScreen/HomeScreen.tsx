@@ -11,13 +11,14 @@ import { useHomeScreen } from './useHomeScreen'
 import ImageButton from '../../components/ImageButton'
 import { useAppSelector } from '../../redux/hooks'
 import { showToast } from '../../components/Toast'
+import STRINGS from '../../constants/STRINGS'
 
 const HomeScreen = () => {
 
     const { loading, currentPosition } = useHomeScreen()
 
     const userID = useAppSelector(state => state.authSlice.userData?.uid)
-    if (userID) showToast('User Signed In Successfully')
+    if (userID) showToast(STRINGS.SIGNIN_SUCCESSFUL)
     return (
         <KeyboardAvoidingView style={{ flex: 1, flexGrow: 1, }}>
             <ScrollView style={{ flex: 1, flexGrow: 1, }} keyboardDismissMode='on-drag' keyboardShouldPersistTaps='handled' showsVerticalScrollIndicator={false} >

@@ -5,4 +5,7 @@ export default {
     NAME_INVALID: 'Entered name is invalid',
     NAME_LENGTH: 'Entered name is invalid',
     NAME_EMPTY: 'Entered name is invalid',
+    INCORRECT_CREDENTIALS:"Incorrect email or password. Please try again.",
+    SIGNIN_SUCCESSFUL:"User Signed In Successfully",
+    LOGOUT_SUCCESSFUL:"User Logged Out",
 }
