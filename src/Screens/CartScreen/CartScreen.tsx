@@ -9,16 +9,12 @@ import CartItem from '../../components/CartItem'
 import actions from '../../redux/actions'
 import { useAppSelector } from '../../redux/hooks'
 import Animated, { ZoomIn } from 'react-native-reanimated'
+import { showCheckOutModal } from '../../components/CheckOutSheet'
 
 const CartScreen = () => {
 
     const cart = useAppSelector(state => state.cartSlice)
     const totalCost = cart.reduce((sum, item) => sum += (item.item.cost * item.count), 0)
-
-
-    function openCheckoutSheet() {
-        actions.ToggleCheckoutSheet(true)
-    }
 
     return (
         <>
@@ -38,7 +34,7 @@ const CartScreen = () => {
                     renderItem={({ item }) => <CartItem item={item.item} count={item.count} />}
                 />
             </View>
-            <ButtonComp title='Go To Checkout' price={totalCost} onPress={openCheckoutSheet} />
+            <ButtonComp title='Go To Checkout' price={totalCost} onPress={showCheckOutModal} />
         </>
     )
 }

@@ -8,4 +8,5 @@ export default {
     INCORRECT_CREDENTIALS: "Incorrect email or password. Please try again.",
     SIGNIN_SUCCESSFUL: "User Signed In Successfully",
     LOGOUT_SUCCESSFUL: "You're Logged Out",
+    MANY_REQUEST: "Too many requests. Please try after some time",
 }

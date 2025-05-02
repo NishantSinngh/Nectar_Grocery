@@ -27,6 +27,7 @@ const LoginScreen = (props: any) => {
     setLoading(true)
     actions
       .userLogin(email, password)
+      .finally(() => setLoading(false))
   }
 
 

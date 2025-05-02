@@ -1,6 +1,17 @@
-import { Alert, Dimensions, Image, Linking, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useCallback, useMemo, useState } from 'react'
-import Animated, { FadeIn, FadeOut, SlideInDown, SlideInRight, ZoomIn, ZoomInEasyDown, ZoomInEasyUp, ZoomOutEasyDown } from 'react-native-reanimated'
+import {
+    Image,
+    Pressable,
+    StyleSheet,
+    Text,
+    View
+} from 'react-native'
+import React, { useState } from 'react'
+import Animated, {
+    FadeIn,
+    FadeOut,
+    SlideInDown,
+    ZoomOutEasyDown
+} from 'react-native-reanimated'
 import colors from '../constants/colors'
 import ImageButton from './ImageButton'
 import imagePath from '../assets/imagePath'
@@ -10,43 +21,57 @@ import DeliveryComponent from './DeliveryComponent'
 import PaymentComponent from './PaymentComponent'
 import CostComponent from './CostComponent'
 import { useAppSelector } from '../redux/hooks'
+import RootSiblings from 'react-native-root-siblings'
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
-const CheckOutModal = React.memo(({
-    onClose,
+
+const CheckOutModalContent = ({
+    onClose
 }: {
     onClose: () => void
 }) => {
-
     const cart = useAppSelector(state => state.cartSlice)
-    const totalCost = cart.reduce((sum, item) => sum + (item.item.cost * item.count), 0)
+    const totalCost = cart.reduce((sum, item) => sum + item.item.cost * item.count, 0)
 
+    const [delivery, setDelivery] = useState<'pay' | 'cod'>('pay')
+    const deliveryText = delivery === 'cod' ? 'Cash On Delivery' : 'Pay Online'
 
-    const [delivery, setDelivery] = useState<'pay' | 'cod'>('pay');
-    const deliveryText = delivery === 'cod' ? 'Cash On Delivery' : 'Pay Online';
+    const [currentScreen, setCurrentScreen] = useState<'main' | 'delivery' | 'payment' | 'cost'>('main')
+    const [loading, setLoading] = useState(false)
+    const [paymentError, setPaymentError] = useState(false)
 
-    const [currentScreen, setCurrentScreen] = useState<'main' | 'delivery' | 'payment' | 'cost'>('main');
-    const [loading, setLoading] = useState(false);
-    const [paymentError, setPaymentError] = useState(false);
-
-    function GoToMain() {
-        setCurrentScreen('main')
-    }
+    const GoToMain = () => setCurrentScreen('main')
 
     const renderScreen = () => {
         switch (currentScreen) {
             case 'delivery':
-                return <DeliveryComponent onBack={GoToMain} delivery={delivery} setDelivery={setDelivery} />
+                return (
+                    <DeliveryComponent
+                        onBack={GoToMain}
+                        delivery={delivery}
+                        setDelivery={setDelivery}
+                    />
+                )
             case 'payment':
-                return <PaymentComponent onBack={GoToMain} amount={totalCost} />
+                return (
+                    <PaymentComponent
+                        onBack={GoToMain}
+                        amount={totalCost}
+                    />
+                )
             case 'cost':
-                return <CostComponent onBack={GoToMain} cost={0} />
+                return (
+                    <CostComponent
+                        onBack={GoToMain}
+                        cost={totalCost}
+                    />
+                )
             default:
-                return <View />;
+                return <View />
         }
     }
 
-    function handlePress(){
+    function handlePress() {
         setPaymentError(true)
     }
 
@@ -65,16 +90,26 @@ const CheckOutModal = React.memo(({
                 style={styles.modalContainer}>
                 <View style={styles.headerContainer}>
                     <Text style={styles.headerText}>Checkout</Text>
-                    <ImageButton imgSrc={imagePath.cross} imgStyle={{ tintColor: colors.black }} onPress={onClose} disabled={loading} />
+                    <ImageButton
+                        imgSrc={imagePath.cross}
+                        imgStyle={{ tintColor: colors.black }}
+                        onPress={onClose}
+                        disabled={loading}
+                    />
                 </View>
                 <Pressable
                     android_ripple={{ color: colors.grey1 }}
                     style={styles.itemContainer}
-                    onPress={() => setCurrentScreen('delivery')}
-                >
+                    onPress={() => setCurrentScreen('delivery')}>
                     <Text style={styles.itemText}>Delivery</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={styles.rightText}>{deliveryText ?? 'Select Method'}</Text>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
+                        <Text style={styles.rightText}>
+                            {deliveryText ?? 'Select Method'}
+                        </Text>
                         <Image source={imagePath.right_arrow} />
                     </View>
                 </Pressable>
@@ -82,11 +117,27 @@ const CheckOutModal = React.memo(({
                 <Pressable
                     android_ripple={{ color: colors.grey1 }}
                     style={styles.itemContainer}
-                    onPress={() => setCurrentScreen('payment')}
-                >
-                    <Text style={[styles.itemText, paymentError && { color: 'red' }]}>Payment</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Image source={imagePath.upi} style={{ marginRight: 10, height: 20, width: 40, }} />
+                    onPress={() => setCurrentScreen('payment')}>
+                    <Text
+                        style={[
+                            styles.itemText,
+                            paymentError && { color: 'red' }
+                        ]}>
+                        Payment
+                    </Text>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
+                        <Image
+                            source={imagePath.upi}
+                            style={{
+                                marginRight: 10,
+                                height: 20,
+                                width: 40
+                            }}
+                        />
                         <Image source={imagePath.right_arrow} />
                     </View>
                 </Pressable>
@@ -94,39 +145,83 @@ const CheckOutModal = React.memo(({
                 <Pressable
                     android_ripple={{ color: colors.grey1 }}
                     style={styles.itemContainer}
-                    onPress={() => setCurrentScreen('cost')}
-                >
+                    onPress={() => setCurrentScreen('cost')}>
                     <Text style={styles.itemText}>Total Cost</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={styles.rightText}>₹{totalCost}</Text>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
+                        <Text style={styles.rightText}>
+                            ₹{totalCost}
+                        </Text>
                         <Image source={imagePath.right_arrow} />
                     </View>
                 </Pressable>
                 <View style={styles.tncContainer}>
-                    <Text style={{ color: colors.grey, fontWeight: '400' }}>
+                    <Text
+                        style={{
+                            color: colors.grey,
+                            fontWeight: '400'
+                        }}>
                         By placing an order you agree to our
-                        <Text style={{ color: colors.black, fontWeight: '500' }}> Terms </Text>
-                        <Text style={{ color: colors.grey, fontWeight: '400' }}> and </Text>
-                        <Text style={{ color: colors.black, fontWeight: '500' }}> Conditions</Text>
+                        <Text
+                            style={{
+                                color: colors.black,
+                                fontWeight: '500'
+                            }}>
+                            {' '}
+                            Terms{' '}
+                        </Text>
+                        <Text
+                            style={{
+                                color: colors.grey,
+                                fontWeight: '400'
+                            }}>
+                            {' '}
+                            and{' '}
+                        </Text>
+                        <Text
+                            style={{
+                                color: colors.black,
+                                fontWeight: '500'
+                            }}>
+                            {' '}
+                            Conditions
+                        </Text>
                     </Text>
                 </View>
                 <ButtonComp
-                    title='Place Order'
-                    mainViewStyle={{ bottom: 30, }}
+                    title="Place Order"
+                    mainViewStyle={{ bottom: 30 }}
                     isAnimated
                     loading={loading}
-                    setLoading={setLoading}
                     onPress={handlePress}
                 />
             </Animated.View>
 
             {renderScreen()}
-
         </React.Fragment>
     )
-})
+}
 
-export default CheckOutModal
+let currentSibling: RootSiblings | null = null
+
+export const showCheckOutModal = () => {
+    if (currentSibling) currentSibling.destroy()
+
+    currentSibling = new RootSiblings(
+        <CheckOutModalContent
+            onClose={() => {
+                if (currentSibling) {
+                    currentSibling.destroy()
+                    currentSibling = null
+                }
+            }}
+        />
+    )
+}
+
 
 const styles = StyleSheet.create({
     backDrop: {

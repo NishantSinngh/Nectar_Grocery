@@ -30,15 +30,15 @@ const App = () => {
     })
     return unsubscribe;
   }, [initializing])
-  
+
 
   return (
-    <RootSiblingParent>
-      <Provider store={store}>
+    <Provider store={store}>
+      <RootSiblingParent>
         <Routes />
         <StatusBar translucent backgroundColor={"transparent"} barStyle={'dark-content'} />
-      </Provider>
-    </RootSiblingParent>
+      </RootSiblingParent>
+    </Provider>
   )
 }
 

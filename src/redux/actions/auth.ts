@@ -23,10 +23,17 @@ export async function userLogin(email: string, password: string) {
                 uid: res.user?.uid ?? null
             })
         })
-        .catch(() => {            
-            showToast(STRINGS.INCORRECT_CREDENTIALS)
-        })
-        .finally(()=> showToast(STRINGS.SIGNIN_SUCCESSFUL))
+        .catch((error) => {
+            console.log({error});
+            
+            if (error.message.includes('auth/invalid-credential')) {
+                showToast(STRINGS.INCORRECT_CREDENTIALS);
+            } else if (error.message.includes('auth/too-many-requests')) {
+                showToast(STRINGS.MANY_REQUEST);
+            }
+        }
+        )
+    // .finally(()=> showToast(STRINGS.SIGNIN_SUCCESSFUL))
 }
 
 export async function userSignUp(name: string, email: string, password: string) {
