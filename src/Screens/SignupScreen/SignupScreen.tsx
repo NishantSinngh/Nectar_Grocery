@@ -48,10 +48,6 @@ const LoginScreen = (props: any) => {
     } else {
       setLoading(true)
       actions.userSignUp(name, email, password)
-        .catch(error => {
-          console.log('error=====>', error);
-          showToast(error?.message || 'Something went wrong')
-        })
         .finally(() => {
           setLoading(false)
         });

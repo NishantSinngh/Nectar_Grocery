@@ -1,5 +1,5 @@
 import { FlatList, Image, Pressable, ScrollView, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import imagePath from '../../assets/imagePath'
 import ImageButton from '../../components/ImageButton'
 import settingsStyle from './settings.style'
@@ -7,6 +7,7 @@ import SettingsItem from '../../components/SettingsItem'
 import SettingsList from './SettingsList'
 import { useAppSelector } from '../../redux/hooks'
 import actions from '../../redux/actions'
+import { showLogoutModal } from '../../components/LogoutModal'
 
 
 const SettingScreen = () => {
@@ -54,7 +55,7 @@ const SettingScreen = () => {
 
                 <Pressable
                     style={settingsStyle.logOutButton}
-                    onPress={handleLogout}
+                    onPress={() => showLogoutModal(handleLogout)}
                 >
                     <Image source={imagePath.exit} />
                     <View style={[{ flex: 1, }, settingsStyle.center]}>

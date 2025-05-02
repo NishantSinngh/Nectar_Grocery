@@ -15,25 +15,32 @@ export async function onSaveUserData(data: Auth) {
 }
 
 export async function userLogin(email: string, password: string) {
-    login(email, password)
-        .then(async (res) => {
-            await onSaveUserData({
-                displayName: res.user?.displayName ?? null,
-                email: res.user?.email ?? null,
-                uid: res.user?.uid ?? null
-            })
+    try {
+
+
+        APP_LOG('calling => login');
+
+        const res = await login(email, password)
+
+        await onSaveUserData({
+            displayName: res.user?.displayName ?? null,
+            email: res.user?.email ?? null,
+            uid: res.user?.uid ?? null
         })
-        .catch((error) => {
-            console.log({error});
-            
-            if (error.message.includes('auth/invalid-credential')) {
-                showToast(STRINGS.INCORRECT_CREDENTIALS);
-            } else if (error.message.includes('auth/too-many-requests')) {
-                showToast(STRINGS.MANY_REQUEST);
-            }
+
+    } catch (error: any) {
+        console.log({ error });
+
+        if (error.message.includes('auth/invalid-credential')) {
+            showToast(STRINGS.INCORRECT_CREDENTIALS);
+        } else if (error.message.includes('auth/too-many-requests')) {
+            showToast(STRINGS.MANY_REQUEST);
         }
-        )
-    // .finally(()=> showToast(STRINGS.SIGNIN_SUCCESSFUL))
+    } finally {
+
+        // .finally(()=> showToast(STRINGS.SIGNIN_SUCCESSFUL))
+    }
+
 }
 
 export async function userSignUp(name: string, email: string, password: string) {
@@ -57,13 +64,17 @@ export async function userSignUp(name: string, email: string, password: string) 
         APP_LOG('from actions user display name', displayName);
 
     } catch (error: any) {
+        console.log({ error });
+
         if (error?.message?.includes('auth/invalid-email')) {
-            throw new Error('Email');
+            showToast('Invalid email');
         } else if (error?.message?.includes('auth/email-already-in-use')) {
-            throw new Error('Email already in use');
+            showToast('Email already in use')
+        } else {
+            showToast('Something went wrong')
         }
     } finally {
-        showToast(STRINGS.SIGNIN_SUCCESSFUL)
+        // showToast(STRINGS.SIGNIN_SUCCESSFUL)
     }
 }
 
