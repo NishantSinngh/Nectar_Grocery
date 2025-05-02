@@ -5,22 +5,16 @@ import {
     Text,
     View
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Animated, {
     FadeIn,
     FadeOut,
-    SlideInDown,
-    ZoomIn,
-    ZoomOut,
-    ZoomOutEasyDown
+    SlideInUp,
+    SlideOutUp,
 } from 'react-native-reanimated'
 import colors from '../constants/colors'
-import ImageButton from './ImageButton'
-import imagePath from '../assets/imagePath'
 import { height, width } from '../helperFunctions/utils'
 import RootSiblings from 'react-native-root-siblings'
-import ButtonComp from './ButtonComp'
-
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 const LogoutModal = ({
@@ -30,21 +24,40 @@ const LogoutModal = ({
     onClose: () => void
     onPress: () => void
 }) => {
+
+    const [disabled, setDisabled] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setDisabled(false), 500);
+        return () => clearTimeout(timer);
+    }, []);
+
+
     function OnPress() {
         onPress()
         onClose()
     }
+
     return (
         <React.Fragment>
             <AnimatedPressable
-                entering={FadeIn.duration(200)}
-                exiting={FadeOut.duration(200)}
+                entering={FadeIn.duration(400)}
+                exiting={FadeOut.duration(400)}
                 onPress={() => onClose()}
                 style={styles.backDrop}
+                disabled={disabled}
             />
             <Animated.View
-                entering={ZoomIn.springify()}
-                exiting={ZoomOut.duration(200)}
+                entering={SlideInUp.duration(400)}
+                exiting={SlideOutUp.duration(200)}
+                style={styles.leftRope} />
+            <Animated.View
+                entering={SlideInUp.duration(400)}
+                exiting={SlideOutUp.duration(200)}
+                style={styles.rightRope} />
+            <Animated.View
+                entering={SlideInUp.springify().damping(13)}
+                exiting={SlideOutUp.duration(200)}
                 style={styles.modalContainer}>
                 <View style={styles.headerContainer}>
                     <Text style={styles.headerText}>Logout</Text>
@@ -92,7 +105,7 @@ const styles = StyleSheet.create({
         top: height * 0.37,
         left: width * 0.1,
         right: width * 0.1,
-        bottom: height * 0.37,
+        bottom: height * 0.36,
         borderRadius: 20,
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -143,4 +156,22 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: '600',
     },
+    leftRope: {
+        position: 'absolute',
+        top: 0,
+        left: width * 0.2,
+        bottom: height * 0.37,
+        backgroundColor: colors.white,
+        height: height * 0.5,
+        width: 5
+    },
+    rightRope: {
+        position: 'absolute',
+        top: 0,
+        right: width * 0.2,
+        bottom: height * 0.37,
+        backgroundColor: colors.white,
+        height: height * 0.5,
+        width: 5,
+    }
 })

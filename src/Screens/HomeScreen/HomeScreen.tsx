@@ -43,7 +43,7 @@ const HomeScreen = () => {
                         <Text style={homeStyles.headingText}>Groceries </Text>
                         {/* <Text style={homeStyles.seeAllText}>See all</Text> */}
                     </View>
-                    <ScrollView horizontal contentContainerStyle={{ flexGrow: 1, marginTop: 10, }} >
+                    <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ flexGrow: 1, marginTop: 10, }} >
                         <ImageButton imgSrc={imagePath.pulses} imgStyle={{ marginRight: 10, marginLeft: 20, }} />
                         <ImageButton imgSrc={imagePath.pulses} imgStyle={{ marginRight: 10 }} />
                     </ScrollView>

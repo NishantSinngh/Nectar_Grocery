@@ -1,4 +1,3 @@
-import { getApp } from "@react-native-firebase/app";
 import { login, logout, signup } from "../../helperFunctions/auth";
 import { APP_LOG } from "../../helperFunctions/utils";
 import { saveUserData } from "../reducers/auth";
@@ -16,7 +15,6 @@ export async function onSaveUserData(data: Auth) {
 
 export async function userLogin(email: string, password: string) {
     try {
-
 
         APP_LOG('calling => login');
 
@@ -40,10 +38,7 @@ export async function userLogin(email: string, password: string) {
         } else if (error.message.includes('auth/invalid-email')) {
             showToast(STRINGS.EMAIL_INVALID)
         }
-    } finally {
-
     }
-
 }
 
 export async function userSignUp(name: string, email: string, password: string) {
@@ -75,8 +70,6 @@ export async function userSignUp(name: string, email: string, password: string) 
         } else {
             showToast('Something went wrong')
         }
-    } finally {
-        // showToast(STRINGS.SIGNIN_SUCCESSFUL)
     }
 }
 
