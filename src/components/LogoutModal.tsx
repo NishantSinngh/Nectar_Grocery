@@ -86,8 +86,7 @@ export const showLogoutModal = (onPress: () => void) => {
         <LogoutModal
             onClose={() => {
                 if (logoutSibling) {
-                    logoutSibling.destroy()
-                    logoutSibling = null
+                    setTimeout(() => logoutSibling?.destroy(), 50);
                 }
             }}
             onPress={onPress}
