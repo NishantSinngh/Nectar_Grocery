@@ -5,12 +5,11 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: colors.white,
         justifyContent: 'flex-start',
-        paddingBottom: 200,
     },
     headerContent: {
         flexDirection: 'row',
         paddingHorizontal: 20,
-        paddingTop: 50,
+        paddingTop: 70,
         paddingBottom: 30,
         alignItems: 'center',
         justifyContent: 'flex-start',
@@ -46,7 +45,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
-        marginTop: 20,
+        marginTop: 40,
         marginHorizontal: 20,
         borderRadius: 18,
         backgroundColor: colors.grey2

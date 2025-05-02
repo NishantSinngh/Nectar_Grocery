@@ -21,7 +21,7 @@ const SettingScreen = () => {
     }
 
     return (
-        <ScrollView style={{ flexGrow: 1, }} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, }} showsVerticalScrollIndicator={false}>
             <View style={settingsStyle.appContainer}>
                 <View style={settingsStyle.headerContent} >
                     <View style={settingsStyle.center}>
@@ -35,7 +35,7 @@ const SettingScreen = () => {
                         <Text style={settingsStyle.mailText}>{userData?.email}</Text>
                     </View>
                 </View>
-                <View style={{ flex: 1, }} >
+                <View>
                     <FlatList
                         data={SettingsList}
                         scrollEnabled={false}
