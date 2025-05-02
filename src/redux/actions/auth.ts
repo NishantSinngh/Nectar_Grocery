@@ -28,6 +28,8 @@ export async function userLogin(email: string, password: string) {
             uid: res.user?.uid ?? null
         })
 
+        showToast(STRINGS.SIGNIN_SUCCESSFUL)
+
     } catch (error: any) {
         console.log({ error });
 
@@ -35,10 +37,11 @@ export async function userLogin(email: string, password: string) {
             showToast(STRINGS.INCORRECT_CREDENTIALS);
         } else if (error.message.includes('auth/too-many-requests')) {
             showToast(STRINGS.MANY_REQUEST);
+        } else if (error.message.includes('auth/invalid-email')) {
+            showToast(STRINGS.EMAIL_INVALID)
         }
     } finally {
 
-        // .finally(()=> showToast(STRINGS.SIGNIN_SUCCESSFUL))
     }
 
 }
@@ -60,8 +63,7 @@ export async function userSignUp(name: string, email: string, password: string) 
             uid: auth().currentUser?.uid ?? null
         })
 
-        const displayName = auth().currentUser?.displayName;
-        APP_LOG('from actions user display name', displayName);
+        showToast(STRINGS.SIGNIN_SUCCESSFUL)
 
     } catch (error: any) {
         console.log({ error });
@@ -80,10 +82,12 @@ export async function userSignUp(name: string, email: string, password: string) 
 
 export async function userLogout() {
     logout()
-        .then(() => onSaveUserData({
-            displayName: null,
-            email: null,
-            uid: null
-        }))
-        .finally(() => showToast(STRINGS.LOGOUT_SUCCESSFUL))
+        .then(() => {
+            onSaveUserData({
+                displayName: null,
+                email: null,
+                uid: null
+            })
+            showToast(STRINGS.LOGOUT_SUCCESSFUL)
+        })
 }
