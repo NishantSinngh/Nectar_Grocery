@@ -163,7 +163,8 @@ const styles = StyleSheet.create({
         bottom: height * 0.37,
         backgroundColor: colors.white,
         height: height * 0.5,
-        width: 5
+        width: 5,
+        elevation: 4,
     },
     rightRope: {
         position: 'absolute',
@@ -173,5 +174,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         height: height * 0.5,
         width: 5,
+        elevation: 4,
     }
 })
