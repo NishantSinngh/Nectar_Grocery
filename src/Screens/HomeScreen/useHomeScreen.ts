@@ -1,15 +1,28 @@
 import { useState, useEffect } from 'react';
 import Geolocation from '@react-native-community/geolocation';
-import { Alert, PermissionsAndroid, Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
+import { useNavigation } from '@react-navigation/native';
+import NavigationStrings from '../../constants/NavigationStrings';
+import { getAddress } from '../../helperFunctions/utils';
+import actions from '../../redux/actions';
 
 export function useHomeScreen() {
-  const [currentPosition, setCurrentPosition] = useState<any>(null);
+  const [currentPosition, setCurrentPosition] = useState<string>('');
+  const [coords, setCoords] = useState<{ latitude: number, longitude: number } | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     requestLocationPermission();
   }, []);
+
+  useEffect(() => {
+    if (coords && currentPosition) {
+      actions.onSaveUserLocation({ coords, address: currentPosition });
+    }
+  }, [coords, currentPosition]);
+
+  const navigation = useNavigation<any>()
 
   const requestLocationPermission = async () => {
     setLoading(true)
@@ -39,14 +52,32 @@ export function useHomeScreen() {
 
   const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
-      (position) => {
-        setCurrentPosition(position);
+      async (position) => {
+
+        const location = { latitude: position?.coords?.latitude, longitude: position?.coords?.longitude }
+        
+        setCoords(location)
+        const address = await getAddress(location)
+        setCurrentPosition(address ?? '')
+
+        actions.onSaveUserLocation({
+          coords: location,
+          address: address ?? '',
+        });
+
       },
       (error) => {
-        Alert.alert("Error while fetching current location", error.message);
+        Alert.alert("Unable to fetch location", error.message,
+          [
+            {
+              text: 'select location on map',
+              onPress: () => navigation.navigate(NavigationStrings.MAP_SCREEN)
+            }
+          ]);
       }
     );
   };
+
 
   return { loading, currentPosition };
 }

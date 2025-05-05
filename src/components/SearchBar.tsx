@@ -3,12 +3,12 @@ import React from 'react'
 import colors from '../constants/colors'
 import imagePath from '../assets/imagePath'
 
-const SearchBar = React.memo(() => {
+const SearchBar = React.memo(({placeholder= 'Search'}:{placeholder:string}) => {
     return (
         <View style={styles.inputContainer} >
             <Image source={imagePath.search} />
             <TextInput
-                placeholder='Search Store'
+                placeholder={placeholder}
                 placeholderTextColor={colors.grey}
                 style={styles.inputStyle}
             />

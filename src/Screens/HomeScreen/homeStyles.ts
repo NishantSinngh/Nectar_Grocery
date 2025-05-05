@@ -21,7 +21,8 @@ export default StyleSheet.create({
     locationText: {
         marginLeft: 4,
         textAlign: 'center',
-        color: colors.darkGrey
+        color: colors.darkGrey,
+        maxWidth:'90%'
     },
     offerContainer: {
         flexDirection: 'row',

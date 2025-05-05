@@ -9,4 +9,5 @@ export default {
     LOGIN : "login",
     SIGNUP : "signup",
     PRODUCT_SCREEN : "productScreen",
+    MAP_SCREEN : "mapScreen",
 }

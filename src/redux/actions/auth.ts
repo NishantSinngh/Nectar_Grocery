@@ -1,6 +1,6 @@
 import { login, logout, signup } from "../../helperFunctions/auth";
 import { APP_LOG } from "../../helperFunctions/utils";
-import { saveUserData } from "../reducers/auth";
+import { saveUserData, saveUserLocation } from "../reducers/auth";
 import store from "../store";
 import auth, { reload, updateProfile } from '@react-native-firebase/auth'
 import { showToast } from "../../components/Toast";
@@ -11,6 +11,9 @@ const { dispatch } = store
 
 export async function onSaveUserData(data: Auth) {
     dispatch(saveUserData(data));
+}
+export async function onSaveUserLocation(data: Location) {
+    dispatch(saveUserLocation(data));
 }
 
 export async function userLogin(email: string, password: string) {

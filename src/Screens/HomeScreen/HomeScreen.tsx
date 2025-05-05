@@ -9,26 +9,27 @@ import BestSellingList from './BestSellingList'
 import GroceriesList from './GroceriesList'
 import { useHomeScreen } from './useHomeScreen'
 import ImageButton from '../../components/ImageButton'
-import { useAppSelector } from '../../redux/hooks'
-import { showToast } from '../../components/Toast'
-import STRINGS from '../../constants/STRINGS'
+import NavigationStrings from '../../constants/NavigationStrings'
 
-const HomeScreen = () => {
-
+const HomeScreen = (props: any) => {
+    const { navigation, route } = props;
     const { loading, currentPosition } = useHomeScreen()
 
+    function navigateToMap() {
+        navigation.navigate(NavigationStrings.MAP_SCREEN)
+    }
+
     return (
-        <KeyboardAvoidingView style={{ flex: 1, flexGrow: 1, }}>
             <ScrollView style={{ flex: 1, flexGrow: 1, }} keyboardDismissMode='on-drag' keyboardShouldPersistTaps='handled' showsVerticalScrollIndicator={false} >
                 <View style={homeStyles.appContainer}>
                     <View style={homeStyles.headerStyle}>
                         <Image source={imagePath.carrot} />
                         <View style={homeStyles.locationContainer}>
                             <Image source={imagePath.location} />
-                            {loading ? <ActivityIndicator /> : <Text style={homeStyles.locationText}>Location : {currentPosition?.coords?.longitude}, {currentPosition?.coords?.latitude}</Text>}
+                            {loading ? <ActivityIndicator /> : <Text onPress={navigateToMap} style={homeStyles.locationText}>{currentPosition}</Text>}
                         </View>
                     </View>
-                    <SearchBar />
+                    <SearchBar placeholder='Search Store' />
                     <View style={homeStyles.offerContainer} >
                         <Text style={homeStyles.headingText}>Exclusive Offer</Text>
                         {/* <Text style={homeStyles.seeAllText}>See all</Text> */}
@@ -51,7 +52,6 @@ const HomeScreen = () => {
                     <Spacer space={100} />
                 </View>
             </ScrollView>
-        </KeyboardAvoidingView>
     )
 }
 
