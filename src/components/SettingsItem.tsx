@@ -5,14 +5,13 @@ import colors from '../constants/colors'
 
 const SettingsItem = React.memo(({
     item,
-    onPress,
 }: {
-    item: { id: string, title: string, path: any },
-    onPress?: () => void
+    item: { id: string, title: string, path: any,onPress:()=>void },
 }) => {
     return (
         <Pressable
             android_ripple={{ color: colors.grey1 }}
+            onPress={item.onPress}
             style={styles.container}>
             <Image source={item.path} />
             <View style={styles.innerContainer}>

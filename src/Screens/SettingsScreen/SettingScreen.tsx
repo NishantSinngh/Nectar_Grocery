@@ -8,6 +8,8 @@ import SettingsList from './SettingsList'
 import { useAppSelector } from '../../redux/hooks'
 import actions from '../../redux/actions'
 import { showLogoutModal } from '../../components/LogoutModal'
+import { showToast } from '../../components/Toast'
+import { NotImplement } from '../../helperFunctions/utils'
 
 
 const SettingScreen = () => {
@@ -31,7 +33,7 @@ const SettingScreen = () => {
                     <View style={settingsStyle.profileDetails}>
                         <View style={[settingsStyle.center, { flexDirection: 'row' }]}>
                             <Text style={settingsStyle.userText}>{userData?.displayName}</Text>
-                            <ImageButton imgSrc={imagePath.edit} />
+                            <ImageButton imgSrc={imagePath.edit} onPress={NotImplement} />
                         </View>
                         <Text style={settingsStyle.mailText}>{userData?.email}</Text>
                     </View>
@@ -42,7 +44,7 @@ const SettingScreen = () => {
                         scrollEnabled={false}
                         removeClippedSubviews={false}
                         keyExtractor={(item) => item.id}
-                        renderItem={({ item }: { item: { id: string, title: string, path: any } }) => <SettingsItem item={item} />}
+                        renderItem={({ item }: { item: { id: string, title: string, path: any, onPress: () => void } }) => <SettingsItem item={item} />}
                     />
                 </View>
 

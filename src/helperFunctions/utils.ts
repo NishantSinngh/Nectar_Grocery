@@ -3,6 +3,7 @@
 // upi://pay — UPI scheme for payment intent.
 
 import { Dimensions } from "react-native";
+import { showToast } from "../components/Toast";
 
 // pa — Payee address (VPA or UPI ID).
 
@@ -26,3 +27,7 @@ export const APP_LOG = (message?: any, ...optionalParams: any[]) => {
 };
 
 export const { height, width } = Dimensions.get('window');
+
+export const NotImplement =()=>{
+    showToast('Functionality not implemented yet.')
+}

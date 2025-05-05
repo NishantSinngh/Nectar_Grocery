@@ -16,7 +16,7 @@ import colors from '../constants/colors'
 import ImageButton from './ImageButton'
 import imagePath from '../assets/imagePath'
 import ButtonComp from './ButtonComp'
-import { height } from '../helperFunctions/utils'
+import { height, NotImplement } from '../helperFunctions/utils'
 import DeliveryComponent from './DeliveryComponent'
 import PaymentComponent from './PaymentComponent'
 import CostComponent from './CostComponent'
@@ -72,7 +72,8 @@ const CheckOutModalContent = ({
     }
 
     function handlePress() {
-        setPaymentError(true)
+        // setPaymentError(true)
+        NotImplement()
     }
 
     return (
