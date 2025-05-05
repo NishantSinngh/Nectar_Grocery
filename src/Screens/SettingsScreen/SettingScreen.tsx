@@ -16,8 +16,9 @@ const SettingScreen = () => {
     console.log(userData);
 
     function handleLogout() {
-        actions
-            .userLogout()
+        setTimeout(() => {
+            actions.userLogout()
+        }, 200);
     }
 
     return (

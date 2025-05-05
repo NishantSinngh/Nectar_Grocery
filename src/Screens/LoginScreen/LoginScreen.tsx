@@ -1,4 +1,4 @@
-import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Image, ImageBackground, ScrollView, Text, TextInput, View } from 'react-native'
 import React, { useRef, useState } from 'react'
 import imagePath from '../../assets/imagePath'
 import Spacer from '../../components/Spacer'
@@ -7,7 +7,6 @@ import colors from '../../constants/colors'
 import TextInputWithLabel from '../../components/TextInputWithLabel'
 import ButtonComp from '../../components/ButtonComp'
 import NavigationStrings from '../../constants/NavigationStrings'
-import { guestLogin, login } from '../../helperFunctions/auth'
 import actions from '../../redux/actions'
 
 const LoginScreen = (props: any) => {
@@ -36,7 +35,8 @@ const LoginScreen = (props: any) => {
       style={{ flex: 1, backgroundColor: colors.white }}
       contentContainerStyle={{ flexGrow: 1, }}
       keyboardDismissMode='interactive'
-      keyboardShouldPersistTaps='handled'>
+      keyboardShouldPersistTaps='handled'
+      showsVerticalScrollIndicator={false}>
       <ImageBackground source={imagePath.blur_background} style={loginStyles.topBG} resizeMode='cover' />
       <Image source={imagePath.carrot} style={{ alignSelf: 'center', marginTop: 50, }} />
 

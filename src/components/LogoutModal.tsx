@@ -1,5 +1,4 @@
 import {
-    Image,
     Pressable,
     StyleSheet,
     Text,
@@ -15,6 +14,9 @@ import Animated, {
 import colors from '../constants/colors'
 import { height, width } from '../helperFunctions/utils'
 import RootSiblings from 'react-native-root-siblings'
+
+
+
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 const LogoutModal = ({
@@ -86,7 +88,7 @@ export const showLogoutModal = (onPress: () => void) => {
         <LogoutModal
             onClose={() => {
                 if (logoutSibling) {
-                    setTimeout(() => logoutSibling?.destroy(), 50);
+                   logoutSibling?.destroy()
                 }
             }}
             onPress={onPress}
