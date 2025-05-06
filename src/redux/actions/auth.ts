@@ -5,6 +5,7 @@ import store from "../store";
 import auth, { reload, updateProfile } from '@react-native-firebase/auth'
 import { showToast } from "../../components/Toast";
 import STRINGS from "../../constants/STRINGS";
+import { saveMultipleLocation } from "../reducers/location";
 
 
 const { dispatch } = store
@@ -15,6 +16,10 @@ export async function onSaveUserData(data: Auth) {
 export async function onSaveUserLocation(data: Location) {
     dispatch(saveUserLocation(data));
 }
+export async function onSaveMultipleLocation(data: MultipleLocation[]) {
+    dispatch(saveMultipleLocation(data));
+}
+
 
 export async function userLogin(email: string, password: string) {
     try {

@@ -50,3 +50,8 @@ export async function getAddress(location: { latitude: number; longitude: number
         }
     }
 }
+
+export const generateLocationId = (coords: { latitude: number, longitude: number } | null) => {
+    if (!coords) return '';
+    return `${coords.latitude}_${coords.longitude}`.replace(/\s+/g, '_');
+};

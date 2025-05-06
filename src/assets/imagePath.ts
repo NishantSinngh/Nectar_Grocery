@@ -39,6 +39,7 @@ export default {
     heart_red: require('./images/heart_red.png'),
     darkMode: require('./images/darkMode.png'),
     homeMarker: require('./images/home_marker.png'),
+    more: require('./images/more.png'),
 
     // explore
     veggies_icon: require('./images/veggies_icon.png'),

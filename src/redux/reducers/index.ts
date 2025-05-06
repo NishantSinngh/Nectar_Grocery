@@ -4,6 +4,7 @@ import cartSlice from './cartItem'
 import favSlice from './favs'
 import darkModeSlice from './darkMode'
 import authSlice from './auth'
+import locSlice from './location'
 
 
 export default combineReducers({
@@ -12,4 +13,5 @@ export default combineReducers({
     favSlice,
     darkModeSlice,
     authSlice,
+    locSlice,
 })
