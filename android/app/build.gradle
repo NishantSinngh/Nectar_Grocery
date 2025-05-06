@@ -2,6 +2,7 @@ apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "com.facebook.react"
 apply plugin: 'com.google.gms.google-services'
+import java.util.Properties
 react {
     autolinkLibrariesWithApp()
 }
@@ -14,12 +15,18 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
-
+    def localProperties = new Properties()
+    def localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(new FileInputStream(localPropertiesFile))
+    }
+    def googleMapsApiKey = localProperties.getProperty("GOOGLE_MAP_KEY")
     namespace "com.nectar_grocery"
     defaultConfig {
         applicationId "com.nectar_grocery"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        manifestPlaceholders = [ GOOGLE_MAP_KEY: googleMapsApiKey ]
         versionCode 1
         versionName "1.0"
     }
