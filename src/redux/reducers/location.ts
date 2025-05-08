@@ -14,6 +14,7 @@ const locationSlice = createSlice({
             const newLoc = action.payload.filter(newLocItem => { // true to add --- false to drop
                 const alreadyExists = !state.some(locItem => locItem.id === newLocItem.id); // if returns false then its added --- if true drops it <== some()
                 if (alreadyExists === false) showToast('Address already Exist')
+                if (alreadyExists === true) showToast('Address added')
                 return alreadyExists
             });
             state.push(...newLoc);

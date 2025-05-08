@@ -10,6 +10,8 @@ import {
 import React, { useEffect } from 'react';
 import colors from '../constants/colors';
 import Animated, {
+  FadeInDown,
+  FadeOutDown,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -77,7 +79,7 @@ const ButtonComp = React.memo(({
   }
 
   return (
-    <Animated.View style={[styles.buttonContainer, mainViewStyle, isAnimated && animatedStyle]}>
+    <Animated.View entering={FadeInDown.springify()} exiting={FadeOutDown} style={[styles.buttonContainer, mainViewStyle, isAnimated && animatedStyle]}>
       <Pressable
         onPress={handlePress}
         android_ripple={{ color: colors.ripple }}

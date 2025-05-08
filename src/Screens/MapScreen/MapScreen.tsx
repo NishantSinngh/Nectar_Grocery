@@ -1,7 +1,7 @@
-import { Image, Keyboard, Pressable, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, Image, Keyboard, Pressable, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import Animated, { FadeIn, FadeInDown, FadeInRight, FadeInUp, FadeOutRight } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInDown, FadeInRight, FadeInUp, FadeOutDown, FadeOutRight, FadeOutUp } from 'react-native-reanimated';
 import colors from '../../constants/colors';
 import { generateLocationId, getAddress, height } from '../../helperFunctions/utils';
 import imagePath from '../../assets/imagePath';
@@ -17,6 +17,7 @@ const MapScreen = () => {
 
     const [markerLocation, setMarkerLocation] = useState<{ latitude: number; longitude: number } | null>(null);
     const [address, setAddress] = useState<string>('');
+    const [addressLoading, setAddressLoading] = useState<boolean>(false);
     const [mapRegion, setMapRegion] = useState({
         latitude: location?.coords?.latitude ?? 26.9124,
         longitude: location?.coords?.longitude ?? 75.7873,
@@ -29,14 +30,23 @@ const MapScreen = () => {
         setIsVisible(prev => !prev)
     }
 
+    function clearMarker() {
+        setMarkerLocation(null)
+        setAddress('')
+    }
+
     useEffect(() => {
         if (markerLocation) {
+            setAddressLoading(true)
             getAddress(markerLocation)
-                .then((address) => setAddress(address || ''));
-        } else if (location?.address) {
-            setAddress(location?.address);
+                .then((address) => setAddress(address || ''))
+                .catch(() => setAddressLoading(false))
+                .finally(() => setAddressLoading(false))
         }
-    }, [markerLocation, location]);
+        // else if (location?.address) {
+        //     setAddress(location?.address);
+        // }
+    }, [markerLocation]);
 
 
     const handleMapPress = (e: any) => {
@@ -100,19 +110,12 @@ const MapScreen = () => {
                     </Marker>
                 )}
             </MapView>
-            {address && (
-                <Animated.View entering={FadeInUp.springify().delay(300)} style={styles.addressBar}>
+            {markerLocation && (
+                <Animated.View entering={FadeInUp.springify()} exiting={FadeOutUp} style={styles.addressBar}>
                     <Pressable>
-                        <Text style={styles.addressText}>{address}</Text>
+                        {addressLoading ? <ActivityIndicator color={colors.white} /> : <Text style={styles.addressText}>{address}</Text>}
                     </Pressable>
                 </Animated.View>
-            )}
-            {markerLocation && (
-                <ButtonComp
-                    title='Submit'
-                    mainViewStyle={styles.submitButton}
-                    onPress={handleMultipleLocation}
-                />
             )}
             {MultipleLocation.length > 0 && (
                 <Animated.View entering={FadeIn} style={styles.ellipses}>
@@ -120,6 +123,15 @@ const MapScreen = () => {
                         imgSrc={imagePath.more}
                         imgStyle={{ height: 30, width: 30 }}
                         onPress={handleLocationsVisible}
+                    />
+                </Animated.View>
+            )}
+            {markerLocation && (
+                <Animated.View entering={FadeInDown} exiting={FadeOutDown} style={styles.clear}>
+                    <ImageButton
+                        imgSrc={imagePath.cancel}
+                        imgStyle={{ height: 30, width: 30, tintColor: colors.black }}
+                        onPress={clearMarker}
                     />
                 </Animated.View>
             )}
@@ -137,6 +149,13 @@ const MapScreen = () => {
                     )
                 })}
             </Animated.ScrollView>}
+            {markerLocation && (
+                <ButtonComp
+                    title='Submit'
+                    mainViewStyle={styles.submitButton}
+                    onPress={handleMultipleLocation}
+                />
+            )}
         </View>
         // </TouchableWithoutFeedback>
     );
@@ -166,6 +185,17 @@ const styles = StyleSheet.create({
     ellipses: {
         position: 'absolute',
         top: 120,
+        right: 20,
+        zIndex: 9999,
+        backgroundColor: colors.themeColor,
+        borderRadius: 8,
+        padding: 4,
+        alignSelf: 'center',
+        elevation: 5,
+    },
+    clear: {
+        position: 'absolute',
+        top: 165,
         right: 20,
         zIndex: 9999,
         backgroundColor: colors.themeColor,
