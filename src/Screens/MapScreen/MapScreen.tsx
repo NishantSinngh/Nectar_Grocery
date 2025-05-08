@@ -73,6 +73,13 @@ const MapScreen = () => {
                 loadingIndicatorColor={colors.themeColor}
                 loadingBackgroundColor={colors.black}
             >
+                <Marker
+                    coordinate={{ latitude: 26.913545321521205, longitude: 75.68323563784361 }}
+                    title="Store Location"
+                    description="From here order will be delivered."
+                >
+                    <Image source={imagePath.store_loc} style={{ width: 50, height: 50 }} />
+                </Marker>
                 {markerLocation && (
                     <Marker
                         coordinate={markerLocation}
@@ -118,11 +125,12 @@ const MapScreen = () => {
             )}
             {isVisible && <Animated.ScrollView entering={FadeInRight} exiting={FadeOutRight} style={styles.locationsContainer} showsVerticalScrollIndicator={false}>
                 {MultipleLocation.map((item, index) => {
+                    const last = MultipleLocation.length - 1
                     return (
                         <Animated.View
                             entering={FadeInRight.delay(index * 150)}
                             key={index}
-                            style={styles.locItem}
+                            style={[styles.locItem, { borderBottomWidth: index == last ? 0 : 1 }]}
                         >
                             <Text style={styles.addressText}>{item.address}</Text>
                         </Animated.View>
@@ -182,7 +190,6 @@ const styles = StyleSheet.create({
     locItem: {
         paddingVertical: 10,
         paddingHorizontal: 12,
-        borderBottomWidth: 1,
         borderBottomColor: colors.grey1,
     },
     submitButton: {

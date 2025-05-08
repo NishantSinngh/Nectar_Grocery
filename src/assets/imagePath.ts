@@ -40,6 +40,7 @@ export default {
     darkMode: require('./images/darkMode.png'),
     homeMarker: require('./images/home_marker.png'),
     more: require('./images/more.png'),
+    store_loc: require('./images/store_loc.png'),
 
     // explore
     veggies_icon: require('./images/veggies_icon.png'),
