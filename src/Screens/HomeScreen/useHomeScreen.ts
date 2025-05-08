@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import Geolocation from '@react-native-community/geolocation';
-import { Alert, Platform } from 'react-native';
+import { Alert, NativeModules, Platform } from 'react-native';
 import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
-import { useNavigation } from '@react-navigation/native';
-import NavigationStrings from '../../constants/NavigationStrings';
 import { getAddress } from '../../helperFunctions/utils';
 import actions from '../../redux/actions';
 
@@ -21,8 +19,6 @@ export function useHomeScreen() {
       actions.onSaveUserLocation({ coords, address: currentPosition });
     }
   }, [coords, currentPosition]);
-
-  const navigation = useNavigation<any>()
 
   const requestLocationPermission = async () => {
     setLoading(true)
@@ -53,27 +49,32 @@ export function useHomeScreen() {
   const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
       async (position) => {
+        const location = {
+          latitude: position?.coords?.latitude,
+          longitude: position?.coords?.longitude,
+        };
 
-        const location = { latitude: position?.coords?.latitude, longitude: position?.coords?.longitude }
-        
-        setCoords(location)
-        const address = await getAddress(location)
-        setCurrentPosition(address ?? '')
+        setCoords(location);
+        const address = await getAddress(location);
+        setCurrentPosition(address ?? '');
 
         actions.onSaveUserLocation({
           coords: location,
           address: address ?? '',
         });
-
       },
-      (error) => {
-        Alert.alert("Unable to fetch location", error.message,
-          [
-            {
-              text: 'select location on map',
-              onPress: () => navigation.navigate(NavigationStrings.MAP_SCREEN)
-            }
-          ]);
+      async (error) => {
+        console.log('Location error:', error.message);
+
+        try {
+          const result = await NativeModules.LocationSettings.promptForEnableLocation();
+          console.log('Location services enabled result:', result);
+          if (result) {
+            getCurrentLocation();
+          }
+        } catch (e) {
+          console.warn('User cancelled or error enabling location services:', e);
+        }
       }
     );
   };

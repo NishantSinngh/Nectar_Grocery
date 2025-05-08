@@ -25,7 +25,7 @@ const HomeScreen = (props: any) => {
                     <View style={homeStyles.headerStyle}>
                         <Image source={imagePath.carrot} />
                         <View style={homeStyles.locationContainer}>
-                            <Image source={imagePath.location} />
+                            <ImageButton imgSrc={imagePath.location} onPress={navigateToMap} />
                             {loading ? <ActivityIndicator /> : <Text onPress={navigateToMap} style={homeStyles.locationText}>{currentPosition}</Text>}
                         </View>
                     </View>
