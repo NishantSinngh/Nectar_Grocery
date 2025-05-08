@@ -7,4 +7,5 @@ export { default as ProductScreen } from "./ProductScreen/ProductScreen";
 export { default as LoginScreen } from "./LoginScreen/LoginScreen";
 export { default as SignupScreen } from "./SignupScreen/SignupScreen";
 export { default as MapScreen } from "./MapScreen/MapScreen";
+export { default as AddressScreen } from "./AddressScreen/AddressScreen";
 

@@ -4,16 +4,52 @@ import imagePath from '../../assets/imagePath'
 import ImageButton from '../../components/ImageButton'
 import settingsStyle from './settings.style'
 import SettingsItem from '../../components/SettingsItem'
-import SettingsList from './SettingsList'
 import { useAppSelector } from '../../redux/hooks'
 import actions from '../../redux/actions'
 import { showLogoutModal } from '../../components/LogoutModal'
-import { showToast } from '../../components/Toast'
 import { NotImplement } from '../../helperFunctions/utils'
+import { useNavigation } from '@react-navigation/native'
+import NavigationStrings from '../../constants/NavigationStrings'
 
 
 const SettingScreen = () => {
-
+    const navigation = useNavigation<any>();
+    const SettingsList = [{
+        id: '1',
+        title: 'Orders',
+        path: imagePath.orders_icon,
+        onPress: NotImplement,
+    }, {
+        id: '2',
+        title: 'My Details',
+        path: imagePath.myDetails_icon,
+        onPress: NotImplement,
+    }, {
+        id: '3',
+        title: 'Delivery Address',
+        path: imagePath.delivery_address,
+        onPress: () => navigation.navigate(NavigationStrings.ADDRESS_SCREEN),
+    }, {
+        id: '4',
+        title: 'Payment Methods',
+        path: imagePath.payment_card,
+        onPress: NotImplement,
+    }, {
+        id: '6',
+        title: 'Notifications',
+        path: imagePath.bell,
+        onPress: NotImplement,
+    }, {
+        id: '7',
+        title: 'Help',
+        path: imagePath.help_icon,
+        onPress: NotImplement,
+    }, {
+        id: '8',
+        title: 'About',
+        path: imagePath.about,
+        onPress: NotImplement,
+    },]
     const userData = useAppSelector(state => state.authSlice.userData)
     console.log(userData);
 

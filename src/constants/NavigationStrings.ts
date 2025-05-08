@@ -10,4 +10,5 @@ export default {
     SIGNUP : "signup",
     PRODUCT_SCREEN : "productScreen",
     MAP_SCREEN : "mapScreen",
+    ADDRESS_SCREEN : "addressScreen",
 }
