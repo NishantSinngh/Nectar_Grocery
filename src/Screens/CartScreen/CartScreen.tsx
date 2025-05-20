@@ -24,6 +24,7 @@ const CartScreen = () => {
                     data={cart}
                     style={{ flex: 1, }}
                     contentContainerStyle={{ flexGrow: 1, }}
+                    removeClippedSubviews={false}
                     ListFooterComponent={<Spacer space={180} />}
                     ListEmptyComponent={() => (
                         <Animated.View entering={ZoomIn.springify().delay(200)} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
