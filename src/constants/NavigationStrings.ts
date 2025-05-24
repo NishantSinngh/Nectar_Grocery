@@ -8,6 +8,7 @@ export default {
     COMING_SOON : "comingSoon",
     LOGIN : "login",
     SIGNUP : "signup",
+    FORGOT_PASSWORD : "forgotPassword",
     PRODUCT_SCREEN : "productScreen",
     MAP_SCREEN : "mapScreen",
     ADDRESS_SCREEN : "addressScreen",

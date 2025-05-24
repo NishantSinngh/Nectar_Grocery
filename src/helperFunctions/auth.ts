@@ -6,6 +6,7 @@ import {
   signInAnonymously,
   validatePassword,
   signOut,
+  sendPasswordResetEmail,
 } from '@react-native-firebase/auth';
 
 export const auth = getAuth(getApp());
@@ -23,6 +24,10 @@ export async function passwordValidation(password: string) {
 }
 export async function logout() {
   return signOut(auth)
+}
+
+export async function forgotPassword(email: string) {
+  return sendPasswordResetEmail(auth, email)
 }
 
 export async function guestLogin() {

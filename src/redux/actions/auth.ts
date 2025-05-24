@@ -1,4 +1,4 @@
-import { login, logout, signup } from "../../helperFunctions/auth";
+import { forgotPassword, login, logout, signup } from "../../helperFunctions/auth";
 import { APP_LOG } from "../../helperFunctions/utils";
 import { saveUserData, saveUserLocation } from "../reducers/auth";
 import store from "../store";
@@ -78,6 +78,18 @@ export async function userSignUp(name: string, email: string, password: string) 
         } else {
             showToast('Something went wrong')
         }
+    }
+}
+
+export async function ForgotPassword(email: string) {
+    try {
+        APP_LOG('calling==> forgotPassword');
+        const res = await forgotPassword(email)
+        APP_LOG(res)
+        showToast('Email has been sent successfully')
+    } catch (error) {
+        APP_LOG(error)
+        showToast('Invalid email')
     }
 }
 

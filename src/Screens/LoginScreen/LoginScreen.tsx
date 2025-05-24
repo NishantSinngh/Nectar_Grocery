@@ -17,12 +17,21 @@ const LoginScreen = (props: any) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+  const [emailError, setEmailError] = useState<string>('')
+  const [passwordError, setPasswordError] = useState<string>('')
 
   function NavigateToSingup() {
     navigation.navigate(NavigationStrings.SIGNUP)
   }
 
   function handleLogin() {
+    let emailError = email.trim() === '';
+    let passwordError = password.trim() === '';
+    if (!!emailError || !!passwordError) {
+      setEmailError(!!emailError ? 'Please enter email' : '');
+      setPasswordError(!!passwordError ? 'Please enter password' : '');
+      return;
+    }
     setLoading(true)
     actions
       .userLogin(email, password)
@@ -53,8 +62,10 @@ const LoginScreen = (props: any) => {
         placeholder='Enter your email'
         reference={emailRef}
         disabled={!loading}
+        error={emailError}
         onSetData={(email: React.SetStateAction<string>) => {
           setEmail(email)
+          setEmailError('')
         }}
         onSubmitEditing={() => passwordRef.current?.focus()}
         returnType='next'
@@ -64,8 +75,10 @@ const LoginScreen = (props: any) => {
         label='Password'
         reference={passwordRef}
         disabled={!loading}
+        error={passwordError}
         onSetData={(password: React.SetStateAction<string>) => {
           setPassword(password)
+          setPasswordError('')
         }}
         secure
         returnType='done'
@@ -73,7 +86,7 @@ const LoginScreen = (props: any) => {
 
 
       <View style={loginStyles.fpContainer}>
-        <Text style={loginStyles.fpText}>Forgot Password?</Text>
+        <Text onPress={() => navigation.navigate(NavigationStrings.FORGOT_PASSWORD)} style={loginStyles.fpText}>Forgot Password?</Text>
       </View>
 
       <ButtonComp
